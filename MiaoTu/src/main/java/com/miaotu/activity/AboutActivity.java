@@ -25,7 +25,6 @@ public class AboutActivity extends BaseFragmentActivity implements OnClickListen
 		findView();
 		bindView();
 		initView();
-		//测试分支
 	}
 
 
