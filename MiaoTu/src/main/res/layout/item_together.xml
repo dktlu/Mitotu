@@ -21,8 +21,8 @@
             android:src="@drawable/default_avatar"
             app:border_width="0dp" />
 
-        <ImageView
-            android:id="@+id/iv_gender"
+        <!--<ImageView
+            android:id="@+id/iv_gender1"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_alignBottom="@id/iv_head_photo"
@@ -33,28 +33,28 @@
             android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/tv_age"
+            android:id="@+id/tv_age1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_head_photo"
             android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/iv_gender"
+            android:layout_toRightOf="@id/iv_gender1"
             android:text="18岁"
             android:textColor="#b4b4b4"
-            android:textSize="10sp" />
+            android:textSize="10sp" />-->
 
         <TextView
-            android:id="@+id/tv_identity"
+            android:id="@+id/tv_wantgo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_head_photo"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_age"
-            android:text="学生"
+            android:layout_toRightOf="@id/iv_head_photo"
+            android:text="想去 米兰"
             android:textColor="#b4b4b4"
             android:textSize="10sp" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             android:layout_toRightOf="@id/tv_identity"
             android:text="刚刚"
             android:textColor="#b4b4b4"
-            android:textSize="10sp" />
+            android:textSize="10sp" />-->
 
         <ImageView
             android:id="@+id/iv_like"
@@ -85,12 +85,42 @@
             android:text="四小美"
             android:textColor="#646464"
             android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_name"
+            android:layout_alignTop="@id/tv_name"
+            android:layout_alignBottom="@id/tv_name"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/bg_sexandagetag"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_woman"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                />
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="#646464"
+                android:textSize="10sp"
+                android:text="26岁"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_tag_date"
             android:layout_width="wrap_content"
             android:layout_height="14dp"
-            android:layout_alignLeft="@id/iv_gender"
+            android:layout_alignLeft="@id/tv_wantgo"
             android:layout_below="@id/iv_head_photo"
             android:layout_marginTop="6dp"
             android:background="@drawable/bg_tag_date"
@@ -193,7 +223,7 @@
             android:textColor="#b4b4b4"
             android:textSize="10sp" />
 
-        <TextView
+        w<TextView
             android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -203,6 +233,17 @@
             android:text="0.05km"
             android:textColor="#b4b4b4"
             android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_distance"
+            android:layout_alignBottom="@id/tv_distance"
+            android:text="刚刚"
+            android:textColor="#b4b4b4"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tv_join_list"
