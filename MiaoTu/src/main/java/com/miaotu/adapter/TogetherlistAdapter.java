@@ -92,7 +92,7 @@ public class TogetherlistAdapter extends BaseAdapter {
 					.findViewById(R.id.iv_gender);
             holder.tvAge = (TextView) convertView
 					.findViewById(R.id.tv_age);
-			holder.tvJob = (TextView) convertView.findViewById(R.id.tv_identity);
+//			holder.tvJob = (TextView) convertView.findViewById(R.id.tv_identity);
             holder.tvTime = (TextView) convertView
                     .findViewById(R.id.tv_date);
             holder.tvDate = (TextView) convertView
@@ -118,7 +118,9 @@ public class TogetherlistAdapter extends BaseAdapter {
                     .findViewById(R.id.iv_like);
             holder.tvJoinList = (TextView) convertView
                     .findViewById(R.id.tv_join_list);
-			convertView.setTag(holder);
+            holder.tvWantGo = (TextView) convertView
+                    .findViewById(R.id.tv_wantgo);
+            convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -197,10 +199,10 @@ public class TogetherlistAdapter extends BaseAdapter {
             }
         });
         holder.tvAge.setText(mList.get(position).getAge()+"岁");
-        if (StringUtil.isBlank(mList.get(position).getJob())){
+        /*if (StringUtil.isBlank(mList.get(position).getJob())){
             holder.tvJob.setVisibility(View.GONE);
         }
-        holder.tvJob.setText(mList.get(position).getJob());
+        holder.tvJob.setText(mList.get(position).getJob());*/
         if(mList.get(position).getGender().equals("男")){
             holder.ivGender.setBackgroundResource(R.drawable.icon_man);
         }else{
@@ -261,6 +263,7 @@ public class TogetherlistAdapter extends BaseAdapter {
             }
         }
         holder.tvDistance.setText(mList.get(position).getDistance() + "km");
+        holder.tvWantGo.setText("想去 米兰");
 		return convertView;
 	}
     private void like(final int position) {
@@ -300,7 +303,7 @@ public class TogetherlistAdapter extends BaseAdapter {
         private CircleImageView ivHeadPhoto = null;
         private ImageView ivGender = null;
         private TextView tvAge = null;
-        private TextView tvJob= null;
+//        private TextView tvJob= null;
         private TextView tvTime= null;
         private TextView tvDate= null;
         private TextView tvDesCity= null;
@@ -313,5 +316,6 @@ public class TogetherlistAdapter extends BaseAdapter {
         private ImageView ivLike= null;
         private LinearLayout layoutImg= null;
         private  TextView tvJoinList = null;
+        private  TextView tvWantGo = null;
 	}
 }

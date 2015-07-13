@@ -21,28 +21,6 @@
             android:src="@drawable/default_avatar"
             app:border_width="0dp" />
 
-        <!--<ImageView
-            android:id="@+id/iv_gender1"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_alignBottom="@id/iv_head_photo"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_head_photo"
-            android:background="@drawable/mine_girl"
-            android:scaleType="fitCenter" />
-
-        <TextView
-            android:id="@+id/tv_age1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head_photo"
-            android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/iv_gender1"
-            android:text="18岁"
-            android:textColor="#b4b4b4"
-            android:textSize="10sp" />-->
-
         <TextView
             android:id="@+id/tv_wantgo"
             android:layout_width="wrap_content"
@@ -53,17 +31,6 @@
             android:text="想去 米兰"
             android:textColor="#b4b4b4"
             android:textSize="10sp" />
-
-        <!--<TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_head_photo"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_identity"
-            android:text="刚刚"
-            android:textColor="#b4b4b4"
-            android:textSize="10sp" />-->
 
         <ImageView
             android:id="@+id/iv_like"
