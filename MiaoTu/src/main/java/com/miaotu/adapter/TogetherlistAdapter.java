@@ -1,20 +1,26 @@
 package com.miaotu.adapter;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.util.DateUtils;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
@@ -141,8 +147,8 @@ public class TogetherlistAdapter extends BaseAdapter {
         holder.tvJoinList.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Util.isNetworkConnected(mContext)) {
-                    ((BaseFragmentActivity)mContext).showToastMsg("当前未联网，请检查网络设置");
+                if (!Util.isNetworkConnected(mContext)) {
+                    ((BaseFragmentActivity) mContext).showToastMsg("当前未联网，请检查网络设置");
                     return;
                 }
                 int pos = (int) view.getTag();
@@ -163,7 +169,7 @@ public class TogetherlistAdapter extends BaseAdapter {
         holder.ivHeadPhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Util.isNetworkConnected(mContext)) {
+                if (!Util.isNetworkConnected(mContext)) {
                     return;
                 }
                 int pos = (int) view.getTag();
@@ -272,10 +278,12 @@ public class TogetherlistAdapter extends BaseAdapter {
             protected void onCompleteTask(BaseResult result) {
                 if (result.getCode() == BaseResult.SUCCESS) {
                     if(mList.get(position).isLike()){
-                        ((BaseFragmentActivity)mContext).showToastMsg("取消喜欢成功！");
+//                        ((BaseFragmentActivity)mContext).showToastMsg("取消喜欢成功！");
+                        showMyToast(((BaseFragmentActivity)mContext), "取消喜欢成功！");
                         mList.get(position).setIsLike(false);
                     }else{
-                        ((BaseFragmentActivity)mContext).showToastMsg("喜欢成功！");
+//                        ((BaseFragmentActivity)mContext).showToastMsg("喜欢成功！");
+                        showMyToast(((BaseFragmentActivity)mContext), "喜欢成功！");
                         mList.get(position).setIsLike(true);
                     }
                     notifyDataSetChanged();
@@ -318,4 +326,26 @@ public class TogetherlistAdapter extends BaseAdapter {
         private  TextView tvJoinList = null;
         private  TextView tvWantGo = null;
 	}
+
+    /**
+     * 显示自定义的Toast
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content){
+        View view = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+        tvContent.setText(content);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                mScreenWidth, Util.dip2px(context, 30));
+        view.setLayoutParams(params);
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        toast.setView(view);
+        toast.show();
+    }
 }
