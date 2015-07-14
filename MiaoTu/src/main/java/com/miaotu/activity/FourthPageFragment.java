@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
@@ -28,7 +29,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private CircleImageView iv_userhead;
     private TextView tv_username, tv_userage, tv_iden, tv_userfans;
     private RelativeLayout rl_userinfo, rl_homepage, rl_setting, rl_hongbao,
-            rl_miaolvtuan, rl_yibaomingde, rl_like, rl_together, rl_recommend;
+            rl_order, rl_customer, rl_recommend;
     private TextView tv_left, tv_title, tv_right;
 
     @Override
@@ -51,10 +52,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         rl_homepage.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
         rl_hongbao.setOnClickListener(this);
-        rl_miaolvtuan.setOnClickListener(this);
-        rl_yibaomingde.setOnClickListener(this);
-        rl_together.setOnClickListener(this);
-        rl_like.setOnClickListener(this);
+        rl_order.setOnClickListener(this);
+        rl_customer.setOnClickListener(this);
         rl_recommend.setOnClickListener(this);
         tv_right.setVisibility(View.GONE);
         tv_left.setVisibility(View.GONE);
@@ -72,10 +71,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         rl_userinfo = (RelativeLayout) root.findViewById(R.id.rl_userinfo);
         rl_homepage = (RelativeLayout) root.findViewById(R.id.rl_homepage);
         rl_setting = (RelativeLayout) root.findViewById(R.id.rl_setting);
-        rl_miaolvtuan = (RelativeLayout) root.findViewById(R.id.rl_miaolvtuan);
-        rl_yibaomingde = (RelativeLayout) root.findViewById(R.id.rl_yibaomingde);
-        rl_like = (RelativeLayout) root.findViewById(R.id.rl_like);
-        rl_together = (RelativeLayout) root.findViewById(R.id.rl_together);
+        rl_order = (RelativeLayout) root.findViewById(R.id.rl_order);
+        rl_customer = (RelativeLayout) root.findViewById(R.id.rl_customtour);
         rl_recommend = (RelativeLayout) root.findViewById(R.id.rl_recommend);
         tv_iden = (TextView) root.findViewById(R.id.tv_iden);
         tv_userage = (TextView) root.findViewById(R.id.tv_userage);
@@ -140,28 +137,12 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                 intent.setClass(FourthPageFragment.this.getActivity(),
                         RedPackageActivity.class);
                 break;
-            case R.id.rl_miaolvtuan:    //妙旅团
-                intent.setClass(FourthPageFragment.this.getActivity(),
-                        MyCustomTourActivity.class);
-                break;
-            case R.id.rl_yibaomingde:
-                intent.setClass(FourthPageFragment.this.getActivity(),
-                        TogetherAndCustomTourActivity.class);
-                intent.putExtra("type", "join");
-                intent.putExtra("title", "已报名的约游");
-                intent.putExtra("isOwner", true);
-                break;
-            case R.id.rl_like:
-                intent.setClass(FourthPageFragment.this.getActivity(),
-                        TogetherAndCustomTourActivity.class);
-                intent.putExtra("type", "like");
-                intent.putExtra("title", "喜欢的约游");
-                intent.putExtra("isOwner", true);
-                break;
-            case R.id.rl_together:  //一起走
-                intent.setClass(FourthPageFragment.this.getActivity(),
-                        MyTogetherActivity.class);
-                break;
+            case R.id.rl_order:
+                showToastMsg("还没开发");
+                return;
+            case R.id.rl_customtour:  //一起走
+                showToastMsg("还没开发");
+                return;
             case R.id.rl_recommend: //应用推荐
                 intent.setClass(FourthPageFragment.this.getActivity(),
                         AppRecommendActivity.class);
