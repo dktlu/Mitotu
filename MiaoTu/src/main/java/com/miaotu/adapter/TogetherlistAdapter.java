@@ -336,12 +336,6 @@ public class TogetherlistAdapter extends BaseAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         tvContent.setText(content);
-        DisplayMetrics dm = new DisplayMetrics();
-        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int mScreenWidth = dm.widthPixels;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                mScreenWidth, Util.dip2px(context, 30));
-        view.setLayoutParams(params);
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
