@@ -203,8 +203,8 @@ private void publish(){
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_publish:
-                if(!StringUtil.isBlank(etComment.getText().toString())){
-                    publishTogether.setRemark(etComment.getText().toString());
+                if(!StringUtil.isBlank(etComment.getText().toString().trim())){
+                    publishTogether.setRemark(etComment.getText().toString().trim());
                     publishTogether.setToken(readPreference("token"));
                     publish();
                 }else{
