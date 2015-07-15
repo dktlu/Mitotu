@@ -269,7 +269,7 @@ public class TogetherlistAdapter extends BaseAdapter {
             }
         }
         holder.tvDistance.setText(mList.get(position).getDistance() + "km");
-        holder.tvWantGo.setText("想去 米兰");
+        holder.tvWantGo.setText("想去 "+mList.get(position).getWantgo());
 		return convertView;
 	}
     private void like(final int position) {

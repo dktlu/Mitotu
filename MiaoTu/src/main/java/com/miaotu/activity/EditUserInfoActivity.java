@@ -53,8 +53,8 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     private EditText et_tag;
     private FlowLayout fl_tags;
     private ModifyPersonInfo userinfo;
-    private EditText et_nickname, et_emotion, et_job, et_wantgo;
-    private TextView tv_address, tv_age, tv_gender;
+    private EditText et_nickname, et_emotion, et_job, et_wantgo,et_school,et_worksite,et_free;
+    private TextView tv_age, tv_gender,tv_budget,tv_content_life,tv_content_home;
     private RelativeLayout rl_changephoto;
     private List<String> alltags;
     private CircleImageView iv_head_photo;
@@ -75,11 +75,16 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        et_school = (EditText) this.findViewById(R.id.et_school);
+        et_worksite = (EditText) this.findViewById(R.id.et_worksite);
+        et_free = (EditText) this.findViewById(R.id.et_free);
+        tv_budget = (TextView) this.findViewById(R.id.tv_budget);
+        tv_content_life = (TextView) this.findViewById(R.id.tv_content_life);
+        tv_content_home = (TextView) this.findViewById(R.id.tv_content_home);
         rl_changephoto = (RelativeLayout) this.findViewById(R.id.rl_changephoto);
         iv_head_photo = (CircleImageView) this.findViewById(R.id.iv_head_photo);
         et_wantgo = (EditText) this.findViewById(R.id.et_wantgo);
         et_job = (EditText) this.findViewById(R.id.et_job);
-        tv_address = (TextView) this.findViewById(R.id.tv_address);
         et_emotion = (EditText) this.findViewById(R.id.et_emotion);
         tv_age = (TextView) this.findViewById(R.id.tv_age);
         tv_gender = (TextView) this.findViewById(R.id.tv_gender);
@@ -90,27 +95,34 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         btn_add = (Button) this.findViewById(R.id.btn_add);
         et_tag = (EditText) this.findViewById(R.id.et_tag);
         fl_tags = (FlowLayout) this.findViewById(R.id.fl_tags);
-        tv_right.setText("完成");
+        tv_right.setText("保存");
         tv_title.setText("编辑个人资料");
         tv_left.setOnClickListener(this);
         tv_right.setOnClickListener(this);
         btn_add.setOnClickListener(this);
         rl_changephoto.setOnClickListener(this);
-        tv_address.setOnClickListener(this);
         tv_age.setOnClickListener(this);
         tv_gender.setOnClickListener(this);
+        tv_budget.setOnClickListener(this);
+        tv_content_home.setOnClickListener(this);
+        tv_content_life.setOnClickListener(this);
     }
 
     private void clearEditText() {
         et_wantgo.setText("");
         et_job.setText("");
-        tv_address.setText("");
         et_emotion.setText("");
         tv_age.setText("");
         tv_gender.setText("");
         et_nickname.setText("");
         et_tag.setText("");
         fl_tags.removeAllViews();
+        et_school.setText("");
+        et_worksite.setText("");
+        et_free.setText("");
+        tv_budget.setText("");
+        tv_content_life.setText("");
+        tv_content_home.setText("");
     }
 
     /**
@@ -122,12 +134,17 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         boolean empty = false;
         if (StringUtil.isBlank(et_wantgo.getText().toString()) &&
                 StringUtil.isBlank(et_job.getText().toString()) &&
-                StringUtil.isBlank(tv_address.getText().toString()) &&
                 StringUtil.isBlank(et_emotion.getText().toString()) &&
                 StringUtil.isBlank(tv_age.getText().toString()) &&
                 StringUtil.isBlank(tv_gender.getText().toString()) &&
                 StringUtil.isBlank(et_nickname.getText().toString()) &&
                 StringUtil.isBlank(et_tag.getText().toString()) &&
+                StringUtil.isBlank(et_school.getText().toString())&&
+                StringUtil.isBlank(et_worksite.getText().toString())&&
+                StringUtil.isBlank(et_free.getText().toString())&&
+                StringUtil.isBlank(tv_budget.getText().toString())&&
+                StringUtil.isBlank(tv_content_home.getText().toString())&&
+                StringUtil.isBlank(tv_content_life.getText().toString())&&
                 fl_tags.getChildCount() < 1) {
             empty = true;
         }
@@ -144,11 +161,16 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         UrlImageViewHelper.setUrlDrawable(iv_head_photo, headimg, R.drawable.default_avatar);
         et_nickname.setText(readPreference("name"));
         tv_gender.setText(readPreference("gender"));
-        tv_age.setText(readPreference("age")+"岁");
-        tv_address.setText(readPreference("address"));
+        tv_age.setText(readPreference("age") + "岁");
         et_emotion.setText(readPreference("emotion"));
         et_job.setText(readPreference("job"));
         et_wantgo.setText(readPreference("wantgo"));
+        et_worksite.setText(readPreference("workarea"));
+        et_school.setText(readPreference("school"));
+        et_free.setText(readPreference("freetime"));
+        tv_budget.setText(readPreference("budget"));
+        tv_content_home.setText(readPreference("home"));
+        tv_content_life.setText(readPreference("lifearea"));
         String tags = readPreference("tags");
         for (String content:tags.split(",")){
             addTag(content);
@@ -221,7 +243,6 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                     userinfo.setAge(tv_age.getText().toString().trim().substring(0,
                             tv_age.getText().toString().length() - 1));
                 }
-                userinfo.setAddress(tv_address.getText().toString().trim());
                 userinfo.setMarital_status(et_emotion.getText().toString().trim());
                 userinfo.setWork(et_job.getText().toString().trim());
                 userinfo.setWant_go(et_wantgo.getText().toString().trim());
@@ -234,20 +255,32 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                 if (!StringUtil.isBlank(contenttag)) {
                     userinfo.setTags(contenttag.substring(0, contenttag.length() - 1));
                 }
+                userinfo.setWorkarea(et_worksite.getText().toString().trim());
+                userinfo.setSchool(et_school.getText().toString().trim());
+                userinfo.setFreetime(et_free.getText().toString().trim());
+                userinfo.setHome(tv_content_home.getText().toString().trim());
+                userinfo.setLifearea(tv_content_life.getText().toString().trim());
+                userinfo.setBudget(tv_budget.getText().toString().trim());
                 modifyUserInfo(userinfo);
                 clearEditText();
                 break;
             case R.id.rl_changephoto:
                 chosePhoto(2);
                 break;
-            case R.id.tv_address:
-                getCityDialog();
-                break;
             case R.id.tv_age:
                 getAgeDialog();
                 break;
             case R.id.tv_gender:
                 getGenderDialog();
+                break;
+            case R.id.tv_content_home:
+                getCityDialog(tv_content_home);
+                break;
+            case R.id.tv_content_life:
+                getCityDialog(tv_content_life);
+                break;
+            case R.id.tv_budget:
+                getBudgetDialog();
                 break;
             default:
                 break;
@@ -288,6 +321,24 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                     }
                     if (!StringUtil.isBlank(info.getTags())) {
                         writePreference("tags", info.getTags());
+                    }
+                    if (!StringUtil.isBlank(info.getWorkarea())){
+                        writePreference("workarea", info.getWorkarea());
+                    }
+                    if (!StringUtil.isBlank(info.getSchool())){
+                        writePreference("school", info.getSchool());
+                    }
+                    if (!StringUtil.isBlank(info.getFreetime())){
+                        writePreference("freetime", info.getFreetime());
+                    }
+                    if (!StringUtil.isBlank(info.getHome())){
+                        writePreference("home", info.getHome());
+                    }
+                    if (!StringUtil.isBlank(info.getLifearea())){
+                        writePreference("lifearea", info.getLifearea());
+                    }
+                    if (!StringUtil.isBlank(info.getBudget())){
+                        writePreference("budget", info.getBudget());
                     }
                     EditUserInfoActivity.this.finish();
 //                    UrlImageViewHelper.setUrlDrawable(iv_head_photo, info.getHear_url(),
@@ -394,7 +445,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     }
 
     // 获取城市dialog
-    private void getCityDialog() {
+    private void getCityDialog(final TextView view) {
         // 为dialog的listview赋值
         LayoutInflater lay = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -507,9 +558,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             public void onClick(View v) {
                 String curCity = cities[province.getCurrentItem()][city
                         .getCurrentItem()]; // 获取当前选中的城市
-                tv_address.setText(curCity);
-//                myUserInfo.setCity(curCity); // 重新修改所在城市
-                // updateUserInfo(myUserInfo); // 更新用户信息
+                view.setText(curCity);
                 dialog.dismiss();
             }
         });
@@ -558,6 +607,31 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                     gender = "女";
                 }
                 tv_gender.setText(gender);
+
+                dialog.dismiss();
+            }
+        });
+    }
+
+    // 获取预算dialog
+    private void getBudgetDialog() {
+        // 为dialog的listview赋值
+        LayoutInflater lay = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = lay.inflate(R.layout.dialog_age_layout, null);
+        final WheelView wvDay = (WheelView) v.findViewById(R.id.wv_day);
+
+        final String months[] = new String[]{"2k以下", "2k-4k","4k-6k","6k-8k","8k-10k","10k-20k","20k以上"};
+        wvDay.setViewAdapter(new DateArrayAdapter(this, months, 0));
+        // 创建dialog
+        dialog = new WheelTwoColumnDialog(this, R.style.Dialog_Fullscreen, v);
+        dialog.setOnConfirmListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+//                int monthIndex = wvMonth.getCurrentItem();
+                int dayIndex = wvDay.getCurrentItem();
+                tv_budget.setText(months[dayIndex]);
 
                 dialog.dismiss();
             }

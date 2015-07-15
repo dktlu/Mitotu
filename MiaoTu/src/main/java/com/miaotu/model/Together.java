@@ -62,6 +62,8 @@ public class Together implements Serializable{
     private String gender;
     @JsonProperty("Work")
     private String job;
+    @JsonProperty("WantGo")
+    private String wantgo;
     @JsonProperty("IsLike")
     private boolean isLike;
     @JsonProperty("Distance")
@@ -359,5 +361,13 @@ public class Together implements Serializable{
 
     public void setGroupname(String groupname) {
         this.groupname = groupname;
+    }
+
+    public String getWantgo() {
+        return wantgo;
+    }
+
+    public void setWantgo(String wantgo) {
+        this.wantgo = wantgo;
     }
 }

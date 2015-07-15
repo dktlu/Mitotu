@@ -30,6 +30,12 @@ public class ModifyPersonInfo {
     private String book;
     private String food;
     private String pic_url;
+    private String home;
+    private String school;
+    private String workarea;
+    private String lifearea;
+    private String budget;
+    private String freetime;
 
     public String getToken() {
         return token;
@@ -237,5 +243,53 @@ public class ModifyPersonInfo {
 
     public void setPic_url(String pic_url) {
         this.pic_url = pic_url;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getWorkarea() {
+        return workarea;
+    }
+
+    public void setWorkarea(String workarea) {
+        this.workarea = workarea;
+    }
+
+    public String getLifearea() {
+        return lifearea;
+    }
+
+    public void setLifearea(String lifearea) {
+        this.lifearea = lifearea;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public String getFreetime() {
+        return freetime;
+    }
+
+    public void setFreetime(String freetime) {
+        this.freetime = freetime;
     }
 }

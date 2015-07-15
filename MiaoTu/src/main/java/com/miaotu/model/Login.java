@@ -48,6 +48,18 @@ public class Login {
     private String wantgo;
     @JsonProperty("Tags")
     private String tags;
+    @JsonProperty("Home")
+    private String home;
+    @JsonProperty("GraduateSchool")
+    private String school;
+    @JsonProperty("WorkArea")
+    private String workarea;
+    @JsonProperty("LifeArea")
+    private String lifearea;
+    @JsonProperty("Budget")
+    private String budget;
+    @JsonProperty("FreeTime")
+    private String freetime;
 
     public String getUid() {
         return uid;
@@ -215,5 +227,53 @@ public class Login {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getWorkarea() {
+        return workarea;
+    }
+
+    public void setWorkarea(String workarea) {
+        this.workarea = workarea;
+    }
+
+    public String getLifearea() {
+        return lifearea;
+    }
+
+    public void setLifearea(String lifearea) {
+        this.lifearea = lifearea;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public String getFreetime() {
+        return freetime;
+    }
+
+    public void setFreetime(String freetime) {
+        this.freetime = freetime;
     }
 }

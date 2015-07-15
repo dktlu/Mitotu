@@ -143,7 +143,7 @@ private View root;
         wm.getDefaultDisplay().getSize(size);
         int width = size.x;
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                width, width * 202 / 339);
+                width, width * 200 / 320);
         gallery.setLayoutParams(params);
 
         getTogether(true);

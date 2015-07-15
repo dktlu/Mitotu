@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -27,42 +27,35 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/mine_edit" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:text="个人资料"
-                    android:textColor="#646464"
-                    android:textSize="14sp" />
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_changephoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="40dp"
-                    android:text="更换头像"
-                    android:textColor="#646464"
-                    android:textSize="14sp" />
 
                 <com.miaotu.view.CircleImageView
                     android:id="@+id/iv_head_photo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_centerHorizontal="true"
                     android:src="@drawable/default_avatar" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/iv_head_photo"
+                    android:layout_marginTop="10dp"
+                    android:text="添加头像"
+                    android:textColor="#505050"
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -70,7 +63,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:visibility="visible"
                 android:background="@drawable/bg_edittext">
 
@@ -80,7 +73,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="昵称"
-                    android:textColor="#b4b4b4"
+                    android:textColor="#646464"
                     android:textSize="12sp" />
 
                 <View
@@ -121,7 +114,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="性别"
-                    android:textColor="#b4b4b4"
+                    android:textColor="#646464"
                     android:textSize="12sp" />
 
                 <View
@@ -160,7 +153,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="年龄"
-                    android:textColor="#b4b4b4"
+                    android:textColor="#646464"
                     android:textSize="12sp" />
 
                 <View
@@ -191,51 +184,6 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_edittext">
-
-                <TextView
-                    android:id="@+id/tv_title_address"
-                    android:layout_width="67dp"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="所在地"
-                    android:textColor="#b4b4b4"
-                    android:textSize="12sp" />
-
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_title_address"
-                    android:background="#dcdcdc" />
-
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/view4"
-                    android:background="#f1f1f1"
-                    android:gravity="center_vertical"
-                    android:hint="请选择您的所在地"
-                    android:textColorHint="#b4b4b4"
-                    android:textColor="#646464"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bg_line" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_edittext">
 
@@ -245,7 +193,7 @@
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="情感状态"
-                    android:textColor="#b4b4b4"
+                    android:textColor="#646464"
                     android:textSize="12sp" />
 
                 <View
@@ -281,53 +229,12 @@
                 android:background="@drawable/bg_edittext">
 
                 <TextView
-                    android:id="@+id/tv_job"
-                    android:layout_width="67dp"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="职业"
-                    android:textColor="#b4b4b4"
-                    android:textSize="12sp" />
-
-                <View
-                    android:id="@+id/view6"
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/tv_job"
-                    android:background="#dcdcdc" />
-
-                <EditText
-                    android:id="@+id/et_job"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/view6"
-                    android:background="#f1f1f1"
-                    android:gravity="center_vertical"
-                    android:hint="请输入您的职业"
-                    android:textColorHint="#b4b4b4"
-                    android:textColor="#646464"
-                    android:textSize="14sp"
-                    android:maxLength="15"
-                    />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_edittext">
-
-                <TextView
                     android:id="@+id/tv_wantgo"
                     android:layout_width="67dp"
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:text="想去"
-                    android:textColor="#b4b4b4"
+                    android:textColor="#646464"
                     android:textSize="12sp" />
 
                 <View
@@ -351,6 +258,314 @@
                     android:textColor="#646464"
                     android:textSize="14sp"
                     android:maxLength="20"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_home"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="家乡"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_home"
+                    android:background="#dcdcdc" />
+
+                <TextView
+                    android:id="@+id/tv_content_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view10"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="如杭州"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="10"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_job"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="职业"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_job"
+                    android:background="#dcdcdc" />
+
+                <EditText
+                    android:id="@+id/et_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view6"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="如产品狗"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="15"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_school"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="学校"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view11"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_school"
+                    android:background="#dcdcdc" />
+
+                <EditText
+                    android:id="@+id/et_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view11"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="如清华大学"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="15"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_life"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="生活在"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view12"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_life"
+                    android:background="#dcdcdc" />
+
+                <TextView
+                    android:id="@+id/tv_content_life"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view12"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="如北京"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="15"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_worksite"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="工作在"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view13"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_worksite"
+                    android:background="#dcdcdc" />
+
+                <EditText
+                    android:id="@+id/et_worksite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view13"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="如北京中关村"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="15"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_title_free"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="有闲"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_title_free"
+                    android:background="#dcdcdc" />
+
+                <EditText
+                    android:id="@+id/et_free"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view4"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="2015-12-23"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp" />
+                <!--<TextView
+                    android:id="@+id/tv_split"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/tv_free_start"
+                    android:gravity="center_vertical"
+                    android:text="~"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_free_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@id/tv_split"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="2015-12-23"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp" />-->
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edittext">
+
+                <TextView
+                    android:id="@+id/tv_title_budget"
+                    android:layout_width="67dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="约游预算"
+                    android:textColor="#646464"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/view14"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_title_budget"
+                    android:background="#dcdcdc" />
+
+                <TextView
+                    android:id="@+id/tv_budget"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/view14"
+                    android:background="#f1f1f1"
+                    android:gravity="center_vertical"
+                    android:hint="2K-4K"
+                    android:textColorHint="#b4b4b4"
+                    android:textColor="#646464"
+                    android:textSize="14sp"
+                    android:maxLength="15"
                     />
             </RelativeLayout>
 
