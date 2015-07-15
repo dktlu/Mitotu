@@ -76,6 +76,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     private HorizontalImageWallAdapter imageWallAdapter;
     private int lastPosition;
     private ViewStub viewStub;
+    private LinearLayout ll_sexandage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        ll_sexandage = (LinearLayout) this.findViewById(R.id.ll_sexandage);
         viewStub = (ViewStub) this.findViewById(R.id.viewstub);
         tvFansCount = (TextView) this.findViewById(R.id.tv_fans_count);
         tvFollowCount = (TextView) this.findViewById(R.id.tv_follow_count);
@@ -209,7 +211,10 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         }
         tv_username.setText(personInfoResult.getPersonInfo().getNickname());
         if("男".equals(personInfoResult.getPersonInfo().getGender())){
-            iv_gender.setBackgroundResource(R.drawable.mine_boy);
+            iv_gender.setBackgroundResource(R.drawable.icon_boy);
+        }else {
+            iv_gender.setBackgroundResource(R.drawable.icon_girl);
+            ll_sexandage.setBackgroundResource(R.drawable.bg_woman);
         }
         if (!StringUtil.isBlank(personInfoResult.getPersonInfo().getPicurl())){
             UrlImageViewHelper.setUrlDrawable(iv_background,

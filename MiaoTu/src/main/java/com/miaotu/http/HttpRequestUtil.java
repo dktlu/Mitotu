@@ -591,6 +591,11 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("book", info.getBook()));
         params.add(new BasicNameValuePair("food", info.getFood()));
         params.add(new BasicNameValuePair("pic_url", info.getPic_url()));
+        params.add(new BasicNameValuePair("budget", info.getBudget()));
+        params.add(new BasicNameValuePair("home", info.getHome()));
+        params.add(new BasicNameValuePair("life_area", info.getLifearea()));
+        params.add(new BasicNameValuePair("work_area", info.getWorkarea()));
+        params.add(new BasicNameValuePair("free_time", info.getFreetime()));
 
         return HttpDecoder.postForObject(getUrl("user"), BaseResult.class, params);
     }

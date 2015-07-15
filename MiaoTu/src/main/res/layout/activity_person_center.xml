@@ -127,6 +127,7 @@
                     app:border_width="2dp" />
 
                 <LinearLayout
+                    android:id="@+id/ll_sexandage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/iv_head_photo"
@@ -308,14 +309,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_line" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_imagewall"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="10dp"
                 android:background="@color/white"
+
                 android:visibility="visible"
                 ></android.support.v7.widget.RecyclerView>
             <ViewStub
