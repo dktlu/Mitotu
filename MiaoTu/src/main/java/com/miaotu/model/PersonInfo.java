@@ -265,6 +265,16 @@ public class PersonInfo implements Serializable {
     private String joincount;
     @JsonProperty("PhotoCount")
     private String photocount;
+    @JsonProperty("Budget")
+    private String budget;
+    @JsonProperty("Home")
+    private String home;
+    @JsonProperty("LifeArea")
+    private String lifearea;
+    @JsonProperty("WorkArea")
+    private String workarea;
+    @JsonProperty("FreeTime")
+    private String freetime;
 
     public String getSinauid() {
         return sinauid;
@@ -448,5 +458,45 @@ public class PersonInfo implements Serializable {
 
     public void setPicurl(String picurl) {
         this.picurl = picurl;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getLifearea() {
+        return lifearea;
+    }
+
+    public void setLifearea(String lifearea) {
+        this.lifearea = lifearea;
+    }
+
+    public String getWorkarea() {
+        return workarea;
+    }
+
+    public void setWorkarea(String workarea) {
+        this.workarea = workarea;
+    }
+
+    public String getFreetime() {
+        return freetime;
+    }
+
+    public void setFreetime(String freetime) {
+        this.freetime = freetime;
     }
 }

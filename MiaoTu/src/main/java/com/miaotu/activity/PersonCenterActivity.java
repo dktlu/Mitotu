@@ -7,22 +7,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
+import com.miaotu.adapter.HorizontalImageWallAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.imutil.ContactInfo;
 import com.miaotu.imutil.IMDatabaseHelper;
+import com.miaotu.model.ImageWall;
 import com.miaotu.model.ModifyPersonInfo;
+import com.miaotu.result.ImageWallResult;
 import com.miaotu.result.PersonInfoResult;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.PhotoUploadResult;
@@ -41,14 +48,14 @@ import java.util.List;
 
 public class PersonCenterActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView tv_username,tv_identity,tv_content_gender,tv_content_age,
-            tv_content_address,tv_content_emotion,tv_content_job,tv_content_wantgo,
-            tv_title,tv_left,tv_right,tv_top_emotion,tv_top_wantgo;
+    private TextView tv_username,tv_content_home,tv_content_school,tv_content_lifearea,
+            tv_content_job,tv_content_workarea,tv_content_freetime,
+            tv_title,tv_left,tv_right;
     private FlowLayout fl_tag;
     private ImageView iv_gender;
     private View view7,view_bottom;
     private LinearLayout ll_tag;
-    private RelativeLayout rl_gender,rl_age,rl_address,rl_emotion,rl_job,rl_wantgo;
+    private RelativeLayout rl_home,rl_school,rl_lifearea,rl_workarea,rl_job,rl_freetime;
     private CircleImageView iv_head_photo;
     private TextView tv_start,tv_sign,tv_like,tv_trends,tv_tip_trends;
     private RelativeLayout rl_follow,rl_chating,rl_bottom,rl_join,rl_like,rl_start,rl_state;
@@ -61,6 +68,14 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             .getExternalStorageDirectory().getAbsolutePath() + "/miaotu/bg.jpg";
     Uri imageUri = Uri.parse(IMAGE_FILE_LOCATION);//
     private ArrayList<PhotoModel> photoList;
+    private TextView tvFollowCount,tvFansCount,tvEmotionStatus,tvBudget;
+    private RecyclerView rvImageWall;
+    private int page=1;
+    private final int PAGECOUNT = 10;
+    private List<ImageWall> imageWallList;
+    private HorizontalImageWallAdapter imageWallAdapter;
+    private int lastPosition;
+    private ViewStub viewStub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +88,12 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        viewStub = (ViewStub) this.findViewById(R.id.viewstub);
+        tvFansCount = (TextView) this.findViewById(R.id.tv_fans_count);
+        tvFollowCount = (TextView) this.findViewById(R.id.tv_follow_count);
+        tvEmotionStatus = (TextView) this.findViewById(R.id.tv_emotion_status);
+        tvBudget = (TextView) this.findViewById(R.id.tv_budget);
+        rvImageWall = (RecyclerView) this.findViewById(R.id.rv_imagewall);
         tv_follow = (TextView) this.findViewById(R.id.tv_follow);
         iv_follow = (ImageView) this.findViewById(R.id.iv_follow);
         tv_start = (TextView) this.findViewById(R.id.tv_start);
@@ -84,12 +105,12 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         rl_chating = (RelativeLayout) this.findViewById(R.id.rl_chating);
         rl_bottom = (RelativeLayout) this.findViewById(R.id.rl_bottom);
         iv_head_photo = (CircleImageView) this.findViewById(R.id.iv_head_photo);
-        rl_gender = (RelativeLayout) this.findViewById(R.id.rl_gender);
-        rl_age = (RelativeLayout) this.findViewById(R.id.rl_age);
-        rl_address = (RelativeLayout) this.findViewById(R.id.rl_address);
-        rl_emotion = (RelativeLayout) this.findViewById(R.id.rl_emotion);
+        rl_home = (RelativeLayout) this.findViewById(R.id.rl_home);
+        rl_school = (RelativeLayout) this.findViewById(R.id.rl_school);
+        rl_lifearea = (RelativeLayout) this.findViewById(R.id.rl_lifearea);
+        rl_workarea = (RelativeLayout) this.findViewById(R.id.rl_workarea);
         rl_job = (RelativeLayout) this.findViewById(R.id.rl_job);
-        rl_wantgo = (RelativeLayout) this.findViewById(R.id.rl_wantgo);
+        rl_freetime = (RelativeLayout) this.findViewById(R.id.rl_freetime);
         rl_join = (RelativeLayout) this.findViewById(R.id.rl_join);
         rl_like = (RelativeLayout) this.findViewById(R.id.rl_like);
         rl_start = (RelativeLayout) this.findViewById(R.id.rl_start);
@@ -99,16 +120,13 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         tv_title = (TextView) this.findViewById(R.id.tv_title);
         tv_left = (TextView) this.findViewById(R.id.tv_left);
         tv_right = (TextView) this.findViewById(R.id.tv_right);
-        tv_content_address = (TextView) this.findViewById(R.id.tv_content_address);
-        tv_identity = (TextView) this.findViewById(R.id.tv_identity);
-        tv_content_gender = (TextView) this.findViewById(R.id.tv_content_gender);
-        tv_content_age = (TextView) this.findViewById(R.id.tv_content_age);
-        tv_content_emotion = (TextView) this.findViewById(R.id.tv_content_emotion);
+        tv_content_home = (TextView) this.findViewById(R.id.tv_content_home);
+        tv_content_school = (TextView) this.findViewById(R.id.tv_content_school);
+        tv_content_lifearea = (TextView) this.findViewById(R.id.tv_content_lifearea);
+        tv_content_workarea = (TextView) this.findViewById(R.id.tv_content_workarea);
         tv_content_job = (TextView) this.findViewById(R.id.tv_content_job);
-        tv_content_wantgo = (TextView) this.findViewById(R.id.tv_content_wantgo);
+        tv_content_freetime = (TextView) this.findViewById(R.id.tv_content_freetime);
         tv_username = (TextView) this.findViewById(R.id.tv_username);
-        tv_top_emotion = (TextView) this.findViewById(R.id.tv_top_emotion);
-        tv_top_wantgo = (TextView) this.findViewById(R.id.tv_top_wantgo);
         iv_gender = (ImageView) this.findViewById(R.id.iv_gender);
         fl_tag = (FlowLayout) this.findViewById(R.id.fl_tag);
         ll_tag = (LinearLayout) this.findViewById(R.id.ll_tag);
@@ -153,33 +171,42 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         PhotoModel photoModel = new PhotoModel();
         photoModel.setOriginalPath(personInfoResult.getPersonInfo().getHeadurl());
         photoList.add(photoModel);
-        tv_top_emotion.setText(personInfoResult.getPersonInfo().getMaritalstatus());
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getAddress())){
-            rl_address.setVisibility(View.VISIBLE);
-            tv_content_address.setText(personInfoResult.getPersonInfo().getAddress());
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getHome())){
+            rl_home.setVisibility(View.VISIBLE);
+            tv_content_home.setText(personInfoResult.getPersonInfo().getHome());
         }
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getAge())){
-            rl_age.setVisibility(View.VISIBLE);
-            tv_content_age.setText(personInfoResult.getPersonInfo().getAge()+"岁");
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getGraduateschool())){
+            rl_school.setVisibility(View.VISIBLE);
+            tv_content_school.setText(personInfoResult.getPersonInfo().getGraduateschool());
         }
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getMaritalstatus())){
-            rl_emotion.setVisibility(View.VISIBLE);
-            tv_content_emotion.setText(personInfoResult.getPersonInfo().getMaritalstatus());
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getLifearea())){
+            rl_lifearea.setVisibility(View.VISIBLE);
+            tv_content_lifearea.setText(personInfoResult.getPersonInfo().getLifearea());
         }
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getGender())){
-            rl_gender.setVisibility(View.VISIBLE);
-            tv_content_gender.setText(personInfoResult.getPersonInfo().getGender());
+        tvEmotionStatus.setText(personInfoResult.getPersonInfo().getMaritalstatus());
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getLikecount())){
+            tvFollowCount.setText(personInfoResult.getPersonInfo().getLikecount());
+        }else {
+            tvFollowCount.setText("0");
+        }
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getCollectcount())){
+            tvFansCount.setText(personInfoResult.getPersonInfo().getCollectcount());
+        }else {
+            tvFansCount.setText("0");
+        }
+        tvBudget.setText(personInfoResult.getPersonInfo().getBudget());
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getWorkarea())){
+            rl_workarea.setVisibility(View.VISIBLE);
+            tv_content_workarea.setText(personInfoResult.getPersonInfo().getWorkarea());
         }
         if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getWork())){
             rl_job.setVisibility(View.VISIBLE);
             tv_content_job.setText(personInfoResult.getPersonInfo().getWork());
         }
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getWantgo())){
-            rl_wantgo.setVisibility(View.VISIBLE);
-            tv_content_wantgo.setText(personInfoResult.getPersonInfo().getWantgo());
+        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getFreetime())){
+            rl_freetime.setVisibility(View.VISIBLE);
+            tv_content_freetime.setText(personInfoResult.getPersonInfo().getFreetime());
         }
-        tv_top_wantgo.setText(personInfoResult.getPersonInfo().getWantgo());
-        tv_identity.setText(personInfoResult.getPersonInfo().getWork());
         tv_username.setText(personInfoResult.getPersonInfo().getNickname());
         if("男".equals(personInfoResult.getPersonInfo().getGender())){
             iv_gender.setBackgroundResource(R.drawable.mine_boy);
@@ -224,7 +251,32 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             showMyPage(true);
             isMine = true;
         }
+        imageWallList = new ArrayList<>();
+        imageWallAdapter = new HorizontalImageWallAdapter(this, imageWallList);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvImageWall.setLayoutManager(linearLayoutManager);
+        rvImageWall.setAdapter(imageWallAdapter);
+        rvImageWall.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        (lastPosition + 1) == imageWallAdapter.getItemCount()&&
+                        imageWallList.size() == page*PAGECOUNT){
+                    page += 1;
+                    getImageWall();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
         readPersonInfo(token, uid);
+        getImageWall();
     }
 
     /**
@@ -531,6 +583,37 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             @Override
             protected BaseResult run(Void... params) {
                 return HttpRequestUtil.getInstance().modifyPersonInfo(info);
+            }
+        }.execute();
+    }
+
+    private void getImageWall(){
+        new BaseHttpAsyncTask<Void, Void, ImageWallResult>(this){
+
+            @Override
+            protected void onCompleteTask(ImageWallResult imageWallResult) {
+                if (imageWallResult.getCode() == BaseResult.SUCCESS){
+                    imageWallList.clear();
+                    imageWallList.addAll(imageWallResult.getImageWallList());
+                    if (imageWallList.size() < 1){
+                        rvImageWall.setVisibility(View.GONE);
+                        viewStub.inflate();
+                        return;
+                    }
+                    imageWallAdapter.notifyItemChanged(imageWallList.size()-1);
+                }else {
+                    if (StringUtil.isBlank(imageWallResult.getMsg())){
+                        showToastMsg("获取图片墙失败");
+                    }else {
+                        showToastMsg(imageWallResult.getMsg());
+                    }
+                }
+            }
+
+            @Override
+            protected ImageWallResult run(Void... params) {
+                return HttpRequestUtil.getInstance().getImageWall(
+                        readPreference("token"),1,PAGECOUNT*page);
             }
         }.execute();
     }
