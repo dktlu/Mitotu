@@ -59,7 +59,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     private CircleImageView iv_head_photo;
     private TextView tv_start,tv_sign,tv_like,tv_trends,tv_tip_trends;
     private RelativeLayout rl_follow,rl_chating,rl_bottom,rl_join,rl_like,rl_start,rl_state;
-    private TextView tv_follow;
+    private TextView tv_follow,tv_age,tv_more;
     private ImageView iv_follow,iv_background;
     private PersonInfoResult result;
     private String token,uid;
@@ -89,6 +89,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        tv_more = (TextView) this.findViewById(R.id.tv_more);
+        tv_age = (TextView) this.findViewById(R.id.tv_age);
         ll_sexandage = (LinearLayout) this.findViewById(R.id.ll_sexandage);
         viewStub = (ViewStub) this.findViewById(R.id.viewstub);
         tvFansCount = (TextView) this.findViewById(R.id.tv_fans_count);
@@ -156,6 +158,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         rl_state.setOnClickListener(this);
         iv_background.setOnClickListener(this);
         iv_head_photo.setOnClickListener(this);
+        tv_more.setOnClickListener(this);
     }
 
     /**
@@ -216,6 +219,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             iv_gender.setBackgroundResource(R.drawable.icon_girl);
             ll_sexandage.setBackgroundResource(R.drawable.bg_woman);
         }
+        tv_age.setText(personInfoResult.getPersonInfo().getAge());
         if (!StringUtil.isBlank(personInfoResult.getPersonInfo().getPicurl())){
             UrlImageViewHelper.setUrlDrawable(iv_background,
                     personInfoResult.getPersonInfo().getPicurl(),
@@ -395,6 +399,10 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                 bundle.putSerializable("photos", photoList);
                 bundle.putSerializable("position", 0);
                 CommonUtils.launchActivity(PersonCenterActivity.this, PhotoPreviewActivity.class, bundle);
+                break;
+            case R.id.tv_more:
+                Intent imagewallIntent = new Intent(PersonCenterActivity.this, GridImageWallActivity.class);
+                startActivity(imagewallIntent);
                 break;
             default:
                 break;
@@ -592,6 +600,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         }.execute();
     }
 
+    /**
+     * 获取图片墙
+     */
     private void getImageWall(){
         new BaseHttpAsyncTask<Void, Void, ImageWallResult>(this){
 

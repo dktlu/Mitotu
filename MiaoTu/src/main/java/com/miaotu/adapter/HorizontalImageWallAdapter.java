@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
@@ -16,6 +17,7 @@ import com.photoselector.model.PhotoModel;
 import com.photoselector.ui.PhotoPreviewActivity;
 import com.photoselector.util.CommonUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +30,12 @@ public class HorizontalImageWallAdapter extends RecyclerView.Adapter<HorizontalI
     private List<ImageWall> imagelist;
     private LayoutInflater inflater;
     private ArrayList<PhotoModel> photoList;
-    private PhotoModel photoModel;
 
     public HorizontalImageWallAdapter(Context context, List<ImageWall> imagelist){
         this.mContext = context;
         this.imagelist = imagelist;
         inflater = LayoutInflater.from(mContext);
         photoList = new ArrayList<>();
-        photoModel = new PhotoModel();
 
     }
 
@@ -48,9 +48,12 @@ public class HorizontalImageWallAdapter extends RecyclerView.Adapter<HorizontalI
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        PhotoModel photoModel = new PhotoModel();
         photoModel.setOriginalPath(imagelist.get(i).getUrl());
         photoList.add(photoModel);
-        UrlImageViewHelper.setUrlDrawable(viewHolder.ivWall, imagelist.get(i).getUrl());
+        UrlImageViewHelper.setUrlDrawable(viewHolder.ivWall,
+                imagelist.get(i).getUrl(), R.drawable.icon_default_bbs_photo);
+        viewHolder.ivWall.setTag(i);
         viewHolder.ivWall.setOnClickListener(this);
     }
 
@@ -65,7 +68,7 @@ public class HorizontalImageWallAdapter extends RecyclerView.Adapter<HorizontalI
             case R.id.iv_wall:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("photos", photoList);
-                bundle.putSerializable("position", 0);
+                bundle.putSerializable("position", (int) view.getTag());
                 CommonUtils.launchActivity(mContext, PhotoPreviewActivity.class, bundle);
                 break;
         }

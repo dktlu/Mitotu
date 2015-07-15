@@ -295,8 +295,8 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-         android:value="miaotu#miaotu" />
-            <!--android:value="miaotu#merryutest" />-->
+            android:value="miaotu#miaotu" />
+        <!-- android:value="miaotu#merryutest" /> -->
         <!-- Required SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService" />
 
@@ -578,9 +578,13 @@
         <activity
             android:name=".activity.HomeShareActivity"
             android:label="@string/title_activity_home_share"
-            android:theme="@android:style/Theme.Translucent"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name=".activity.GridImageWallActivity"
+            android:label="@string/title_activity_grid_image_wall" >
         </activity>
     </application>
 

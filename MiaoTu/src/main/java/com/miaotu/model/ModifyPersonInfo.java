@@ -18,7 +18,6 @@ public class ModifyPersonInfo {
     private String education;
     private String marital_status;
     private String address;
-    private String graduate_school;
     private String work;
     private String tags;
     private String body_type;
@@ -139,14 +138,6 @@ public class ModifyPersonInfo {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGraduate_school() {
-        return graduate_school;
-    }
-
-    public void setGraduate_school(String graduate_school) {
-        this.graduate_school = graduate_school;
     }
 
     public String getWork() {

@@ -579,7 +579,7 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("education", info.getEducation()));
         params.add(new BasicNameValuePair("marital_status", info.getMarital_status()));
         params.add(new BasicNameValuePair("address", info.getAddress()));
-        params.add(new BasicNameValuePair("graduate_school", info.getGraduate_school()));
+        params.add(new BasicNameValuePair("graduate_school", info.getSchool()));
         params.add(new BasicNameValuePair("work", info.getWork()));
         params.add(new BasicNameValuePair("tags", info.getTags()));
         params.add(new BasicNameValuePair("body_type", info.getBody_type()));
