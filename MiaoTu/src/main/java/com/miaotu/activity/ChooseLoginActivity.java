@@ -153,6 +153,7 @@ private Button btnWechatRegister,btnOtherRegister,btnLogin;
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
         if(platform.getName().equals(QZone.NAME)){
+            writePreference("logintype", "qq");
             try{
                 String info = "qq登陆信息：";
                 //qq登陆
@@ -180,6 +181,7 @@ private Button btnWechatRegister,btnOtherRegister,btnLogin;
         }
         //微博
         if (platform.getName().equals(SinaWeibo.NAME)) {
+            writePreference("logintype", "weibo");
             PlatformDb platDB = platform.getDb();//获取数平台数据DB
             //通过DB获取各种数据
             platDB.getUserId();
@@ -210,6 +212,7 @@ private Button btnWechatRegister,btnOtherRegister,btnLogin;
         }
         //微信
         if(platform.getName().equals(Wechat.NAME)){
+            writePreference("logintype", "wx");
             PlatformDb platDB = platform.getDb();//获取数平台数据DB
             //通过DB获取各种数据
             platDB.getUserId();

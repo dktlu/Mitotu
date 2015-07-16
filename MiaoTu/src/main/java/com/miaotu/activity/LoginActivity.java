@@ -309,6 +309,7 @@ private void init(){
         LogUtil.d("登陆成功！");
 
         if(platform.getName().equals(QZone.NAME)){
+            writePreference("logintype", "qq");
             try{
                 Iterator iter = res.entrySet().iterator();
                 while (iter.hasNext()) {
@@ -343,6 +344,7 @@ private void init(){
         }
         //微博
         if (platform.getName().equals(SinaWeibo.NAME)) {
+            writePreference("logintype", "weibo");
             PlatformDb platDB = platform.getDb();//获取数平台数据DB
             //通过DB获取各种数据
             platDB.getUserId();
@@ -373,6 +375,7 @@ private void init(){
         }
         //微信
         if(platform.getName().equals(Wechat.NAME)){
+            writePreference("logintype", "wx");
             try {
                 Iterator iter = res.entrySet().iterator();
                 while (iter.hasNext()) {

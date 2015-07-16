@@ -18,6 +18,7 @@ import com.miaotu.annotation.Ignore;
 import com.miaotu.form.MFriendsInfo;
 import com.miaotu.form.PublishCustomForm;
 import com.miaotu.model.ModifyPersonInfo;
+import com.miaotu.result.AddressListResult;
 import com.miaotu.result.BlackResult;
 import com.miaotu.result.CustomTourResult;
 import com.miaotu.result.DeleteTopicMessageResult;
@@ -1409,5 +1410,18 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("num", num+""));
         return HttpDecoder.getForObject(getUrl("user/photos"),
                 ImageWallResult.class, params);
+    }
+
+    /**
+     * 匹配手机号
+     * @param token
+     * @return
+     */
+    public AddressListResult matchPhones(String token, String phones){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("phones", phones));
+        return HttpDecoder.postForObject(getUrl("user/phone"),
+                AddressListResult.class, params);
     }
 }

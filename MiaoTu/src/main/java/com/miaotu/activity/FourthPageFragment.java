@@ -170,8 +170,9 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                 intent.putExtra("flag", 0);
                 break;
             case R.id.ll_search:
-                MainActivity.getInstance().setTabSelection(1);
-                return;
+                intent.setClass(FourthPageFragment.this.getActivity(),
+                        FindMFriendsActivity.class);
+                break;
             default:
                 break;
         }
