@@ -32,10 +32,9 @@ import kankan.wheel.widget.WheelView;
 
 
 public class PublishCustomTourActivity2 extends BaseActivity implements OnClickListener{
-    private TextView tvTitle,tvLeft,tvStartDate,tvEndDate;
+    private TextView tvTitle,tvLeft,tvRight,tvStartDate,tvEndDate;
     private EditText etOriginLocaiton,etDesCity,etOriginCity;
     private TextView tvWantgo,tvOrigin;
-    private Button btnNext;
     private PublishCustomForm customForm;
     private WheelTwoColumnDialog dialog;
     @Override
@@ -48,26 +47,27 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
     }
     private void findView(){
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         etDesCity = (EditText) findViewById(R.id.et_des_city);
         etOriginCity = (EditText) findViewById(R.id.et_origin_city);
         tvStartDate = (TextView) findViewById(R.id.tv_start_date);
         tvEndDate = (TextView) findViewById(R.id.tv_end_date);
         etOriginLocaiton = (EditText) findViewById(R.id.tv_gather_location);
-        btnNext = (Button) findViewById(R.id.btn_next);
         tvWantgo = (TextView) findViewById(R.id.tv_select_wantgo);
         tvOrigin = (TextView) findViewById(R.id.tv_select_origin);
     };
     private void bindView(){
         tvLeft.setOnClickListener(this);
-        btnNext.setOnClickListener(this);
         tvOrigin.setOnClickListener(this);
         tvWantgo.setOnClickListener(this);
         tvStartDate.setOnClickListener(this);
         tvEndDate.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
     };
     private void init(){
         tvTitle.setText("定制约游");
+        tvRight.setText("下一步");
         tvStartDate.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 //        tvEndDate.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         customForm = new PublishCustomForm();
@@ -242,7 +242,7 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_next:
+            case R.id.tv_right:
                 if(validate()){
                     customForm.setDesCity(etDesCity.getText().toString());
                     customForm.setOriginCity(etOriginCity.getText().toString());

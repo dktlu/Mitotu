@@ -33,8 +33,7 @@ import java.util.List;
 
 
 public class PublishCustomTourActivity4 extends BaseActivity implements OnClickListener{
-    private TextView tvTitle,tvLeft;
-    private Button btnNext;
+    private TextView tvTitle,tvLeft,tvRight;
     private PublishCustomForm customForm;
     private RadioGroup rgDaoyou,rgDriver,rgZiyouxing,rgAboard,rgActivity;
     @Override
@@ -48,7 +47,7 @@ public class PublishCustomTourActivity4 extends BaseActivity implements OnClickL
     private void findView(){
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvLeft = (TextView) findViewById(R.id.tv_left);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         rgAboard = (RadioGroup) findViewById(R.id.rg_aboard);
         rgActivity = (RadioGroup) findViewById(R.id.rg_activity);
         rgDaoyou = (RadioGroup) findViewById(R.id.rg_daoyou);
@@ -57,10 +56,11 @@ public class PublishCustomTourActivity4 extends BaseActivity implements OnClickL
     };
     private void bindView(){
         tvLeft.setOnClickListener(this);
-        btnNext.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
     };
     private void init(){
         tvTitle.setText("定制约游");
+        tvRight.setText("下一步");
     };
     private void publish(){
         new BaseHttpAsyncTask<Void, Void, BaseResult>(PublishCustomTourActivity4.this, true) {
@@ -92,7 +92,7 @@ public class PublishCustomTourActivity4 extends BaseActivity implements OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_next:
+            case R.id.tv_right:
                 customForm = (PublishCustomForm) getIntent().getSerializableExtra("form");
                 if(rgZiyouxing.getCheckedRadioButtonId()==R.id.rb_ziyouxing1){
                     customForm.setIsFreepath("1");

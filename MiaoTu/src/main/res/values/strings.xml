@@ -162,4 +162,28 @@
     <string name="title_activity_home_share">HomeShareActivity</string>
     <string name="title_activity_grid_image_wall">GridImageWallActivity</string>
     <string name="title_activity_find_mfriends">FindMFriendsActivity</string>
+    <string name="togethernotice">
+        欢迎报名这次旅行，妙途君希望您玩的愉快！\n\n
+        本次旅行是妙途用户通过妙途平台发起的，妙途君希望您在开始旅行之前，能与旅行线路的发起人进行详细
+        和妥善的沟通，并且购买相应的旅行保险。所有旅行参与者在旅行过程中出现的人身或者财产损失，妙途将
+        不担负任何责任。\n\n
+        当你完成报名流程后，旅行发起人依然有权拒绝你的报名。因此，请尽量与线路发起人通过私聊、团聊等方
+        式详细沟通后再进行报名。\n\n
+        如您有其他疑惑请拨打妙途官方服务热线
+        4008-030-085。
+    </string>
+    <string name="customtournotice">
+        欢迎报名这次旅行，妙途君希望您玩的愉快！\n\n
+        本次旅行是妙途用户通过妙途平台发起的妙途定制旅行，妙途君对每位旅行发起人都进行了详细的身份认证，
+        尽我们所能最大程度保证旅行发起人的身份的真实性；并且对线路进行了精心规划、安排；尽最大努力让您
+        拥有一次安全、愉悦的旅行。\n\n
+        妙途君希望您在开始旅行之前，能与旅行线路的发起人（团长）进行详细和妥善的沟通。当您报名付款成功
+        后，妙途将为您购买旅行相关保险。所有旅行过程中出现的人身或财产损失，妙途将不承担任何责任。\n\n
+        当你完成报名流程后，团长依然有权拒绝你的报名，所以请尽量与团长通过私聊、团聊等方式详细沟通后再
+        进行报名。\n
+        如果您在报名付款后依然被团长拒绝，妙途将退返给您所有已支付的费用。\n\n
+        
+
+    </string>
+    <string name="title_activity_sign_notice">SignNoticeActivity</string>
 </resources>

@@ -43,10 +43,9 @@ import kankan.wheel.widget.WheelView;
 
 
 public class PublishCustomTourActivity3 extends BaseActivity implements OnClickListener{
-    private TextView tvTitle,tvLeft,tvDel1,tvDel2;
+    private TextView tvTitle,tvLeft,tvRight,tvDel1,tvDel2;
     private EditText etTel,etId;
     private ImageView ivId1,ivId2;
-    private Button btnNext;
     private PublishCustomForm customForm;
     private static final String IMAGE_FILE_LOCATION1 = Environment
             .getExternalStorageDirectory().getAbsolutePath() + "/miaotu/temp1.jpg";
@@ -66,6 +65,7 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
     }
     private void findView(){
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvDel1 = (TextView) findViewById(R.id.tv_del1);
         tvDel2 = (TextView) findViewById(R.id.tv_del2);
@@ -73,11 +73,10 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
         ivId2 = (ImageView) findViewById(R.id.iv_id_2);
         etTel = (EditText) findViewById(R.id.et_tel);
         etId = (EditText) findViewById(R.id.et_id);
-        btnNext = (Button) findViewById(R.id.btn_next);
     };
     private void bindView(){
         tvLeft.setOnClickListener(this);
-        btnNext.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
         ivId1.setOnClickListener(this);
         ivId2.setOnClickListener(this);
         tvDel1.setOnClickListener(this);
@@ -86,6 +85,7 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
     };
     private void init(){
         tvTitle.setText("定制约游");
+        tvRight.setText("下一步");
         customForm = new PublishCustomForm();
         File myDir = new File(Environment
                 .getExternalStorageDirectory().getAbsolutePath() + "/miaotu");
@@ -231,7 +231,7 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_next:
+            case R.id.tv_right:
                 if(validate()){
                     List<File>imgs = new ArrayList<>();
                     imgs.add(file1);

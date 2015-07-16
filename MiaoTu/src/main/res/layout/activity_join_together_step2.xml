@@ -8,6 +8,7 @@
     layout="@layout/top_bar"
     ></include>
     <LinearLayout
+        android:id="@+id/ll_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -70,6 +71,18 @@
             android:maxLength="11"
             />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_data"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="#4d99cb"
+        android:textSize="14sp"
+        android:text="报名须知"
+        />
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"

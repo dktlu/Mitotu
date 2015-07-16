@@ -278,7 +278,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <Button
+    <!--<Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="49dp"
@@ -286,5 +286,5 @@
         android:background="#a2dadb"
         android:text="下一步"
         android:textColor="#ffffff"
-        />
+        />-->
 </RelativeLayout>

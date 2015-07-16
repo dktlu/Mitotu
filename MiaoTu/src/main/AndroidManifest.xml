@@ -592,6 +592,10 @@
             android:name=".activity.FindMFriendsActivity"
             android:label="@string/title_activity_find_mfriends" >
         </activity>
+        <activity
+            android:name=".activity.SignNoticeActivity"
+            android:label="@string/title_activity_sign_notice" >
+        </activity>
     </application>
 
 </manifest>
