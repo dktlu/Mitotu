@@ -87,12 +87,15 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvFriends.setLayoutManager(linearLayoutManager);
         rvFriends.setAdapter(adapter);
-        String phones = "";
-        for (String phone:mContactsNumber){
-            phones+=phone+",";
+        if (mContactsNumber.size() > 1){
+            String phones = "";
+            for (String phone:mContactsNumber){
+                phones+=phone+",";
+            }
+            matchPhoneList(phones.substring(0, phones.length() - 1));
+        }else {
+            showToastMsg("手机没有通讯录");
         }
-        Log.e("ERROR", phones.substring(0, phones.length() - 1));
-        matchPhoneList(phones.substring(0, phones.length() - 1));
     }
 
     @Override
