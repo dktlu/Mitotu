@@ -76,6 +76,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     private HorizontalImageWallAdapter imageWallAdapter;
     private int lastPosition;
     private ViewStub viewStub;
+    private TextView tv_title_tour;
+    private View belowimagewall;
     private LinearLayout ll_sexandage;
 
     @Override
@@ -89,6 +91,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        tv_title_tour = (TextView) this.findViewById(R.id.tv_title_tour);
+        belowimagewall = this.findViewById(R.id.belowimagewall);
         tv_more = (TextView) this.findViewById(R.id.tv_more);
         tv_age = (TextView) this.findViewById(R.id.tv_age);
         ll_sexandage = (LinearLayout) this.findViewById(R.id.ll_sexandage);
@@ -169,6 +173,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         if("true".equals(personInfoResult.getPersonInfo().getIslike())){    //是否关注此人
             changeBtnFollow(true);
         }
+        tvFollowCount.setText(readPreference("followcount"));
+        tvFansCount.setText(readPreference("fanscount"));
         UrlImageViewHelper.setUrlDrawable(iv_head_photo,
                 personInfoResult.getPersonInfo().getHeadurl(),
                 R.drawable.icon_default_head_photo);
@@ -189,16 +195,6 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             tv_content_lifearea.setText(personInfoResult.getPersonInfo().getLifearea());
         }
         tvEmotionStatus.setText(personInfoResult.getPersonInfo().getMaritalstatus());
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getLikecount())){
-            tvFollowCount.setText(personInfoResult.getPersonInfo().getLikecount());
-        }else {
-            tvFollowCount.setText("0");
-        }
-        if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getCollectcount())){
-            tvFansCount.setText(personInfoResult.getPersonInfo().getCollectcount());
-        }else {
-            tvFansCount.setText("0");
-        }
         tvBudget.setText(personInfoResult.getPersonInfo().getBudget());
         if(!StringUtil.isBlank(personInfoResult.getPersonInfo().getWorkarea())){
             rl_workarea.setVisibility(View.VISIBLE);
@@ -402,6 +398,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_more:
                 Intent imagewallIntent = new Intent(PersonCenterActivity.this, GridImageWallActivity.class);
+                imagewallIntent.putExtra("uid", uid);
                 startActivity(imagewallIntent);
                 break;
             default:
@@ -421,6 +418,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             tv_like.setText("我喜欢的约游");
             tv_trends.setText("我发布的动态");
             tv_tip_trends.setText("发布的动态");
+            tv_title_tour.setText("我的约游");
         }
     }
 
@@ -613,6 +611,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     imageWallList.addAll(imageWallResult.getImageWallList());
                     if (imageWallList.size() < 1){
                         rvImageWall.setVisibility(View.GONE);
+                        belowimagewall.setVisibility(View.GONE);
+                        tv_more.setVisibility(View.GONE);
                         viewStub.inflate();
                         return;
                     }
@@ -629,7 +629,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             @Override
             protected ImageWallResult run(Void... params) {
                 return HttpRequestUtil.getInstance().getImageWall(
-                        readPreference("token"),1,PAGECOUNT*page);
+                        token,uid,1,PAGECOUNT*page);
             }
         }.execute();
     }

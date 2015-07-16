@@ -26,14 +26,16 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private FirstPageTab1Fragment mTab02;
     private int curPage;
 
-    private ImageView iv_usergender;
     private CircleImageView iv_userhead;
-    private TextView tv_username, tv_userage, tv_iden, tv_userfans;
+    private TextView tv_username;
     private RelativeLayout rl_userinfo, rl_homepage, rl_setting, rl_hongbao,
             rl_order, rl_customer, rl_recommend;
     private TextView tv_left, tv_title, tv_right;
     private LinearLayout llFans,llFollow,llSearch;
     private TextView tvFansCount,tvFollowCount;
+    private TextView tvAge;
+    private ImageView ivGender;
+    private LinearLayout llSexandAge;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,19 +63,20 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         tv_right.setVisibility(View.GONE);
         tv_left.setVisibility(View.GONE);
         tv_title.setText("我的");
-        tv_userfans.setOnClickListener(this);
         llSearch.setOnClickListener(this);
         llFollow.setOnClickListener(this);
         llFans.setOnClickListener(this);
     }
 
     private void findView() {
+        tvAge = (TextView) root.findViewById(R.id.tv_age);
+        ivGender = (ImageView) root.findViewById(R.id.iv_gender);
+        llSexandAge = (LinearLayout) root.findViewById(R.id.ll_sexandage);
         llFans = (LinearLayout) root.findViewById(R.id.ll_fans);
         llFollow = (LinearLayout) root.findViewById(R.id.ll_follow);
         llSearch= (LinearLayout) root.findViewById(R.id.ll_search);
         tvFansCount = (TextView) root.findViewById(R.id.tv_fans_count);
         tvFollowCount = (TextView) root.findViewById(R.id.tv_follow_count);
-        tv_userfans = (TextView) root.findViewById(R.id.tv_userfans);
         iv_userhead = (CircleImageView) root.findViewById(R.id.iv_userhead);
         tv_title = (TextView) root.findViewById(R.id.tv_title);
         tv_left = (TextView) root.findViewById(R.id.tv_left);
@@ -85,10 +88,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         rl_order = (RelativeLayout) root.findViewById(R.id.rl_order);
         rl_customer = (RelativeLayout) root.findViewById(R.id.rl_customtour);
         rl_recommend = (RelativeLayout) root.findViewById(R.id.rl_recommend);
-        tv_iden = (TextView) root.findViewById(R.id.tv_iden);
-        tv_userage = (TextView) root.findViewById(R.id.tv_userage);
         tv_username = (TextView) root.findViewById(R.id.tv_username);
-        iv_usergender = (ImageView) root.findViewById(R.id.iv_usergender);
     }
 
     /**
@@ -104,14 +104,13 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         String fanscount = readPreference("fanscount");
         UrlImageViewHelper.setUrlDrawable(iv_userhead, headimg, R.drawable.default_avatar);
         if ("男".equals(gender)) {
-            iv_usergender.setBackgroundResource(R.drawable.mine_boy);
+            ivGender.setBackgroundResource(R.drawable.icon_boy);
         }else {
-            iv_usergender.setBackgroundResource(R.drawable.mine_girl);
+            ivGender.setBackgroundResource(R.drawable.icon_girl);
+            llSexandAge.setBackgroundResource(R.drawable.bg_woman);
         }
-        tv_iden.setText(identity);
-        tv_userage.setText(age);
+        tvAge.setText(age);
         tv_username.setText(name);
-        tv_userfans.setText(followcount + "个关注|" + fanscount + "个粉丝");
         tvFansCount.setText(fanscount);
         tvFollowCount.setText(followcount);
     }
@@ -159,10 +158,6 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
             case R.id.rl_recommend: //应用推荐
                 intent.setClass(FourthPageFragment.this.getActivity(),
                         AppRecommendActivity.class);
-                break;
-            case R.id.tv_userfans:  //粉丝和关注
-                intent.setClass(FourthPageFragment.this.getActivity(),
-                        MyLikeAndFansActivity.class);
                 break;
             case R.id.ll_fans:
                 intent.setClass(FourthPageFragment.this.getActivity(),

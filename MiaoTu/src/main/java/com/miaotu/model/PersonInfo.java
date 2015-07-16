@@ -259,6 +259,8 @@ public class PersonInfo implements Serializable {
     private String food;
     @JsonProperty("LikeCount")
     private String likecount;
+    @JsonProperty("LikedCount")
+    private String likedcount;
     @JsonProperty("CollectCount")
     private String collectcount;
     @JsonProperty("JoinCount")
@@ -498,5 +500,13 @@ public class PersonInfo implements Serializable {
 
     public void setFreetime(String freetime) {
         this.freetime = freetime;
+    }
+
+    public String getLikedcount() {
+        return likedcount;
+    }
+
+    public void setLikedcount(String likedcount) {
+        this.likedcount = likedcount;
     }
 }

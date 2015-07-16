@@ -1401,9 +1401,10 @@ public class HttpRequestUtil {
      * @param token
      * @return
      */
-    public ImageWallResult getImageWall(String token, int page, int num){
+    public ImageWallResult getImageWall(String token, String uid, int page, int num){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("uid", uid));
         params.add(new BasicNameValuePair("page", page+""));
         params.add(new BasicNameValuePair("num", num+""));
         return HttpDecoder.getForObject(getUrl("user/photos"),

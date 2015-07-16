@@ -105,7 +105,7 @@ public class GridImageWallActivity extends BaseActivity implements View.OnClickL
             @Override
             protected ImageWallResult run(Void... params) {
                 return HttpRequestUtil.getInstance().getImageWall(
-                        readPreference("token"),1,PAGECOUNT*page);
+                        readPreference("token"),getIntent().getStringExtra("uid"),1,PAGECOUNT*page);
             }
         }.execute();
     }
