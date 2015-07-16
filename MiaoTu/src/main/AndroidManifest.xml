@@ -36,6 +36,8 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".app.App"
@@ -585,6 +587,10 @@
         <activity
             android:name=".activity.GridImageWallActivity"
             android:label="@string/title_activity_grid_image_wall" >
+        </activity>
+        <activity
+            android:name=".activity.FindMFriendsActivity"
+            android:label="@string/title_activity_find_mfriends" >
         </activity>
     </application>
 

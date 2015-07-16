@@ -161,4 +161,5 @@
     </string>
     <string name="title_activity_home_share">HomeShareActivity</string>
     <string name="title_activity_grid_image_wall">GridImageWallActivity</string>
+    <string name="title_activity_find_mfriends">FindMFriendsActivity</string>
 </resources>
