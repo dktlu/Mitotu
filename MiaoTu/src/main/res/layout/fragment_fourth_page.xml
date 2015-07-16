@@ -119,6 +119,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/ll_follow"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -126,6 +127,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_follow_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="199"
@@ -142,6 +144,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_fans"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -149,6 +152,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_fans_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="11099"
@@ -165,6 +169,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_search"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

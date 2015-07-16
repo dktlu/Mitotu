@@ -24,7 +24,9 @@ import java.util.List;
 /**
  * Created by Jayden on 2015/7/15.
  */
-public class HorizontalImageWallAdapter extends RecyclerView.Adapter<HorizontalImageWallAdapter.ViewHolder> implements View.OnClickListener {
+public class HorizontalImageWallAdapter extends
+        RecyclerView.Adapter<HorizontalImageWallAdapter.ViewHolder>
+        implements View.OnClickListener {
 
     private Context mContext;
     private List<ImageWall> imagelist;

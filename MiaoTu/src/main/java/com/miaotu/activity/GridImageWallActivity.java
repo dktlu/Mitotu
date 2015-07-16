@@ -26,7 +26,7 @@ public class GridImageWallActivity extends BaseActivity implements View.OnClickL
 
     private RecyclerView rvImageWall;
     private int page=1;
-    private final int PAGECOUNT = 10;
+    private final int PAGECOUNT = 15;
     private List<ImageWall> imageWallList;
     private HorizontalImageWallAdapter imageWallAdapter;
     private int lastPosition;
@@ -55,11 +55,10 @@ public class GridImageWallActivity extends BaseActivity implements View.OnClickL
     private void initData(){
         tvTitle.setText("图片墙");
         imageWallList = new ArrayList<>();
-
         imageWallAdapter = new HorizontalImageWallAdapter(this, imageWallList);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvImageWall.setLayoutManager(linearLayoutManager);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        rvImageWall.setLayoutManager(gridLayoutManager);
         rvImageWall.setAdapter(imageWallAdapter);
         rvImageWall.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -76,7 +75,7 @@ public class GridImageWallActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+                lastPosition = gridLayoutManager.findLastVisibleItemPosition();
             }
         });
         getImageWall();
@@ -86,18 +85,14 @@ public class GridImageWallActivity extends BaseActivity implements View.OnClickL
      * 获取图片墙
      */
     private void getImageWall(){
-        new BaseHttpAsyncTask<Void, Void, ImageWallResult>(this, true){
+        new BaseHttpAsyncTask<Void, Void, ImageWallResult>(this){
 
             @Override
             protected void onCompleteTask(ImageWallResult imageWallResult) {
                 if (imageWallResult.getCode() == BaseResult.SUCCESS){
-                    if (rvImageWall == null){
-                        return;
-                    }
                     imageWallList.clear();
                     imageWallList.addAll(imageWallResult.getImageWallList());
-//                    imageWallAdapter.notifyItemChanged(imageWallList.size() - 1);
-                    imageWallAdapter.notifyDataSetChanged();
+                    imageWallAdapter.notifyItemChanged(imageWallList.size()-1);
                 }else {
                     if (StringUtil.isBlank(imageWallResult.getMsg())){
                         showToastMsg("获取图片墙失败");

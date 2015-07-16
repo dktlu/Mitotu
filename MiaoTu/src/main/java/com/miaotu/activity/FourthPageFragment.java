@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private RelativeLayout rl_userinfo, rl_homepage, rl_setting, rl_hongbao,
             rl_order, rl_customer, rl_recommend;
     private TextView tv_left, tv_title, tv_right;
+    private LinearLayout llFans,llFollow,llSearch;
+    private TextView tvFansCount,tvFollowCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,9 +62,17 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         tv_left.setVisibility(View.GONE);
         tv_title.setText("我的");
         tv_userfans.setOnClickListener(this);
+        llSearch.setOnClickListener(this);
+        llFollow.setOnClickListener(this);
+        llFans.setOnClickListener(this);
     }
 
     private void findView() {
+        llFans = (LinearLayout) root.findViewById(R.id.ll_fans);
+        llFollow = (LinearLayout) root.findViewById(R.id.ll_follow);
+        llSearch= (LinearLayout) root.findViewById(R.id.ll_search);
+        tvFansCount = (TextView) root.findViewById(R.id.tv_fans_count);
+        tvFollowCount = (TextView) root.findViewById(R.id.tv_follow_count);
         tv_userfans = (TextView) root.findViewById(R.id.tv_userfans);
         iv_userhead = (CircleImageView) root.findViewById(R.id.iv_userhead);
         tv_title = (TextView) root.findViewById(R.id.tv_title);
@@ -83,7 +94,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     /**
      * 初始化用户信息
      */
-    private void/**/ initUserInfo() {
+    private void initUserInfo() {
         String headimg = readPreference("headphoto");
         String identity = readPreference("job");
         String age = readPreference("age");
@@ -101,6 +112,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         tv_userage.setText(age);
         tv_username.setText(name);
         tv_userfans.setText(followcount + "个关注|" + fanscount + "个粉丝");
+        tvFansCount.setText(fanscount);
+        tvFollowCount.setText(followcount);
     }
 
     private void init() {
@@ -150,6 +163,16 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
             case R.id.tv_userfans:  //粉丝和关注
                 intent.setClass(FourthPageFragment.this.getActivity(),
                         MyLikeAndFansActivity.class);
+                break;
+            case R.id.ll_fans:
+                intent.setClass(FourthPageFragment.this.getActivity(),
+                        MyLikeAndFansActivity.class);
+                intent.putExtra("flag", 1);
+                break;
+            case R.id.ll_follow:
+                intent.setClass(FourthPageFragment.this.getActivity(),
+                        MyLikeAndFansActivity.class);
+                intent.putExtra("flag", 0);
                 break;
             default:
                 break;

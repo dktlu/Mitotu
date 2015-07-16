@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -62,7 +63,11 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
     private void init() {
         tvTitle.setText("关注与粉丝");
         fragmentManager = getSupportFragmentManager();
-        setTabSelection(0);
+        if (getIntent().getIntExtra("flag", 0) == 0){
+            setTabSelection(0);
+        }else {
+            ((RadioButton)findViewById(R.id.tab2)).setChecked(true);
+        }
         setResult(1);
     }
 
