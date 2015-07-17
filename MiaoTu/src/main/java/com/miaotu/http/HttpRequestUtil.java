@@ -41,6 +41,7 @@ import com.miaotu.result.BaseResult;
 import com.miaotu.result.LoginResult;
 import com.miaotu.result.PhotoUploadResult;
 import com.miaotu.result.PublishTogetherResult;
+import com.miaotu.result.RecommendListResult;
 import com.miaotu.result.RedPackageListResult;
 import com.miaotu.result.RemindLikeCustomResult;
 import com.miaotu.result.RemindLikeResult;
@@ -1423,5 +1424,17 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("phones", phones));
         return HttpDecoder.postForObject(getUrl("user/phone"),
                 AddressListResult.class, params);
+    }
+
+    /**
+     * 获取寻找妙友的推荐用户
+     * @param token
+     * @return
+     */
+    public RecommendListResult getRecommendList(String token){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("token", token));
+        return HttpDecoder.getForObject(getUrl("user/recommend"),
+                RecommendListResult.class, params);
     }
 }

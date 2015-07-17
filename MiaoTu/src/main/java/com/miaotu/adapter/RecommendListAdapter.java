@@ -1,7 +1,6 @@
 package com.miaotu.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,31 +8,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.model.Address;
-import com.miaotu.model.ImageWall;
-import com.photoselector.model.PhotoModel;
-import com.photoselector.ui.PhotoPreviewActivity;
-import com.photoselector.util.CommonUtils;
+import com.miaotu.model.Recommend;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Jayden on 2015/7/15.
  */
-public class ContactListAdapter extends
-        RecyclerView.Adapter<ContactListAdapter.ViewHolder>
+public class RecommendListAdapter extends
+        RecyclerView.Adapter<RecommendListAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private Context mContext;
-    private List<Address> contactlist;
+    private List<Recommend> recommendList;
     private LayoutInflater inflater;
 
-    public ContactListAdapter(Context context, List<Address> contactlist){
+    public RecommendListAdapter(Context context, List<Recommend> recommendList){
         this.mContext = context;
-        this.contactlist = contactlist;
+        this.recommendList = recommendList;
         inflater = LayoutInflater.from(mContext);
 
     }
@@ -49,13 +43,13 @@ public class ContactListAdapter extends
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         viewHolder.ivControl.setTag(i);
         viewHolder.ivControl.setOnClickListener(this);
-        viewHolder.tvName.setText(contactlist.get(i).getNickname());
-        viewHolder.tvPs.setText("手机联系人："+contactlist.get(i).getNickname()+"正在使用妙途");
+        viewHolder.tvName.setText(recommendList.get(i).getNickname());
+        viewHolder.tvPs.setText("手机联系人："+recommendList.get(i).getNickname()+"正在使用妙途");
     }
 
     @Override
     public int getItemCount() {
-        return contactlist == null?0:contactlist.size();
+        return recommendList == null?0:recommendList.size();
     }
 
     @Override

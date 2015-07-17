@@ -37,8 +37,49 @@
                 android:layout_gravity="center"
                 android:layout_toRightOf="@id/iv_head_photo"
                 android:text="小张"
-                android:textColor="#b4b4b4"
+                android:textColor="#505050"
                 android:textSize="12sp" />
+            
+            <LinearLayout
+                android:id="@+id/ll_sexandage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_nickname"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:background="@drawable/bg_sexandagetag"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/mine_girl"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24"
+                    android:textColor="#505050"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ll_sexandage"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_sexandagetag"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="周末去哪儿"
+                android:textSize="12sp"
+                android:textColor="#505050"
+                />
 
             <TextView
                 android:id="@+id/tv_top_date"
@@ -47,6 +88,16 @@
                 android:layout_alignBottom="@id/iv_head_photo"
                 android:layout_toRightOf="@id/iv_head_photo"
                 android:text="2月9号"
+                android:textColor="#b4b4b4"
+                android:visibility="gone"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_wantgo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/iv_head_photo"
+                android:layout_toRightOf="@id/iv_head_photo"
+                android:text="想去 米兰"
                 android:textColor="#b4b4b4"
                 android:textSize="12sp" />
 

@@ -17,14 +17,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.miaotu.R;
 import com.miaotu.adapter.ContactListAdapter;
+import com.miaotu.adapter.RecommendListAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.Address;
+import com.miaotu.model.Recommend;
 import com.miaotu.result.AddressListResult;
 import com.miaotu.result.BaseResult;
+import com.miaotu.result.RecommendListResult;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 
@@ -50,7 +54,10 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     private ArrayList<String> mContactsNumber = new ArrayList<String>();
     private ArrayList<Bitmap> mContactsPhonto = new ArrayList<Bitmap>();
     private List<Address> contactlist;
-    private ContactListAdapter adapter;
+    private List<Recommend> recommendList;
+    private ContactListAdapter contactsadapter;
+    private RecommendListAdapter recommendadapter;
+    private TextView tvChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +76,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         llWX = (LinearLayout) this.findViewById(R.id.ll_wx);
         rvFriends = (RecyclerView) this.findViewById(R.id.rv_friends);
         rvRecommend = (RecyclerView) this.findViewById(R.id.rv_recommend);
-
+        tvChange = (TextView) this.findViewById(R.id.tv_change);
     }
 
     private void bindView() {
@@ -77,16 +84,21 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         llWX.setOnClickListener(this);
         llQQ.setOnClickListener(this);
         llAddress.setOnClickListener(this);
+        tvChange.setOnClickListener(this);
     }
 
     private void initData() {
         getPhoneContacts();
         contactlist = new ArrayList<>();
-        adapter = new ContactListAdapter(this, contactlist);
+        recommendList = new ArrayList<>();
+        contactsadapter = new ContactListAdapter(this, contactlist);
+        recommendadapter = new RecommendListAdapter(this, recommendList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvFriends.setLayoutManager(linearLayoutManager);
-        rvFriends.setAdapter(adapter);
+        rvFriends.setAdapter(contactsadapter);
+        rvRecommend.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rvRecommend.setAdapter(recommendadapter);
         if (mContactsNumber.size() > 1){
             String phones = "";
             for (String phone:mContactsNumber){
@@ -96,11 +108,16 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         }else {
             showToastMsg("手机没有通讯录");
         }
+        getRecommendList();
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.tv_change:
+                getRecommendList();
+                break;
+        }
     }
 
     /**
@@ -160,8 +177,8 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     }
                     contactlist.clear();
                     contactlist.addAll(addressListResult.getAddressList());
-                    adapter.notifyItemChanged(contactlist.size() - 1);
                     setAdapterHeght(contactlist.size(), 60);
+                    contactsadapter.notifyItemChanged(contactlist.size() - 1);
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
                         showToastMsg("匹配通讯录失败");
@@ -189,5 +206,37 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 ViewGroup.LayoutParams.MATCH_PARENT, height);
         params.setMargins(60,0,0,0);
         rvFriends.setLayoutParams(params);
+    }
+
+    /**
+     * 获取寻找妙友的推荐好友
+     */
+    private void getRecommendList(){
+        new BaseHttpAsyncTask<Void, Void, RecommendListResult>(this, false){
+
+            @Override
+            protected void onCompleteTask(RecommendListResult recommendListResult) {
+                if (recommendListResult.getCode() == BaseResult.SUCCESS){
+                    if (rvRecommend == null){
+                        return;
+                    }
+                    recommendList.clear();
+                    recommendList.addAll(recommendListResult.getRecommendList());
+                    setAdapterHeght(recommendList.size(), 60);
+                    recommendadapter.notifyItemChanged(recommendList.size() - 1);
+                }else {
+                    if (StringUtil.isBlank(recommendListResult.getMsg())){
+                        showToastMsg("推荐好友获取失败");
+                    }else {
+                        showToastMsg(recommendListResult.getMsg());
+                    }
+                }
+            }
+
+            @Override
+            protected RecommendListResult run(Void... params) {
+                return HttpRequestUtil.getInstance().getRecommendList(readPreference("token"));
+            }
+        }.execute();
     }
 }
