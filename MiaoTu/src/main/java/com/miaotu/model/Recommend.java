@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Recommend {
     @JsonProperty("Uid")
-    private String phone;
+    private String uid;
     @JsonProperty("Nickname")
     private String nickname;
     @JsonProperty("HeadUrl")
@@ -18,12 +18,12 @@ public class Recommend {
     @JsonProperty("Gender")
     private String gender;
 
-    public String getPhone() {
-        return phone;
+    public String getUid() {
+        return uid;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNickname() {

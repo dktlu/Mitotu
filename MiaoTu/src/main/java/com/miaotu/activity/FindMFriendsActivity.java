@@ -58,6 +58,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     private ContactListAdapter contactsadapter;
     private RecommendListAdapter recommendadapter;
     private TextView tvChange;
+    private TextView tvLeft,tvTitle;
+    private LinearLayout llFriend;
+    private TextView tvFriendCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,10 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        tvLeft = (TextView) this.findViewById(R.id.tv_left);
+        tvTitle = (TextView) this.findViewById(R.id.tv_title);
+        llFriend = (LinearLayout) this.findViewById(R.id.ll_friend);
+        tvFriendCount = (TextView) this.findViewById(R.id.tv_friend_count);
         llAddress = (LinearLayout) this.findViewById(R.id.ll_address);
         llQQ = (LinearLayout) this.findViewById(R.id.ll_qq);
         llWeibo = (LinearLayout) this.findViewById(R.id.ll_weibo);
@@ -80,6 +87,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bindView() {
+        tvLeft.setOnClickListener(this);
         llWeibo.setOnClickListener(this);
         llWX.setOnClickListener(this);
         llQQ.setOnClickListener(this);
@@ -88,6 +96,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
+        tvTitle.setText("寻找妙友");
         getPhoneContacts();
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();
@@ -107,6 +116,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             matchPhoneList(phones.substring(0, phones.length() - 1));
         }else {
             showToastMsg("手机没有通讯录");
+            llFriend.setVisibility(View.GONE);
         }
         getRecommendList();
     }
@@ -116,6 +126,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()){
             case R.id.tv_change:
                 getRecommendList();
+                break;
+            case R.id.tv_left:
+                finish();
                 break;
         }
     }
@@ -175,10 +188,17 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     if (rvFriends == null){
                         return;
                     }
+                    if (addressListResult.getAddressList().size() < 1){
+
+                        llFriend.setVisibility(View.GONE);
+                        rvFriends.setVisibility(View.GONE);
+                        return;
+                    }
                     contactlist.clear();
                     contactlist.addAll(addressListResult.getAddressList());
-                    setAdapterHeght(contactlist.size(), 60);
+                    setAdapterHeght(contactlist.size(), 60, rvFriends);
                     contactsadapter.notifyItemChanged(contactlist.size() - 1);
+                    tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\\n关注后和TA们一起，看更大的世界");
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
                         showToastMsg("匹配通讯录失败");
@@ -200,19 +220,19 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
      * @param count item个数
      * @param base 每个item高度
      */
-    private void setAdapterHeght(int count, int base){
+    private void setAdapterHeght(int count, int base, RecyclerView view){
         int height = count*Util.dip2px(this, base);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, height);
         params.setMargins(60,0,0,0);
-        rvFriends.setLayoutParams(params);
+        view.setLayoutParams(params);
     }
 
     /**
      * 获取寻找妙友的推荐好友
      */
     private void getRecommendList(){
-        new BaseHttpAsyncTask<Void, Void, RecommendListResult>(this, false){
+        new BaseHttpAsyncTask<Void, Void, RecommendListResult>(this, true){
 
             @Override
             protected void onCompleteTask(RecommendListResult recommendListResult) {
@@ -222,7 +242,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     }
                     recommendList.clear();
                     recommendList.addAll(recommendListResult.getRecommendList());
-                    setAdapterHeght(recommendList.size(), 60);
+                    setAdapterHeght(recommendList.size(), 60, rvRecommend);
                     recommendadapter.notifyItemChanged(recommendList.size() - 1);
                 }else {
                     if (StringUtil.isBlank(recommendListResult.getMsg())){

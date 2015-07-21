@@ -64,6 +64,8 @@
                 android:layout_alignBottom="@id/iv_head_photo"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/iv_head_photo"
+                android:layout_marginRight="40dp"
+                android:singleLine="true"
                 android:text="你们都在：杭州西湖"
                 android:textColor="#b4b4b4"
                 android:textSize="14sp" />

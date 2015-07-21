@@ -71,6 +71,8 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
     private int isLike; //1001喜欢,1002取消喜欢
     private int likecount;  //记录喜欢数量
     private View view;
+    private ImageView ivGender;
+    private TextView tvAge,tvEmotion,tvWantgo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +172,21 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             LayoutInflater inflater = LayoutInflater.from(this);
             view = inflater.inflate(R.layout.item_topic_detail, null);
 //            tvTitle.setText(topic.getTitle());
+            tvWantgo = (TextView) view.findViewById(R.id.tv_wantgo);
+            ivGender = (ImageView) view.findViewById(R.id.iv_gender);
+            tvAge = (TextView) view.findViewById(R.id.tv_age);
+            tvEmotion = (TextView) view.findViewById(R.id.tv_emotion);
             tvTipComment = (TextView) view.findViewById(R.id.tv_tip_comment);
+            tvAge.setText(topic.getAge() + "岁");
+            if (StringUtil.isBlank(topic.getEmotion())){
+                tvEmotion.setVisibility(View.GONE);
+            }
+            tvEmotion.setText(topic.getEmotion());
+            ivGender.setBackgroundResource(R.drawable.mine_girl);
+            if ("男".equals(topic.getGender())){
+                ivGender.setBackgroundResource(R.drawable.mine_boy);
+            }
+            tvWantgo.setText("想去 "+topic.getWantgo());
             ((TextView) view.findViewById(R.id.tv_nickname)).setText(topic.getNickname());
             UrlImageViewHelper.setUrlDrawable((CircleImageView) view.findViewById(R.id.iv_head_photo),
                     topic.getHead_url() + "100x100",
@@ -416,7 +432,21 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     /*tvTitle.setText(topic.getTitle());*/
                     LayoutInflater inflater = LayoutInflater.from(BBSTopicDetailActivity.this);
                     view = inflater.inflate(R.layout.item_topic_detail, null);
+                    ivGender = (ImageView) view.findViewById(R.id.iv_gender);
+                    tvAge = (TextView) view.findViewById(R.id.tv_age);
+                    tvEmotion = (TextView) view.findViewById(R.id.tv_emotion);
+                    tvWantgo = (TextView) view.findViewById(R.id.tv_wantgo);
                     tvTipComment = (TextView) view.findViewById(R.id.tv_tip_comment);
+                    tvAge.setText(topic.getAge() + "岁");
+                    if (StringUtil.isBlank(topic.getEmotion())){
+                        tvEmotion.setVisibility(View.GONE);
+                    }
+                    tvEmotion.setText(topic.getEmotion());
+                    ivGender.setBackgroundResource(R.drawable.mine_girl);
+                    if ("男".equals(topic.getGender())){
+                        ivGender.setBackgroundResource(R.drawable.mine_boy);
+                    }
+                    tvWantgo.setText("想去 "+topic.getWantgo());
                     ((TextView) view.findViewById(R.id.tv_nickname)).setText(topic.getNickname());
                     UrlImageViewHelper.setUrlDrawable((CircleImageView) view.findViewById(R.id.iv_head_photo),
                             topic.getHead_url() + "100x100",

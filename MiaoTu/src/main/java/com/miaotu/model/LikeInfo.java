@@ -16,6 +16,8 @@ public class LikeInfo implements Serializable{
     private String headurl;
     @JsonProperty("IsLiked")
     private String isliked;
+    @JsonProperty("Lid")
+    private String lid;
 
     public String getUid() {
         return uid;
@@ -47,5 +49,13 @@ public class LikeInfo implements Serializable{
 
     public void setIsliked(String isliked) {
         this.isliked = isliked;
+    }
+
+    public String getLid() {
+        return lid;
+    }
+
+    public void setLid(String lid) {
+        this.lid = lid;
     }
 }

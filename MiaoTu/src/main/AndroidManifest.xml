@@ -596,6 +596,10 @@
             android:name=".activity.SignNoticeActivity"
             android:label="@string/title_activity_sign_notice" >
         </activity>
+        <activity
+            android:name=".activity.PhoneAddressActivity"
+            android:label="@string/title_activity_phone_address" >
+        </activity>
     </application>
 
 </manifest>

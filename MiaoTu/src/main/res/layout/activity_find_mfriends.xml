@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
@@ -127,34 +128,33 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cbcbcb" />
-
             <LinearLayout
+                android:id="@+id/ll_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#f0f0f0"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp">
+                android:visibility="visible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cbcbcb" />
 
                 <TextView
+                    android:id="@+id/tv_friend_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:text="您有2个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界"
                     android:textColor="#787878"
                     android:textSize="12sp" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cbcbcb" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_friends"
@@ -163,23 +163,23 @@
                 android:layout_marginLeft="20dp"
                 android:background="@color/white" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cbcbcb" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#f0f0f0"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp">
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cbcbcb" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:text="推荐关注"
                     android:textColor="#787878"
                     android:textSize="12sp" />
@@ -189,6 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/bg_hottag"
                     android:padding="3dp"
@@ -198,17 +199,17 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cbcbcb" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_recommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:background="@color/white" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#cbcbcb" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
