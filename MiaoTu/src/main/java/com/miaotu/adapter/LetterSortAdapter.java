@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -46,22 +47,34 @@ public class LetterSortAdapter extends BaseAdapter implements SectionIndexer {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = null;
         if (view == null){
+            holder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_phoneaddress, null);
             holder.tvName = (TextView) view.findViewById(R.id.tv_name);
             holder.tvNumber = (TextView) view.findViewById(R.id.tv_number);
             holder.cbBox = (CheckBox) view.findViewById(R.id.cb_add);
+            holder.tvLetter = (TextView) view.findViewById(R.id.tv_letter);
+            holder.llLetter = (LinearLayout) view.findViewById(R.id.ll_letter);
             view.setTag(holder);
         }else {
             holder = (ViewHolder) view.getTag();
         }
         holder.tvNumber.setText(addressList.get(i).getNumber());
         holder.tvName.setText(addressList.get(i).getName());
+        //根据position获取分类的首字母的char ascii值
+        int section = getSectionForPosition(i);
+        //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+        if(i == getPositionForSection(section)){
+            holder.llLetter.setVisibility(View.VISIBLE);
+            holder.tvLetter.setText(addressList.get(i).getSortLetters());
+        }else{
+            holder.llLetter.setVisibility(View.GONE);
+        }
         return view;
     }
 
     @Override
     public Object[] getSections() {
-        return new Object[0];
+        return null;
     }
 
     /**
@@ -90,5 +103,7 @@ public class LetterSortAdapter extends BaseAdapter implements SectionIndexer {
         TextView tvName;
         TextView tvNumber;
         CheckBox cbBox;
+        TextView tvLetter;
+        LinearLayout llLetter;
     }
 }

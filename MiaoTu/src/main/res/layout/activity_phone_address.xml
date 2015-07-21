@@ -6,8 +6,10 @@
     <include layout="@layout/top_bar"/>
 
     <ListView
+        android:id="@+id/lv_address"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
     </ListView>
 
 </LinearLayout>

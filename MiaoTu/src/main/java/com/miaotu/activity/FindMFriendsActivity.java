@@ -2,6 +2,7 @@ package com.miaotu.activity;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -129,6 +130,12 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_left:
                 finish();
+                break;
+            case R.id.ll_address:
+                Intent addressIntent = new Intent();
+                addressIntent.setClass(FindMFriendsActivity.this,
+                        PhoneAddressActivity.class);
+                startActivity(addressIntent);
                 break;
         }
     }
