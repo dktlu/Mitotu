@@ -1,13 +1,19 @@
 package com.miaotu.activity;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
@@ -22,6 +28,7 @@ import com.miaotu.util.PinyinComparator;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class PhoneAddressActivity extends BaseActivity implements View.OnClickListener{
@@ -36,6 +43,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     private static final String[] PHONES_PROJECTION = new String[]{
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
             ContactsContract.CommonDataKinds.Phone.NUMBER};
+    private List<String> numbers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +69,13 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     private void initData(){
         tvTitle.setText("手机通讯录朋友");
         tvRight.setText("邀请");
+        numbers = new ArrayList<>();
         phoneAddressList = new ArrayList<>();
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
         getPhoneContacts();
         filledData(phoneAddressList);
-        lvAddress.setAdapter(new LetterSortAdapter(this, phoneAddressList));
+        lvAddress.setAdapter(new LetterSortAdapter(this, phoneAddressList, numbers));
     }
 
     @Override
@@ -76,7 +85,24 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_right:
-                showToastMsg("该功能还没开发");
+                String sms_content = "你好";
+                if(numbers.size() < 1) {
+                    showToastMsg("没有选择联系人");
+                } else {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    for (String number:numbers){
+                        if(sms_content.length() > 70) {
+                            List<String> contents = smsManager.divideMessage(sms_content);
+                            for(String sms : contents) {
+                                smsManager.sendTextMessage(number, null, sms, null, null);
+                            }
+                        } else {
+                            smsManager.sendTextMessage(number, null, sms_content, null, null);
+                        }
+                        break;
+                    }
+                    showToastMsg("发送完毕");
+                }
                 break;
         }
     }
@@ -111,7 +137,8 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
         ContentResolver resolver = this.getContentResolver();
 
         // 获取手机联系人
-        Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PHONES_PROJECTION, null, null, null);
+        Cursor phoneCursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                PHONES_PROJECTION, null, null, null);
 
         if (phoneCursor != null) {
             while (phoneCursor.moveToNext()) {

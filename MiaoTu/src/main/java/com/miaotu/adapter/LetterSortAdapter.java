@@ -7,13 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miaotu.R;
 import com.miaotu.model.NativePhoneAddress;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -23,9 +26,12 @@ public class LetterSortAdapter extends BaseAdapter implements SectionIndexer {
 
     private List<NativePhoneAddress> addressList;
     private Context mContext;
-    public LetterSortAdapter(Context mContext, List<NativePhoneAddress> addressList){
-        this.addressList = addressList;
+    private List<String> numbers;
+    public LetterSortAdapter(Context mContext, List<NativePhoneAddress> addressList,
+                             List<String> numbers){
         this.mContext = mContext;
+        this.addressList = addressList;
+        this.numbers = numbers;
     }
 
     @Override
@@ -60,6 +66,24 @@ public class LetterSortAdapter extends BaseAdapter implements SectionIndexer {
         }
         holder.tvNumber.setText(addressList.get(i).getNumber());
         holder.tvName.setText(addressList.get(i).getName());
+        holder.cbBox.setTag(i);
+        if (addressList.get(i).isSelected() == true){
+            holder.cbBox.setChecked(true);
+        }else {
+            holder.cbBox.setChecked(false);
+        }
+        holder.cbBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    addressList.get((Integer) compoundButton.getTag()).setIsSelected(true);
+                    numbers.add(addressList.get((Integer) compoundButton.getTag()).getNumber());
+                }else {
+                    addressList.get((Integer) compoundButton.getTag()).setIsSelected(false);
+                    numbers.remove(addressList.get((Integer) compoundButton.getTag()).getNumber());
+                }
+            }
+        });
         //根据position获取分类的首字母的char ascii值
         int section = getSectionForPosition(i);
         //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现

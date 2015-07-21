@@ -8,6 +8,7 @@ public class NativePhoneAddress {
     private String name;
     private String number;
     private String sortLetters;
+    private boolean isSelected;
 
     public String getName() {
         return name;
@@ -32,5 +33,14 @@ public class NativePhoneAddress {
     public void setSortLetters(String sortLetters) {
         this.sortLetters = sortLetters;
     }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
 }
 
