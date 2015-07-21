@@ -101,14 +101,22 @@ public class TopiclistAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_like);
             holder.tvComment = (TextView) convertView
                     .findViewById(R.id.tv_comment);
-            holder.tvTopDate = (TextView) convertView
-                    .findViewById(R.id.tv_top_date);
+            holder.tvTime = (TextView) convertView
+                    .findViewById(R.id.tv_time);
             holder.ivLike = (ImageView) convertView
                     .findViewById(R.id.iv_like);
             holder.llComment = (LinearLayout) convertView
                     .findViewById(R.id.ll_comment);
             holder.llCount = (LinearLayout) convertView
                     .findViewById(R.id.ll_count);
+            holder.ivGender = (ImageView) convertView
+                    .findViewById(R.id.iv_gender);
+            holder.tvAge = (TextView) convertView
+                    .findViewById(R.id.tv_age);
+            holder.tvEmotion = (TextView) convertView
+                    .findViewById(R.id.tv_emotion);
+            holder.tvWantgo = (TextView) convertView
+                    .findViewById(R.id.tv_wantgo);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -136,7 +144,7 @@ public class TopiclistAdapter extends BaseAdapter {
 //        holder.tvTitle.setText(mList.get(position).getTitle());
         holder.tvContent.setText(mList.get(position).getContent());
         try {
-            holder.tvTopDate.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(mList.get(position).getCreated())));
+            holder.tvTime.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(mList.get(position).getCreated())));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -225,8 +233,23 @@ public class TopiclistAdapter extends BaseAdapter {
         }
         holder.tvLike.setText("喜欢 " + mList.get(position).getStatelikecount() + "人");
         holder.tvComment.setText("评论 " + mList.get(position).getStatereplycount());
+        holder.tvAge.setText(mList.get(position).getAge() + "岁");
+        if (StringUtil.isBlank(mList.get(position).getAge())){
+            holder.tvAge.setText("0岁");
+        }
+        holder.ivGender.setBackgroundResource(R.drawable.mine_girl);
+        if ("男".equals(mList.get(position).getGender())){
+            holder.ivGender.setBackgroundResource(R.drawable.mine_boy);
+        }
+        holder.tvEmotion.setText(mList.get(position).getEmotion());
+        holder.tvEmotion.setVisibility(View.VISIBLE);
+        if (StringUtil.isBlank(mList.get(position).getEmotion())){
+            holder.tvEmotion.setVisibility(View.GONE);
+        }
+        holder.tvWantgo.setText("想去 "+mList.get(position).getWantgo());
         //true 显示我的/ta的动态, false 显示妙友
         if (flag) {
+            holder.tvTime.setVisibility(View.GONE);
             holder.tvDistance.setVisibility(View.GONE);
             holder.ivLike.setVisibility(View.GONE);
             holder.llComment.setVisibility(View.GONE);
@@ -244,12 +267,16 @@ public class TopiclistAdapter extends BaseAdapter {
         private LinearLayout layoutPhotos = null;
         private TextView tvMovementName = null;
         private TextView tvDistance = null;
+        private TextView tvTime = null;
         private TextView tvLike = null;
         private TextView tvComment = null;
-        private TextView tvTopDate;
         private LinearLayout llComment;
         private LinearLayout llCount;
         private ImageView ivLike;
+        private ImageView ivGender;
+        private TextView tvAge;
+        private TextView tvEmotion;
+        private TextView tvWantgo;
     }
 
 

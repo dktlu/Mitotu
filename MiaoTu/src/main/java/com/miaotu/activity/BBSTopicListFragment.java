@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.adapter.TopiclistAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
@@ -28,6 +29,7 @@ import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.jpush.MessageCountDatabaseHelper;
 import com.miaotu.form.MFriendsInfo;
 import com.miaotu.model.LikeInfo;
+import com.miaotu.model.Recommend;
 import com.miaotu.model.Topic;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.TopicListResult;
@@ -56,11 +58,16 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
     private RadioButton tab1,tab2;
     private boolean isClick;
     private String tempTitle = "nearby";//区分最热和身旁
+    private LinearLayout llMore;
+    private ImageView ivHeadPhoto,ivAdd;
+    private TextView tvName,tvPs;
+    private View topView;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.activity_bbs_topic_list,
                 container, false);
         layoutMore = inflater.inflate(R.layout.pull_to_refresh_more,null);
+        topView = inflater.inflate(R.layout.header_more, null);
         findView();
         bindView();
         init();
@@ -68,6 +75,11 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void findView() {
+        tvName = (TextView) topView.findViewById(R.id.tv_name);
+        tvPs = (TextView) topView.findViewById(R.id.tv_ps);
+        ivAdd = (ImageView) topView.findViewById(R.id.iv_add);
+        ivHeadPhoto = (ImageView) topView.findViewById(R.id.iv_head_photo);
+        llMore = (LinearLayout) topView.findViewById(R.id.ll_more);
         ivDot = (ImageView) root.findViewById(R.id.iv_dot);
         ivPublish = (ImageView) root.findViewById(R.id.iv_publish);
         btnLeft = (Button) root.findViewById(R.id.btn_left);
@@ -91,7 +103,11 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 // Update the LastUpdatedLabel
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-                getTopics(false, info);
+                boolean isMore = false;
+                if ("nearby".equals(tempTitle)){
+                    isMore = true;
+                }
+                getTopics(false, info, isMore);
 
             }
 
@@ -135,7 +151,6 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void init() {
-
         if(readPreference("topic_comment").equals("1")){
             ivDot.setVisibility(View.VISIBLE);
         }else {
@@ -174,12 +189,12 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 tab1.setChecked(true);
                 tab1.setText("身旁");
                 info.setType("nearby");
-                getTopics(true, info);
+                getTopics(true, info, true);
             }
         });
         lvTopics.setEmptyView(emptyview);
 
-        getTopics(true, info);
+        getTopics(true, info, true);
     }
     //刷新左上角提示
     public void refreshMessage(){
@@ -192,7 +207,11 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
     //刷新社区页面
     private void refresh(){
         try{
-            getTopics(false, info);
+            boolean isMore = false;
+            if ("nearby".equals(tempTitle)){
+                isMore = true;
+            }
+            getTopics(false, info, isMore);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -215,7 +234,7 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
      * @param isShow
      * @param info
      */
-    private void getTopics(boolean isShow, final MFriendsInfo info) {
+    private void getTopics(boolean isShow, final MFriendsInfo info, final boolean isMore) {
         new BaseHttpAsyncTask<Void, Void, TopicListResult>(getActivity(), isShow) {
             @Override
             protected void onCompleteTask(TopicListResult result) {
@@ -234,6 +253,22 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
 //                    showToastMsg("lastvisibale:"+lvTopics.getRefreshableView().getLastVisiblePosition()+"  count: "+lvTopics.getRefreshableView().getCount()+" first:"+lvTopics.getRefreshableView().getFirstVisiblePosition());
                     if(lvTopics.getRefreshableView().getFooterViewsCount()==1&&topicList.size()==PAGECOUNT){
                         lvTopics.getRefreshableView().addFooterView(layoutMore);
+                    }
+                    if (isMore){
+                        if (lvTopics.getRefreshableView().getHeaderViewsCount() == 1){
+                            lvTopics.getRefreshableView().addHeaderView(topView);
+                        }
+                        if (result.getRecommends() != null && result.getRecommends().size() > 0){
+                            //刷新更多妙友
+                            llMore.setVisibility(View.VISIBLE);
+                            refreshMoreView(result.getRecommends());
+                        }else {
+                            llMore.setVisibility(View.GONE);
+                        }
+                    }else {
+                        if (lvTopics.getRefreshableView().getHeaderViewsCount() > 1){
+                            lvTopics.getRefreshableView().removeHeaderView(topView);
+                        }
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
@@ -323,15 +358,15 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 if (isClick){
                     tab1.setChecked(true);
                     info.setType(tempTitle);
-                    getTopics(true, info);
+                    getTopics(true, info, true);
                 }else {
                     showPopWindow(this.getActivity(), tab1);
                 }
                 isClick = false;
                 break;
-            case R.id.tab2:
+            case R.id.tab2: //好友
                 info.setType("like");
-                getTopics(true, info);
+                getTopics(true, info , false);
                 isClick =  true;
                 if (lvTopics.getRefreshableView().getFooterViewsCount()>1){
                     lvTopics.getRefreshableView().removeFooterView(layoutMore);
@@ -388,7 +423,7 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 tempTitle = "nearby";
                 tab1.setText("身旁");
                 info.setType(tempTitle);
-                getTopics(true, info);
+                getTopics(true, info, true);
                 popWindow.dismiss();
             }
         });
@@ -403,7 +438,7 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 if (lvTopics.getRefreshableView().getFooterViewsCount()>1){
                     lvTopics.getRefreshableView().removeFooterView(layoutMore);
                 }
-                getTopics(true, info);
+                getTopics(true, info, false);
                 popWindow.dismiss();
             }
         });
@@ -411,6 +446,15 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
         popWindow.setFocusable(true);
         popWindow.setOutsideTouchable(true);
         popWindow.showAsDropDown(parent);
+    }
+
+    //刷新更多妙友
+    private void refreshMoreView(List< Recommend> recommends){
+        if (recommends.size() > 1){
+            UrlImageViewHelper.setUrlDrawable(ivHeadPhoto, recommends.get(0).getHeadurl());
+            tvName.setText(recommends.get(0).getNickname());
+            tvPs.setText(recommends.get(0).getContent());
+        }
     }
 
 }

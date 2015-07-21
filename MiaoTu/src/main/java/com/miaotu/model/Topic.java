@@ -45,6 +45,10 @@ public class Topic implements Serializable {
     private String age;
     @JsonProperty("Gender")
     private String Gender;
+    @JsonProperty("MaritalStatus")
+    private String emotion;
+    @JsonProperty("WantGo")
+    private String wantgo;
     @JsonProperty("IsLike")
     private String islike;
     @JsonProperty("PicList")
@@ -228,5 +232,21 @@ public class Topic implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getEmotion() {
+        return emotion;
+    }
+
+    public void setEmotion(String emotion) {
+        this.emotion = emotion;
+    }
+
+    public String getWantgo() {
+        return wantgo;
+    }
+
+    public void setWantgo(String wantgo) {
+        this.wantgo = wantgo;
     }
 }

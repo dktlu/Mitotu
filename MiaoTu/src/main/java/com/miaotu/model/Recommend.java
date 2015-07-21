@@ -15,6 +15,8 @@ public class Recommend {
     private String headurl;
     @JsonProperty("Content")
     private String content;
+    @JsonProperty("Gender")
+    private String gender;
 
     public String getPhone() {
         return phone;
@@ -46,5 +48,13 @@ public class Recommend {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
