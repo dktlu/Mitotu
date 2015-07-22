@@ -9,8 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miaotu.R;
+import com.miaotu.activity.BaseActivity;
+import com.miaotu.async.BaseHttpAsyncTask;
+import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.Address;
 import com.miaotu.model.Recommend;
+import com.miaotu.result.BaseResult;
+import com.miaotu.result.LikeResult;
+import com.miaotu.util.StringUtil;
 
 import java.util.List;
 
@@ -44,7 +50,7 @@ public class RecommendListAdapter extends
         viewHolder.ivControl.setTag(i);
         viewHolder.ivControl.setOnClickListener(this);
         viewHolder.tvName.setText(recommendList.get(i).getNickname());
-        viewHolder.tvPs.setText("手机联系人："+recommendList.get(i).getNickname()+"正在使用妙途");
+        viewHolder.tvPs.setText("手机联系人：" + recommendList.get(i).getNickname() + "正在使用妙途");
     }
 
     @Override
@@ -56,7 +62,8 @@ public class RecommendListAdapter extends
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.iv_control:
-
+                like(((BaseActivity)mContext).readPreference("token"),
+                        recommendList.get((int) view.getTag()).getUid(), (ImageView) view);
                 break;
         }
     }
@@ -72,5 +79,45 @@ public class RecommendListAdapter extends
             tvName = (TextView) itemView.findViewById(R.id.tv_name);
             tvPs = (TextView) itemView.findViewById(R.id.tv_ps);
         }
+    }
+
+    private void like(final String token, final String touid, final ImageView view){
+        new BaseHttpAsyncTask<Void, Void, LikeResult>(((BaseActivity)mContext)){
+
+            @Override
+            protected void onCompleteTask(LikeResult result) {
+                if (result.getCode() == BaseResult.SUCCESS){
+                    int count = 0;
+
+                    if (!StringUtil.isBlank(((BaseActivity)mContext).readPreference("followcount"))){
+                        count = Integer.parseInt(((BaseActivity)mContext).readPreference("followcount"));
+                    }
+                    if ("0".equals(result.getLikeInfo().getLid())){
+                        view.setBackgroundResource(R.drawable.icon_add);
+                        count-=1;
+                        if (count < 0){
+                            count = 0;
+                        }
+                        ((BaseActivity)mContext).showToastMsg("取消喜欢成功");
+                    }else {
+                        view.setBackgroundResource(R.drawable.icon_minus);
+                        count+=1;
+                        ((BaseActivity)mContext).showToastMsg("喜欢成功");
+                    }
+                    ((BaseActivity)mContext).writePreference("followcount", count + "");
+                }else {
+                    if (StringUtil.isBlank(result.getMsg())){
+                        ((BaseActivity)mContext).showToastMsg("添加好友失败");
+                    }else {
+                        ((BaseActivity)mContext).showToastMsg(result.getMsg());
+                    }
+                }
+            }
+
+            @Override
+            protected LikeResult run(Void... params) {
+                return HttpRequestUtil.getInstance().likeforparam(token, touid);
+            }
+        }.execute();
     }
 }

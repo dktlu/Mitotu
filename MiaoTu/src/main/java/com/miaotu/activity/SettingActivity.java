@@ -19,6 +19,11 @@ import cn.sharesdk.wechat.friends.Wechat;
 import com.easemob.chat.EMChatManager;
 import com.miaotu.R;
 import com.miaotu.receiver.JPushReceiver;
+import com.miaotu.util.LogUtil;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 /**
  * @author zhanglei
@@ -161,6 +166,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 writePreference("budget","");
                 writePreference("home","");
                 writePreference("lifearea","");
+                writePreference("logintype", "");
                 JPushInterface.stopPush(SettingActivity.this);
                 // XmppConnection.getInstance().closeConnection();
                 setResult(1);
@@ -195,7 +201,27 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.ll_check:
-
+                UmengUpdateAgent.setUpdateAutoPopup(false);
+                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+                    @Override
+                    public void onUpdateReturned(int updateStatus,UpdateResponse updateInfo) {
+                        switch (updateStatus) {
+                            case UpdateStatus.Yes: // has update
+                                UmengUpdateAgent.showUpdateDialog(SettingActivity.this, updateInfo);
+                                break;
+                            case UpdateStatus.No: // has no update
+                                showToastMsg("没有更新");
+                                break;
+                            case UpdateStatus.NoneWifi: // none wifi
+                                showToastMsg("没有wifi连接， 只在wifi下更新");
+                                break;
+                            case UpdateStatus.Timeout: // time out
+                                showToastMsg("超时");
+                                break;
+                        }
+                    }
+                });
+                UmengUpdateAgent.update(this);
                 break;
         }
 

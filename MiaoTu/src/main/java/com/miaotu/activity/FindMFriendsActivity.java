@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miaotu.R;
 import com.miaotu.adapter.ContactListAdapter;
@@ -30,12 +31,21 @@ import com.miaotu.model.Recommend;
 import com.miaotu.result.AddressListResult;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.RecommendListResult;
+import com.miaotu.result.WeiboResult;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
 
 public class FindMFriendsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -98,7 +108,6 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
 
     private void initData() {
         tvTitle.setText("寻找妙友");
-        getPhoneContacts();
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();
         contactsadapter = new ContactListAdapter(this, contactlist);
@@ -107,17 +116,31 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvFriends.setLayoutManager(linearLayoutManager);
         rvFriends.setAdapter(contactsadapter);
-        rvRecommend.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rvRecommend.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvRecommend.setAdapter(recommendadapter);
-        if (mContactsNumber.size() > 1){
-            String phones = "";
-            for (String phone:mContactsNumber){
-                phones+=phone+",";
-            }
-            matchPhoneList(phones.substring(0, phones.length() - 1));
-        }else {
-            showToastMsg("手机没有通讯录");
+        if ("qq".equals(readPreference("logintype"))){
             llFriend.setVisibility(View.GONE);
+            rvFriends.setVisibility(View.GONE);
+        }else if("wx".equals(readPreference("logintype"))) {
+            llFriend.setVisibility(View.GONE);
+            rvFriends.setVisibility(View.GONE);
+        }else if ("weibo".equals(readPreference("logintype"))){
+            llFriend.setVisibility(View.GONE);
+            rvFriends.setVisibility(View.GONE);
+        }else {
+            llFriend.setVisibility(View.VISIBLE);
+            rvFriends.setVisibility(View.VISIBLE);
+            getPhoneContacts();
+            if (mContactsNumber.size() > 1){
+                String phones = "";
+                for (String phone:mContactsNumber){
+                    phones+=phone+",";
+                }
+                matchPhoneList(phones.substring(0, phones.length() - 1));
+            }else {
+                showToastMsg("手机没有通讯录");
+                llFriend.setVisibility(View.GONE);
+            }
         }
         getRecommendList();
     }
@@ -136,6 +159,38 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 addressIntent.setClass(FindMFriendsActivity.this,
                         PhoneAddressActivity.class);
                 startActivity(addressIntent);
+                break;
+            case R.id.ll_weibo:
+                getFollowList(readPreference("weibo_token"),
+                        readPreference("weibo_id"),readPreference("weibo_name"));
+                break;
+            case R.id.ll_wx:
+                ShareSDK.initSDK(this);
+                Wechat.ShareParams wcsp = new Wechat.ShareParams();
+                String headurl = "";
+                if (StringUtil.isBlank(headurl)) {
+                    wcsp.setShareType(Platform.SHARE_TEXT);
+                } else {
+//                    wcsp.setShareType(Platform.SHARE_WEBPAGE);
+//                    wcsp.setImageUrl(headurl + "200x200");
+//                    wcsp.setUrl("http://m.miaotu.com/ShareLine/?yid=" + yid);
+                }
+                wcsp.setTitle("妙途");
+                wcsp.setText("妙途" + "\n http://m.miaotu.com/");
+                Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+                wechat.setPlatformActionListener(new PlatFormListener());
+                wechat.share(wcsp);
+                break;
+            case R.id.ll_qq:
+                ShareSDK.initSDK(this);
+                QQ.ShareParams qqsp = new QQ.ShareParams();
+                qqsp.setTitle("妙途");
+                qqsp.setTitleUrl("http://m.miaotu.com/");
+                qqsp.setText("http://m.miaotu.com/");
+//                qqsp.setImageUrl("");
+                Platform qq = ShareSDK.getPlatform(QQ.NAME);
+                qq.setPlatformActionListener(new PlatFormListener());
+                qq.share(qqsp);
                 break;
         }
     }
@@ -265,5 +320,38 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 return HttpRequestUtil.getInstance().getRecommendList(readPreference("token"));
             }
         }.execute();
+    }
+
+    private void getFollowList(final String access_token, final String uid, final String screen_name){
+        new BaseHttpAsyncTask<Void, Void, WeiboResult>(this, true){
+
+            @Override
+            protected void onCompleteTask(WeiboResult weiboResult) {
+                Log.e("ERROR", "总数/"+weiboResult.getTotal_number());
+                showToastMsg("总数/"+weiboResult.getTotal_number(), Toast.LENGTH_LONG);
+            }
+
+            @Override
+            protected WeiboResult run(Void... params) {
+                return HttpRequestUtil.getInstance().getWeiboList(access_token, uid, screen_name);
+            }
+        }.execute();
+    }
+
+    private class PlatFormListener implements PlatformActionListener {
+        @Override
+        public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+            showToastMsg("发送完成");
+        }
+
+        @Override
+        public void onError(Platform platform, int i, Throwable throwable) {
+            showToastMsg("发送失败");
+        }
+
+        @Override
+        public void onCancel(Platform platform, int i) {
+            showToastMsg("取消发送");
+        }
     }
 }

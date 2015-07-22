@@ -353,6 +353,9 @@ private void init(){
             platDB.getUserIcon();
             platDB.getUserId();
             platDB.getUserName();
+            writePreference("weibo_token,", platDB.getToken());
+            writePreference("weibo_id", platDB.getUserId());
+            writePreference("weibo_name", platDB.getUserName());
             LogUtil.d("微博信息    " + platDB.getToken() + "," + platDB.getUserGender() + "," + platDB.getUserIcon()
                     + "," + platDB.getUserId() + "," + platDB.getUserName());
             final RegisterInfo registerInfo = new RegisterInfo();

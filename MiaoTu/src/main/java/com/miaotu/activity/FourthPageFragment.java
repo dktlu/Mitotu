@@ -125,29 +125,36 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
             showToastMsg("当前未联网，请检查网络设置");
             return;
         }
-        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.rl_userinfo:
+                Intent intent = new Intent();
                 intent.setClass(FourthPageFragment.this.getActivity(),
                         EditUserInfoActivity.class);
+                startActivityForResult(intent, 1001);
                 break;
             case R.id.rl_homepage:
                 if(!Util.isNetworkConnected(FourthPageFragment.this.getActivity())) {
                     showToastMsg("当前未联网，请检查网络设置");
                     return;
                 }
+                Intent homepageIntent = new Intent();
                 String uid = readPreference("uid");
-                intent.putExtra("uid", uid);
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                homepageIntent.putExtra("uid", uid);
+                homepageIntent.setClass(FourthPageFragment.this.getActivity(),
                         PersonCenterActivity.class);
+                startActivityForResult(homepageIntent, 1001);
                 break;
             case R.id.rl_setting:
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent settingIntent = new Intent();
+                settingIntent.setClass(FourthPageFragment.this.getActivity(),
                         SettingActivity.class);
+                startActivityForResult(settingIntent, 1001);
                 break;
             case R.id.rl_hongbao:
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent hongbaoIntent = new Intent();
+                hongbaoIntent.setClass(FourthPageFragment.this.getActivity(),
                         RedPackageActivity.class);
+                startActivityForResult(hongbaoIntent, 1001);
                 break;
             case R.id.rl_order:
                 showToastMsg("还没开发");
@@ -156,27 +163,34 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                 showToastMsg("还没开发");
                 return;
             case R.id.rl_recommend: //应用推荐
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent recommendIntent = new Intent();
+                recommendIntent.setClass(FourthPageFragment.this.getActivity(),
                         AppRecommendActivity.class);
+                startActivityForResult(recommendIntent, 1001);
                 break;
             case R.id.ll_fans:
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent fansIntent = new Intent();
+                fansIntent.setClass(FourthPageFragment.this.getActivity(),
                         MyLikeAndFansActivity.class);
-                intent.putExtra("flag", 1);
+                fansIntent.putExtra("flag", 1);
+                startActivityForResult(fansIntent, 1001);
                 break;
             case R.id.ll_follow:
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent followIntent = new Intent();
+                followIntent.setClass(FourthPageFragment.this.getActivity(),
                         MyLikeAndFansActivity.class);
-                intent.putExtra("flag", 0);
+                followIntent.putExtra("flag", 0);
+                startActivityForResult(followIntent, 1001);
                 break;
             case R.id.ll_search:
-                intent.setClass(FourthPageFragment.this.getActivity(),
+                Intent searchIntent = new Intent();
+                searchIntent.setClass(FourthPageFragment.this.getActivity(),
                         FindMFriendsActivity.class);
+                startActivityForResult(searchIntent, 1);
                 break;
             default:
                 break;
         }
-        startActivityForResult(intent, 1001);
     }
 
     /**

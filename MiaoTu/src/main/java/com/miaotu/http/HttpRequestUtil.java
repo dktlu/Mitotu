@@ -56,6 +56,7 @@ import com.miaotu.result.TopicCommentsListResult;
 import com.miaotu.result.TopicListResult;
 import com.miaotu.result.TopicMessageListResult;
 import com.miaotu.result.TopicResult;
+import com.miaotu.result.WeiboResult;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
@@ -1453,5 +1454,25 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("token", token));
         return HttpDecoder.getForObject(getUrl("user/recommend"),
                 RecommendListResult.class, params);
+    }
+
+    /**
+     * 获取微博关注列表
+     * @param access_token
+     * @param uid
+     * @param screen_name
+     * @return
+     */
+    public WeiboResult getWeiboList(String access_token,String uid,String screen_name){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("source", "3551653898"));
+//        params.add(new BasicNameValuePair("access_token", access_token));
+        params.add(new BasicNameValuePair("uid", uid));
+        params.add(new BasicNameValuePair("screen_name", screen_name));
+        params.add(new BasicNameValuePair("count", "200"));
+        params.add(new BasicNameValuePair("cursor", "0"));
+        params.add(new BasicNameValuePair("trim_status", "0"));
+        return HttpDecoder.getForObject("https://api.weibo.com/2/friendships/friends.json",
+                WeiboResult.class, params);
     }
 }
