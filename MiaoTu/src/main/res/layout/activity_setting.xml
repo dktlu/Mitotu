@@ -92,6 +92,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_settingcomment" />
 
             <TextView
@@ -102,6 +103,58 @@
                 android:textColor="#646464"
                 android:textSize="14sp"
                 android:text="去评分" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_go" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:src="@color/line_grey" />
+
+    <LinearLayout
+        android:id="@+id/ll_check"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                android:src="@drawable/icon_settingcomment" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:textColor="#646464"
+                android:textSize="14sp"
+                android:text="检查更新" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,6 +204,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_settingmsg" />
 
             <TextView
@@ -201,6 +255,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_blacklist" />
 
             <TextView
@@ -231,10 +286,6 @@
         android:layout_height="1px"
         android:src="@color/line_grey" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <LinearLayout
         android:id="@+id/layout_introduce"
         android:layout_width="match_parent"
@@ -255,6 +306,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_introduce" />
 
             <TextView
@@ -264,7 +316,7 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#646464"
                 android:textSize="14sp"
-                android:text="妙途3.0介绍" />
+                android:text="红包玩法" />
         </LinearLayout>
 
         <LinearLayout
@@ -279,6 +331,15 @@
                 android:src="@drawable/icon_go" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:src="@color/line_grey" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -305,6 +366,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_call" />
 
             <TextView
@@ -359,6 +421,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 android:src="@drawable/icon_help" />
 
             <TextView

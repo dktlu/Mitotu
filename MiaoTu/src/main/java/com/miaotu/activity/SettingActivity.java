@@ -30,7 +30,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
     private TextView tvLeft, tvTitle;
     private LinearLayout layout_account_safe, layout_use_msg,
             layout_call, layout_introduce, layout_feedback,
-            layout_blacklist,ll_comment;
+            layout_blacklist,ll_comment,ll_check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
     private void findView() {
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        ll_check = (LinearLayout) findViewById(R.id.ll_check);
         layout_account_safe = (LinearLayout) findViewById(R.id.layout_account_safe);
         layout_use_msg = (LinearLayout) findViewById(R.id.layout_use_msg);
         layout_call = (LinearLayout) findViewById(R.id.layout_call);
@@ -75,6 +76,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
         layout_blacklist.setOnClickListener(this);
 		ll_comment.setOnClickListener(this);
         btnExit.setOnClickListener(this);
+        ll_check.setOnClickListener(this);
     }
 
     private void init() {
@@ -103,8 +105,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 Intent helpIntent = new Intent(this, AboutActivity.class);
                 this.startActivity(helpIntent);
                 break;
-            case R.id.layout_introduce:        //妙途3.0介绍
-                Intent aboutIntent = new Intent(this, IntroduceActivity.class);
+            case R.id.layout_introduce:        //妙途3.0介绍 改为红包玩法
+//                Intent aboutIntent = new Intent(this, IntroduceActivity.class);
+                Intent aboutIntent = new Intent(this, RedPackageIntroduceActivity.class);
                 this.startActivity(aboutIntent);
                 break;
             case R.id.layout_account_safe:      //账号与安全
@@ -152,6 +155,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 writePreference("emotion","");
                 writePreference("wantgo","");
                 writePreference("tags","");
+                writePreference("workarea","");
+                writePreference("school","");
+                writePreference("freetime","");
+                writePreference("budget","");
+                writePreference("home","");
+                writePreference("lifearea","");
                 JPushInterface.stopPush(SettingActivity.this);
                 // XmppConnection.getInstance().closeConnection();
                 setResult(1);
@@ -184,6 +193,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                break;
+            case R.id.ll_check:
+
                 break;
         }
 

@@ -286,6 +286,12 @@ private Button btnWechatRegister,btnOtherRegister,btnLogin;
                     writePreference("email", result.getLogin().getEmail());
                     writePreference("phone", result.getLogin().getPhone());
                     writePreference("login_status","in");
+                    writePreference("workarea",result.getLogin().getWorkarea());
+                    writePreference("school",result.getLogin().getSchool());
+                    writePreference("freetime",result.getLogin().getFreetime());
+                    writePreference("budget",result.getLogin().getBudget());
+                    writePreference("home",result.getLogin().getHome());
+                    writePreference("lifearea",result.getLogin().getLifearea());
                     EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
                             new EMCallBack() {//回调
                                 @Override
