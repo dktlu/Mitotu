@@ -375,6 +375,9 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                     tab1.setChecked(true);
                     info.setType(tempTitle);
                     getTopics(true, info, true);
+                    if (lvTopics.getRefreshableView().getFooterViewsCount() > 1) {
+                        lvTopics.getRefreshableView().removeFooterView(layoutMore);
+                    }
                 } else {
                     showPopWindow(this.getActivity(), tab1);
                 }
@@ -448,6 +451,9 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                 tempTitle = "nearby";
                 tab1.setText("身旁");
                 info.setType(tempTitle);
+                if (lvTopics.getRefreshableView().getFooterViewsCount() > 1) {
+                    lvTopics.getRefreshableView().removeFooterView(layoutMore);
+                }
                 getTopics(true, info, true);
                 popWindow.dismiss();
             }
