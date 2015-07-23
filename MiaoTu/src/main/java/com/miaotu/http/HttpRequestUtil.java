@@ -767,6 +767,8 @@ public class HttpRequestUtil {
     public BaseResult emptyTopicMessage(String token, String type) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("type", type));
+        params.add(new BasicNameValuePair("value", ""));
         return HttpDecoder.postForObject(
                 getUrl("user/msg/delete/"+type), BaseResult.class,
                 params);
@@ -1157,7 +1159,9 @@ public class HttpRequestUtil {
     public BaseResult delAllLikeRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/like"),
+        params.add(new BasicNameValuePair("type","user"));
+        params.add(new BasicNameValuePair("value","like"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/user"),
                 BaseResult.class, params);
     }
 
@@ -1169,19 +1173,23 @@ public class HttpRequestUtil {
     public BaseResult delAllLikeTogetherRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/yueyou_like"),
+        params.add(new BasicNameValuePair("type","like"));
+        params.add(new BasicNameValuePair("value","yueyou"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/like"),
                 BaseResult.class, params);
     }
 
     /**
-     * 清空关注提醒
+     * 清空评论秒旅团提醒
      * @param token
      * @return
      */
     public BaseResult delAllCommentCustomTourRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/activity_reply"),
+        params.add(new BasicNameValuePair("type","reply"));
+        params.add(new BasicNameValuePair("value","activity"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/reply"),
                 BaseResult.class, params);
     }
 
@@ -1193,18 +1201,22 @@ public class HttpRequestUtil {
     public BaseResult delAllCommentTogetherRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/yueyou_reply"),
+        params.add(new BasicNameValuePair("type","reply"));
+        params.add(new BasicNameValuePair("value","yueyou"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/reply"),
                 BaseResult.class, params);
     }
     /**
-     * 清空喜欢定制游提醒
+     * 清空喜欢秒旅团游提醒
      * @param token
      * @return
      */
     public BaseResult delAllLikeCustomRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/activity_like"),
+        params.add(new BasicNameValuePair("type","like"));
+        params.add(new BasicNameValuePair("value","activity"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/like"),
                 BaseResult.class, params);
     }
     /**
@@ -1215,7 +1227,9 @@ public class HttpRequestUtil {
     public BaseResult delAllJoinTogetherRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/yueyou_join"),
+        params.add(new BasicNameValuePair("type","join"));
+        params.add(new BasicNameValuePair("value","yueyou"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/join"),
                 BaseResult.class, params);
     }
     /**
@@ -1226,7 +1240,9 @@ public class HttpRequestUtil {
     public BaseResult delAllJoinCustomRemind(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        return HttpDecoder.postForObject(getUrl("user/msg/delete/activity_join"),
+        params.add(new BasicNameValuePair("type","join"));
+        params.add(new BasicNameValuePair("value","activity"));
+        return HttpDecoder.postForObject(getUrl("user/msg/delete/join"),
                 BaseResult.class, params);
     }
     /**
