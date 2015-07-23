@@ -1,6 +1,5 @@
 package com.miaotu.activity;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,10 +27,8 @@ import com.miaotu.adapter.TogetherlistAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.Banner;
-import com.miaotu.model.RegisterInfo;
 import com.miaotu.model.Together;
 import com.miaotu.result.BaseResult;
-import com.miaotu.result.LoginResult;
 import com.miaotu.result.TogetherResult;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.StringUtil;
@@ -52,7 +47,7 @@ private View root;
     private TogetherlistAdapter adapter;
     private List<Together> mList;
     private int page=1;
-    private final int PAGECOUNT = 12;
+    private final int PAGECOUNT = 5;
     private boolean isLoadMore = false;
     private View layoutMore;
     private GuideGallery gallery; // 自定义轮播控件
@@ -90,7 +85,6 @@ private View root;
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(getActivity(),
                         TogetherDetailActivity.class);
                 intent.putExtra("id", mList.get(position - 2).getId());
@@ -156,8 +150,6 @@ private View root;
                 super.handleMessage(msg);
             }
         };
-
-
     }
 //获取一起去
     private void getTogether(final boolean isShow) {
@@ -285,6 +277,13 @@ private View root;
                 if (result.getCode() == BaseResult.SUCCESS) {
                     if(result.getTogetherList()==null){
                         return;
+                    }
+                    if (result.getBannerList() != null && result.getBannerList().size() > 0){
+                        Together together = new Together();
+                        together.setExtend(result.getBannerList().get(0).getExtend());
+                        together.setPicurl(result.getBannerList().get(0).getPicUrl());
+                        together.setType(result.getBannerList().get(0).getType());
+                        mList.add(together);
                     }
                     mList.addAll(result.getTogetherList());
                     adapter.notifyDataSetChanged();

@@ -82,6 +82,9 @@ public class Together implements Serializable{
     private List<PersonInfo> joinList;
     @JsonProperty("ReplyList")
     private List<TogetherReply> replyList;
+    private String type;
+    private String picurl;
+    private String extend;
 
     public String getUid() {
         return uid;
@@ -369,5 +372,29 @@ public class Together implements Serializable{
 
     public void setWantgo(String wantgo) {
         this.wantgo = wantgo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
+    }
+
+    public String getExtend() {
+        return extend;
+    }
+
+    public void setExtend(String extend) {
+        this.extend = extend;
     }
 }
