@@ -12,6 +12,8 @@ public class RemindLikeTogether {
     private String created;
     @JsonProperty("Content")
     private RemindLikeTogetherInfo remindLikeTogetherInfo;
+    @JsonProperty("Status")
+    private String status;
 
     public String getId() {
         return id;
@@ -35,5 +37,13 @@ public class RemindLikeTogether {
 
     public void setRemindLikeTogetherInfo(RemindLikeTogetherInfo remindLikeTogetherInfo) {
         this.remindLikeTogetherInfo = remindLikeTogetherInfo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

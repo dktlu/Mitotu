@@ -143,4 +143,8 @@ public class RemindJoinTogetherFragment extends BaseFragment implements View.OnC
         switch (view.getId()){
         }
     }
+
+    public void refresh(){
+        adapter.notifyDataSetChanged();
+    }
 }

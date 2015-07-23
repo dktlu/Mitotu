@@ -14,7 +14,7 @@ public class RemindLikeTogetherInfo implements Serializable{
     private String nickname;
     @JsonProperty("HeadUrl")
     private String headUrl;
-    @JsonProperty("Yid")
+    @JsonProperty("Value")
     private String yid;
     @JsonProperty("PicUrl")
     private String picUrl;

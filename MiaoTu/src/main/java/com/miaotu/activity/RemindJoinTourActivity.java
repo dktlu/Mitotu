@@ -1,6 +1,7 @@
 package com.miaotu.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -172,6 +173,14 @@ public class RemindJoinTourActivity extends BaseFragmentActivity implements View
                     delAllLikeCustom();
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == 1001){
+            mTab01.refresh();
         }
     }
 }

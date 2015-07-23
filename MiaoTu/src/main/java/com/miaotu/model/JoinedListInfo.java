@@ -22,6 +22,8 @@ public class JoinedListInfo {
     private String usercard;
     @JsonProperty("Created")
     private String created;
+    @JsonProperty("Status")
+    private String status;
 
     public String getUid() {
         return uid;
@@ -85,5 +87,13 @@ public class JoinedListInfo {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

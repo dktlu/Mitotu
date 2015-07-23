@@ -110,6 +110,18 @@ public class JoinedListAdapter extends BaseAdapter {
         });
         if (isTogether) {
             holder.rlIdentity.setVisibility(View.GONE);
+            if ("-1".equals(info.getStatus())){
+                holder.rlOption.setVisibility(View.GONE);
+                holder.llOptionTip.setVisibility(View.VISIBLE);
+                holder.tvRefused.setText("已拒绝（取消）");
+            }else if ("1".equals(info.getStatus())){
+                holder.rlOption.setVisibility(View.GONE);
+                holder.llOptionTip.setVisibility(View.VISIBLE);
+                holder.tvRefused.setText("已恩准");
+            }else {
+                holder.rlOption.setVisibility(View.VISIBLE);
+                holder.llOptionTip.setVisibility(View.GONE);
+            }
             holder.tvAgree.setOnClickListener(new ClickListener(holder.rlOption,
                     holder.llOptionTip, holder.tvRefused, yid, info.getUid()));
             holder.tvRefuse.setOnClickListener(new ClickListener(holder.rlOption,
@@ -268,10 +280,10 @@ public class JoinedListAdapter extends BaseAdapter {
     private void reviewUser(final String yid, final String uid, final String status,
                             final RelativeLayout relativeLayout,
                             final LinearLayout linearLayout, final TextView tvRefused){
-        new BaseHttpAsyncTask<Void, Void, ReviewResult>((Activity)mcontext){
+        new BaseHttpAsyncTask<Void, Void, BaseResult>((Activity)mcontext){
 
             @Override
-            protected void onCompleteTask(ReviewResult reviewResult) {
+            protected void onCompleteTask(BaseResult reviewResult) {
                 if (reviewResult.getCode() == BaseResult.SUCCESS){
                     if ("1".equals(status)){    //同意
                         changeOptionView(relativeLayout, linearLayout, tvRefused, 2);
@@ -291,7 +303,7 @@ public class JoinedListAdapter extends BaseAdapter {
             }
 
             @Override
-            protected ReviewResult run(Void... params) {
+            protected BaseResult run(Void... params) {
                 return HttpRequestUtil.getInstance().reviewUser(
                         ((BaseActivity)mcontext).readPreference("token"), yid,uid, status);
             }

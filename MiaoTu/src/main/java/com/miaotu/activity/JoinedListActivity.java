@@ -72,6 +72,7 @@ public class JoinedListActivity extends BaseActivity implements View.OnClickList
             lvContent.setAdapter(adapter);
             getCustomTourList(getIntent().getStringExtra("aid"));
         }
+        setResult(1001);
     }
 
     @Override

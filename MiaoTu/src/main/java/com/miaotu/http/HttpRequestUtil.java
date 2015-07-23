@@ -974,9 +974,11 @@ public class HttpRequestUtil {
     public RemindLikeResult getRemindLikeList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","user"));
+        params.add(new BasicNameValuePair("value","like"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/like"),
+        return HttpDecoder.getForObject(getUrl("user/msg/user"),
                 RemindLikeResult.class, params);
     }
     /**
@@ -987,6 +989,8 @@ public class HttpRequestUtil {
     public RemindSysResult getRemindSysList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","system"));
+        params.add(new BasicNameValuePair("value",""));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
         return HttpDecoder.getForObject(getUrl("user/msg/system"),
@@ -1001,9 +1005,11 @@ public class HttpRequestUtil {
     public RemindLikeTogetherResult getRemindLikeTogetherList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","like"));
+        params.add(new BasicNameValuePair("value","yueyou"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/yueyou_like"),
+        return HttpDecoder.getForObject(getUrl("user/msg/like"),
                 RemindLikeTogetherResult.class, params);
     }
     /**
@@ -1014,9 +1020,11 @@ public class HttpRequestUtil {
     public RemindLikeCustomResult getRemindLikeCustomList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","like"));
+        params.add(new BasicNameValuePair("value","activity"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/activity_like"),
+        return HttpDecoder.getForObject(getUrl("user/msg/like"),
                 RemindLikeCustomResult.class, params);
     }
 
@@ -1028,10 +1036,11 @@ public class HttpRequestUtil {
     public RemindLikeTogetherResult getRemindCommentTogetherList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        params.add(new BasicNameValuePair("type","yueyou_reply"));
+        params.add(new BasicNameValuePair("type","reply"));
+        params.add(new BasicNameValuePair("value","yueyou"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/yueyou_reply"),
+        return HttpDecoder.getForObject(getUrl("user/msg/reply"),
                 RemindLikeTogetherResult.class, params);
     }
     /**
@@ -1042,10 +1051,11 @@ public class HttpRequestUtil {
     public RemindLikeCustomResult getRemindCommentCustomTourList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
-        params.add(new BasicNameValuePair("type","activity_reply"));
+        params.add(new BasicNameValuePair("type","reply"));
+        params.add(new BasicNameValuePair("value","activity"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/activity_reply"),
+        return HttpDecoder.getForObject(getUrl("user/msg/reply"),
                 RemindLikeCustomResult.class, params);
     }
 
@@ -1057,9 +1067,11 @@ public class HttpRequestUtil {
     public RemindLikeTogetherResult getRemindJoinTogetherList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","join"));
+        params.add(new BasicNameValuePair("value","yueyou"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/yueyou_join"),
+        return HttpDecoder.getForObject(getUrl("user/msg/join"),
                 RemindLikeTogetherResult.class, params);
     }
     /**
@@ -1070,9 +1082,11 @@ public class HttpRequestUtil {
     public RemindLikeCustomResult getRemindJoinCustomList(String token){
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token",token));
+        params.add(new BasicNameValuePair("type","join"));
+        params.add(new BasicNameValuePair("value","activity"));
         params.add(new BasicNameValuePair("page","1"));
         params.add(new BasicNameValuePair("num","1000"));
-        return HttpDecoder.getForObject(getUrl("user/msg/activity_join"),
+        return HttpDecoder.getForObject(getUrl("user/msg/join"),
                 RemindLikeCustomResult.class, params);
     }
 /**
@@ -1465,14 +1479,15 @@ public class HttpRequestUtil {
      * @param status
      * @return
      */
-    public ReviewResult reviewUser(String token, String yid, String uid, String status){
+    //ReviewResult
+    public BaseResult reviewUser(String token, String yid, String uid, String status){
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("yid", yid));
         params.add(new BasicNameValuePair("uid", uid));
         params.add(new BasicNameValuePair("status", status));
         return HttpDecoder.postForObject(getUrl("yueyou/join/pass"),
-                ReviewResult.class, params);
+                BaseResult.class, params);
     }
 
     /**
