@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -178,7 +179,6 @@ public class JoinedListAdapter extends BaseAdapter {
         private RelativeLayout rlOption;
         private LinearLayout llOptionTip;
         private TextView tvRefused;
-        private boolean isTimeOut;
         private String yid,uid;
 
         public ClickListener(RelativeLayout rlOption,
@@ -195,36 +195,16 @@ public class JoinedListAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tv_agree: //同意
-//                    changeOptionView(rlOption, llOptionTip, tvRefused, 2);
-//                    tvRefused.setTag(2);
                     reviewUser(yid, uid, "1", rlOption, llOptionTip, tvRefused);
                     break;
                 case R.id.tv_refuse:    //拒绝
-//                    changeOptionView(rlOption, llOptionTip, tvRefused, 1);
-//                    tvRefused.setTag(1);
                     reviewUser(yid,uid,"-1",rlOption,llOptionTip,tvRefused);
 
                     break;
                 case R.id.tv_refused:       //取消
-//                    changeOptionView(rlOption, llOptionTip, tvRefused, 0);
-                    if ((int) view.getTag() == 1) {
-                        if (!isTimeOut){
-                            Timer timer = new Timer();
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    //
-                                    isTimeOut = true;
-                                }
-                            }, 300000);
-                        }
-                        if (isTimeOut){
+                    if (!"已恩准".equals(tvRefused.getText().toString().trim())) {
                             createDialog(rlOption,
                                     llOptionTip, tvRefused, yid, uid);
-                        }else {
-                            ((BaseActivity)mcontext).showToastMsg("您已经拒绝了TA的报名\n" +
-                                    "5分钟后才能修改");
-                        }
                     }
                     break;
             }
@@ -287,10 +267,8 @@ public class JoinedListAdapter extends BaseAdapter {
                 if (reviewResult.getCode() == BaseResult.SUCCESS){
                     if ("1".equals(status)){    //同意
                         changeOptionView(relativeLayout, linearLayout, tvRefused, 2);
-                        tvRefused.setTag(2);
                     }else { //拒绝
                         changeOptionView(relativeLayout, linearLayout, tvRefused, 1);
-                        tvRefused.setTag(1);
                     }
                 }else {
                     if (StringUtil.isBlank(reviewResult.getMsg())){
@@ -305,7 +283,7 @@ public class JoinedListAdapter extends BaseAdapter {
             @Override
             protected BaseResult run(Void... params) {
                 return HttpRequestUtil.getInstance().reviewUser(
-                        ((BaseActivity)mcontext).readPreference("token"), yid,uid, status);
+                        ((BaseActivity)mcontext).readPreference("token"), yid, uid, status);
             }
         }.execute();
     }

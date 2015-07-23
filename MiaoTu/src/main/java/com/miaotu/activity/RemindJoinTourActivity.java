@@ -175,12 +175,4 @@ public class RemindJoinTourActivity extends BaseFragmentActivity implements View
                 break;
         }
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == 1001){
-            mTab01.refresh();
-        }
-    }
 }
