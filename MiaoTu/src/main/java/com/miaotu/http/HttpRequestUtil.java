@@ -47,6 +47,7 @@ import com.miaotu.result.RemindLikeCustomResult;
 import com.miaotu.result.RemindLikeResult;
 import com.miaotu.result.RemindLikeTogetherResult;
 import com.miaotu.result.RemindSysResult;
+import com.miaotu.result.ReviewResult;
 import com.miaotu.result.SearchTourResult;
 import com.miaotu.result.SearchUserResult;
 import com.miaotu.result.SymbolResult;
@@ -1454,6 +1455,24 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("token", token));
         return HttpDecoder.getForObject(getUrl("user/recommend"),
                 RecommendListResult.class, params);
+    }
+
+    /**
+     * 审核用户
+     * @param token
+     * @param yid
+     * @param uid
+     * @param status
+     * @return
+     */
+    public ReviewResult reviewUser(String token, String yid, String uid, String status){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("yid", yid));
+        params.add(new BasicNameValuePair("uid", uid));
+        params.add(new BasicNameValuePair("status", status));
+        return HttpDecoder.postForObject(getUrl("yueyou/join/pass"),
+                ReviewResult.class, params);
     }
 
     /**

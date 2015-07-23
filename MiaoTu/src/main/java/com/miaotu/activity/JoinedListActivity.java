@@ -64,11 +64,11 @@ public class JoinedListActivity extends BaseActivity implements View.OnClickList
         joinedListInfoList = new ArrayList<>();
         String flag = getIntent().getStringExtra("flag");       //1：一起走的报名列表，2：妙旅团的报名列表
         if("1".equals(flag)){
-            adapter = new JoinedListAdapter(this, joinedListInfoList, true);
+            adapter = new JoinedListAdapter(this, joinedListInfoList, true, getIntent().getStringExtra("yid"));
             lvContent.setAdapter(adapter);
             getTogetherList(getIntent().getStringExtra("yid"));
         }else {
-            adapter = new JoinedListAdapter(this, joinedListInfoList, false);
+            adapter = new JoinedListAdapter(this, joinedListInfoList, false, getIntent().getStringExtra("aid"));
             lvContent.setAdapter(adapter);
             getCustomTourList(getIntent().getStringExtra("aid"));
         }

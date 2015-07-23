@@ -1,5 +1,6 @@
 package com.miaotu.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,7 +20,12 @@ import android.widget.TextView;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.activity.BaseActivity;
+import com.miaotu.async.BaseHttpAsyncTask;
+import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.JoinedListInfo;
+import com.miaotu.result.BaseResult;
+import com.miaotu.result.ReviewResult;
+import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 
 import java.util.List;
@@ -35,13 +41,15 @@ public class JoinedListAdapter extends BaseAdapter {
     private List<JoinedListInfo> joinedListInfoList;
     private LayoutInflater inflater;
     private boolean isTogether; //判断一起去还是妙旅团跳转过来
-    private int rlOptionid, llOptionTipid;
+    private String yid;
 
-    public JoinedListAdapter(Context mcontext, List<JoinedListInfo> joinedListInfoList, boolean isTogether) {
+    public JoinedListAdapter(Context mcontext, List<JoinedListInfo> joinedListInfoList,
+                             boolean isTogether, String yid) {
         this.mcontext = mcontext;
         this.joinedListInfoList = joinedListInfoList;
         inflater = LayoutInflater.from(mcontext);
         this.isTogether = isTogether;
+        this.yid = yid;
     }
 
     @Override
@@ -82,8 +90,6 @@ public class JoinedListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        rlOptionid = holder.rlOption.getId();
-        llOptionTipid = holder.llOptionTip.getId();
         JoinedListInfo info = joinedListInfoList.get(i);
         holder.tvName.setText(info.getUsername());
         holder.tvNickName.setText("(昵称：" + info.getNickname() + ")");
@@ -104,13 +110,15 @@ public class JoinedListAdapter extends BaseAdapter {
         });
         if (isTogether) {
             holder.rlIdentity.setVisibility(View.GONE);
+            holder.tvAgree.setOnClickListener(new ClickListener(holder.rlOption,
+                    holder.llOptionTip, holder.tvRefused, yid, info.getUid()));
+            holder.tvRefuse.setOnClickListener(new ClickListener(holder.rlOption,
+                    holder.llOptionTip, holder.tvRefused, yid, info.getUid()));
+            holder.tvRefused.setOnClickListener(new ClickListener(holder.rlOption,
+                    holder.llOptionTip, holder.tvRefused, yid, info.getUid()));
+        }else {
+            holder.rlOption.setVisibility(View.GONE);
         }
-        holder.tvAgree.setOnClickListener(new ClickListener(holder.rlOption,
-                holder.llOptionTip, holder.tvRefused));
-        holder.tvRefuse.setOnClickListener(new ClickListener(holder.rlOption,
-                holder.llOptionTip, holder.tvRefused));
-        holder.tvRefused.setOnClickListener(new ClickListener(holder.rlOption,
-                holder.llOptionTip, holder.tvRefused));
         return view;
     }
 
@@ -159,25 +167,31 @@ public class JoinedListAdapter extends BaseAdapter {
         private LinearLayout llOptionTip;
         private TextView tvRefused;
         private boolean isTimeOut;
+        private String yid,uid;
 
         public ClickListener(RelativeLayout rlOption,
                              LinearLayout llOptionTip,
-                             TextView tvRefused) {
+                             TextView tvRefused, String yid, String uid) {
             this.rlOption = rlOption;
             this.llOptionTip = llOptionTip;
             this.tvRefused = tvRefused;
+            this.yid = yid;
+            this.uid = uid;
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tv_agree: //同意
-                    changeOptionView(rlOption, llOptionTip, tvRefused, 2);
-                    tvRefused.setTag(2);
+//                    changeOptionView(rlOption, llOptionTip, tvRefused, 2);
+//                    tvRefused.setTag(2);
+                    reviewUser(yid, uid, "1", rlOption, llOptionTip, tvRefused);
                     break;
                 case R.id.tv_refuse:    //拒绝
-                    changeOptionView(rlOption, llOptionTip, tvRefused, 1);
-                    tvRefused.setTag(1);
+//                    changeOptionView(rlOption, llOptionTip, tvRefused, 1);
+//                    tvRefused.setTag(1);
+                    reviewUser(yid,uid,"-1",rlOption,llOptionTip,tvRefused);
+
                     break;
                 case R.id.tv_refused:       //取消
 //                    changeOptionView(rlOption, llOptionTip, tvRefused, 0);
@@ -193,7 +207,8 @@ public class JoinedListAdapter extends BaseAdapter {
                             }, 300000);
                         }
                         if (isTimeOut){
-                            createDialog();
+                            createDialog(rlOption,
+                                    llOptionTip, tvRefused, yid, uid);
                         }else {
                             ((BaseActivity)mcontext).showToastMsg("您已经拒绝了TA的报名\n" +
                                     "5分钟后才能修改");
@@ -204,7 +219,9 @@ public class JoinedListAdapter extends BaseAdapter {
         }
     }
 
-    private void createDialog() {
+    private void createDialog(final RelativeLayout rlOption,
+                              final LinearLayout llOptionTip,
+                              final TextView tvRefused, final String yid, final String uid) {
         final Dialog dialog = new AlertDialog.Builder(mcontext).create();
         dialog.setCancelable(true);
         dialog.show();
@@ -226,7 +243,7 @@ public class JoinedListAdapter extends BaseAdapter {
                     return;
                 }
                 //同意的接口
-
+                reviewUser(yid,uid,"1",rlOption,llOptionTip,tvRefused);
                 dialog.dismiss();
             }
         });
@@ -240,5 +257,44 @@ public class JoinedListAdapter extends BaseAdapter {
         params.width = Util.dip2px(mcontext, 240);
         params.height = Util.dip2px(mcontext, 149);
         dialog.getWindow().setAttributes(params);
+    }
+
+    /**
+     * 审核用户
+     * @param yid
+     * @param uid
+     * @param status
+     */
+    private void reviewUser(final String yid, final String uid, final String status,
+                            final RelativeLayout relativeLayout,
+                            final LinearLayout linearLayout, final TextView tvRefused){
+        new BaseHttpAsyncTask<Void, Void, ReviewResult>((Activity)mcontext){
+
+            @Override
+            protected void onCompleteTask(ReviewResult reviewResult) {
+                if (reviewResult.getCode() == BaseResult.SUCCESS){
+                    if ("1".equals(status)){    //同意
+                        changeOptionView(relativeLayout, linearLayout, tvRefused, 2);
+                        tvRefused.setTag(2);
+                    }else { //拒绝
+                        changeOptionView(relativeLayout, linearLayout, tvRefused, 1);
+                        tvRefused.setTag(1);
+                    }
+                }else {
+                    if (StringUtil.isBlank(reviewResult.getMsg())){
+                        ((BaseActivity)mcontext).showToastMsg("操作失败");
+                    }else {
+                        ((BaseActivity)mcontext).showToastMsg(reviewResult.getMsg());
+
+                    }
+                }
+            }
+
+            @Override
+            protected ReviewResult run(Void... params) {
+                return HttpRequestUtil.getInstance().reviewUser(
+                        ((BaseActivity)mcontext).readPreference("token"), yid,uid, status);
+            }
+        }.execute();
     }
 }
