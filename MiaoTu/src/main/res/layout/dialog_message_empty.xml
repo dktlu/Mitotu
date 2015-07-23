@@ -18,6 +18,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center"
             android:text="清空所有消息？"
             android:textColor="#646464"
             android:textSize="17sp" />

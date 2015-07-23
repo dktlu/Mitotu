@@ -328,7 +328,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             @Override
             protected void onCompleteTask(WeiboResult weiboResult) {
                 Log.e("ERROR", "总数/"+weiboResult.getTotal_number());
-                showToastMsg("总数/"+weiboResult.getTotal_number(), Toast.LENGTH_LONG);
+                showToastMsg("总数/"+weiboResult.getTotal_number());
             }
 
             @Override
