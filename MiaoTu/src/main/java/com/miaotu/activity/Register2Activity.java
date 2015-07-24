@@ -1,8 +1,10 @@
 package com.miaotu.activity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,7 +56,7 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
     }
     private void bindView(){
         tvLeft.setOnClickListener(this);
-        btnNext.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
     }
     private void init(){
         tvTitle.setText("手机号注册");
@@ -108,6 +110,7 @@ private boolean validate(){
             @Override
             public void onClick(View view) {
                 getSms(etTel.getText().toString());
+                dialog.dismiss();
             }
         });
         // 创建dialog
@@ -163,5 +166,26 @@ private boolean validate(){
                 }
                 break;
         }
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("Exit");
+        this.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(broadcastReceiver);
     }
 }

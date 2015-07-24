@@ -156,7 +156,7 @@ public class HttpRequestUtil {
      * @param registerInfo
      * @return
      */
-    public BaseResult register(RegisterInfo registerInfo) {
+    public LoginResult register(RegisterInfo registerInfo) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         if (!StringUtil.isEmpty(registerInfo.getPhone())) {
             params.add(new BasicNameValuePair("phone", registerInfo.getPhone()));
@@ -198,7 +198,7 @@ public class HttpRequestUtil {
             params.add(new BasicNameValuePair("headurl", registerInfo.getHeadurl()));
         }
         return HttpDecoder.postForObject(
-                getUrl("base/user"), BaseResult.class,
+                getUrl("base/user"), LoginResult.class,
                 params);
 
     }

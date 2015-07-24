@@ -231,39 +231,39 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_right:
                 if (isEmpty()) {
-                    return;
-                }
-                String token = readPreference("token");
-                userinfo.setToken(token);
-                userinfo.setNickname(et_nickname.getText().toString().trim());
-                userinfo.setGender(tv_gender.getText().toString().trim());
-                if (StringUtil.isBlank(tv_age.getText().toString().trim())){
-                    userinfo.setAge("");
-                }else {
-                    userinfo.setAge(tv_age.getText().toString().trim().substring(0,
-                            tv_age.getText().toString().length() - 1));
-                }
-                userinfo.setMarital_status(et_emotion.getText().toString().trim());
-                userinfo.setWork(et_job.getText().toString().trim());
-                userinfo.setWant_go(et_wantgo.getText().toString().trim());
-                userinfo.setHear_url("");
-                LogUtil.e("修改头像", "路径// " + photourl);
-                String contenttag = "";
-                for (String tag : alltags) {
-                    contenttag += tag + ",";
-                }
-                if (!StringUtil.isBlank(contenttag)) {
-                    userinfo.setTags(contenttag.substring(0, contenttag.length() - 1));
-                }
-                userinfo.setWorkarea(et_worksite.getText().toString().trim());
-                userinfo.setSchool(et_school.getText().toString().trim());
-                userinfo.setFreetime(et_free.getText().toString().trim());
-                userinfo.setHome(tv_content_home.getText().toString().trim());
-                userinfo.setLifearea(tv_content_life.getText().toString().trim());
-                userinfo.setBudget(tv_budget.getText().toString().trim());
-                modifyUserInfo(userinfo);
-                clearEditText();
-                break;
+                return;
+            }
+            String token = readPreference("token");
+            userinfo.setToken(token);
+            userinfo.setNickname(et_nickname.getText().toString().trim());
+            userinfo.setGender(tv_gender.getText().toString().trim());
+            if (StringUtil.isBlank(tv_age.getText().toString().trim())){
+                userinfo.setAge("");
+            }else {
+                userinfo.setAge(tv_age.getText().toString().trim().substring(0,
+                        tv_age.getText().toString().length() - 1));
+            }
+            userinfo.setMarital_status(et_emotion.getText().toString().trim());
+            userinfo.setWork(et_job.getText().toString().trim());
+            userinfo.setWant_go(et_wantgo.getText().toString().trim());
+            userinfo.setHear_url("");
+            LogUtil.e("修改头像", "路径// " + photourl);
+            String contenttag = "";
+            for (String tag : alltags) {
+                contenttag += tag + ",";
+            }
+            if (!StringUtil.isBlank(contenttag)) {
+                userinfo.setTags(contenttag.substring(0, contenttag.length() - 1));
+            }
+            userinfo.setWorkarea(et_worksite.getText().toString().trim());
+            userinfo.setSchool(et_school.getText().toString().trim());
+            userinfo.setFreetime(et_free.getText().toString().trim());
+            userinfo.setHome(tv_content_home.getText().toString().trim());
+            userinfo.setLifearea(tv_content_life.getText().toString().trim());
+            userinfo.setBudget(tv_budget.getText().toString().trim());
+            modifyUserInfo(userinfo);
+            clearEditText();
+            break;
             case R.id.rl_changephoto:
                 chosePhoto(2);
                 break;

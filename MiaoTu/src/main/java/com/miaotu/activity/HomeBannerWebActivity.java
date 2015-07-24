@@ -2,6 +2,7 @@ package com.miaotu.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,7 +19,9 @@ import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 public class HomeBannerWebActivity extends BaseActivity implements View.OnClickListener{
 
     private WebView webView;
-    private TextView tvLeft;
+    private TextView tvLeft,tvTitle;
+    Handler mHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,7 @@ public class HomeBannerWebActivity extends BaseActivity implements View.OnClickL
 
     private void initView(){
         webView = (WebView) findViewById(R.id.webview);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         tvLeft = (TextView) findViewById(R.id.tv_left);
     }
 
@@ -66,6 +70,20 @@ public class HomeBannerWebActivity extends BaseActivity implements View.OnClickL
             Intent intent = new Intent(HomeBannerWebActivity.this, CustomTourDetailActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
+        }
+
+        @android.webkit.JavascriptInterface
+        public void setTitle(final String title) {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+
+                    // Code in here
+                    tvTitle.setText(title);
+
+                }
+
+            });
         }
 
         @android.webkit.JavascriptInterface

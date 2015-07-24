@@ -69,8 +69,8 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     private ContactListAdapter contactsadapter;
     private RecommendListAdapter recommendadapter;
     private TextView tvChange;
-    private TextView tvLeft,tvTitle;
-    private LinearLayout llFriend;
+    private TextView tvLeft,tvTitle, tvRight;
+    private LinearLayout llFriend,llShareArea;
     private TextView tvFriendCount;
 
     @Override
@@ -84,7 +84,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        llShareArea = (LinearLayout) this.findViewById(R.id.ll_share_area);
         tvLeft = (TextView) this.findViewById(R.id.tv_left);
+        tvRight = (TextView) this.findViewById(R.id.tv_right);
         tvTitle = (TextView) this.findViewById(R.id.tv_title);
         llFriend = (LinearLayout) this.findViewById(R.id.ll_friend);
         tvFriendCount = (TextView) this.findViewById(R.id.tv_friend_count);
@@ -107,7 +109,14 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
-        tvTitle.setText("寻找妙友");
+        if ("register".equals(getIntent().getStringExtra("register"))){
+            tvTitle.setText("添加手机好友");
+            tvRight.setText("跳过");
+            llShareArea.setVisibility(View.GONE);
+        }else {
+            tvTitle.setText("寻找妙友");
+            tvRight.setVisibility(View.GONE);
+        }
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();
         contactsadapter = new ContactListAdapter(this, contactlist);
@@ -153,6 +162,11 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_left:
                 finish();
+                break;
+            case R.id.tv_right:
+                Intent intent = new Intent();
+                intent.setClass(FindMFriendsActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_address:
                 Intent addressIntent = new Intent();

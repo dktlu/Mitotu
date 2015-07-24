@@ -1,7 +1,10 @@
 package com.miaotu.activity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,6 +84,7 @@ private void bindView(){
 private void init(){
     tvRight.setText("注册");
     tvTitle.setText("登录");
+    ShareSDK.initSDK(this);
 }
     //登陆
     private void login(final RegisterInfo registerInfo, final boolean isTel) {
@@ -163,9 +167,9 @@ private void init(){
                         }else{
                             showToastMsg(result.getMsg());
                         }
-                    }else{
+                    }/*else{
                         register(registerInfo);
-                    }
+                    }*/
                 }
             }
 
@@ -212,18 +216,82 @@ private void init(){
      * @param registerInfo
      */
     private void register(final RegisterInfo registerInfo) {
-        new BaseHttpAsyncTask<Void, Void, BaseResult>(this, true) {
+        new BaseHttpAsyncTask<Void, Void, LoginResult>(this, true) {
             @Override
-            protected void onCompleteTask(BaseResult result) {
+            protected void onCompleteTask(LoginResult result) {
                 if(btnLogin==null){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("注册成功！");
-                    login(registerInfo,false);
+//                    login(registerInfo,false);
+                    showToastMsg("登录成功！");
+                    writePreference("uid", result.getLogin().getUid());
+                    writePreference("id", result.getLogin().getId());
+                    writePreference("token",result.getLogin().getToken());
+                    writePreference("name",result.getLogin().getName());
+                    writePreference("age",result.getLogin().getAge());
+                    writePreference("gender",result.getLogin().getGender());
+                    writePreference("address",result.getLogin().getAddress());
+                    writePreference("emotion",result.getLogin().getMaritalstatus());
+                    writePreference("wantgo",result.getLogin().getWantgo());
+                    writePreference("tags",result.getLogin().getTags());
+                    writePreference("headphoto",result.getLogin().getHeadPhoto());
+                    writePreference("job",result.getLogin().getJob());
+                    writePreference("fanscount", result.getLogin().getFanscount());
+                    writePreference("followcount", result.getLogin().getFollowcount());
+//                    writePreference("wxid", result.getLogin().getWxunionid());
+//                    writePreference("qqid", result.getLogin().getQqopenid());
+//                    writePreference("sinaid", result.getLogin().getSinauid());
+                    writePreference("luckmoney", result.getLogin().getLuckymoney());
+//                    writePreference("status", result.getLogin().getStatus());   //1身份证验证 0未验证
+                    writePreference("email", result.getLogin().getEmail());
+                    writePreference("phone", result.getLogin().getPhone());
+                    writePreference("login_status","in");
+                    writePreference("workarea",result.getLogin().getWorkarea());
+                    writePreference("school",result.getLogin().getSchool());
+                    writePreference("freetime",result.getLogin().getFreetime());
+                    writePreference("budget",result.getLogin().getBudget());
+                    writePreference("home",result.getLogin().getHome());
+                    writePreference("lifearea",result.getLogin().getLifearea());
+
+                    EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
+                            new EMCallBack() {//回调
+                                @Override
+                                public void onSuccess() {
+//                                    runOnUiThread(new Runnable() {
+//                                        public void run() {
+//
+//                                        }
+//                                    });
+                                    new LoadIMInfoThread().start();
+                                }
+
+                                @Override
+                                public void onProgress(int progress, String status) {
+
+                                }
+
+                                @Override
+                                public void onError(int code, String message) {
+                                    Log.d("main", "登录聊天服务器失败！");
+                                }
+
+                            });
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+                    String sysDatetime = fmt.format(calendar.getTime())+readPreference("token");
+                    if(readPreference("everyday").equals(sysDatetime)){
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivityForResult(intent, 1);
+                    }else{
+                        Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
+                        startActivityForResult(intent, 1);
+                    }
+                    setResult(1);
+                    finish();
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("注册失败！");
+                        showToastMsg("登陆失败！");
                     }else{
                         showToastMsg(result.getMsg());
                     }
@@ -231,8 +299,15 @@ private void init(){
             }
 
             @Override
-            protected BaseResult run(Void... params) {
+            protected LoginResult run(Void... params) {
                 return HttpRequestUtil.getInstance().register(registerInfo);
+            }
+
+            @Override
+            protected void finallyRun() {
+                if(loadingDlg!=null){
+                    loadingDlg.dismiss();
+                }
             }
 
         }.execute();
@@ -293,7 +368,7 @@ private void init(){
                     final RegisterInfo registerInfo = new RegisterInfo();
                     registerInfo.setPhone(etTel.getText().toString());
                     registerInfo.setPassword(etPassword.getText().toString());
-                    login(registerInfo,true);
+                    login(registerInfo, true);
                 }
                 break;
             case R.id.iv_qq:
@@ -343,7 +418,7 @@ private void init(){
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        login(registerInfo,false);
+                        register(registerInfo);
                     }
                 });
             }catch (Exception e){e.printStackTrace();}
@@ -377,7 +452,7 @@ private void init(){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    login(registerInfo,false);
+                    register(registerInfo);
                 }
             });
 
@@ -417,7 +492,7 @@ private void init(){
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    login(registerInfo,false);
+                    register(registerInfo);
                 }
             });
         }
@@ -435,5 +510,26 @@ private void init(){
         if(loadingDlg!=null){
             loadingDlg.dismiss();
         }
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("Exit");
+        this.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(broadcastReceiver);
     }
 }

@@ -21,8 +21,10 @@ public class MaritalStatusAdapter extends AbstractWheelTextAdapter {
 		super(context, R.layout.dialog_word_design, NO_RESOURCE);
 
 		setItemTextResource(R.id.country_name);
-		for (int i=0;i<45;i++){
-			maritalStatuses[i]=""+(i+15);
+		maritalStatuses[0] = "16岁以下";
+		maritalStatuses[44] = "60岁以上";
+		for (int i=1;i<44;i++){
+			maritalStatuses[i]=""+(i+16);
 		}
 	}
 

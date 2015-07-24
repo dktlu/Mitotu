@@ -36,9 +36,10 @@
                 android:textSize="14sp"
                 />
             <TextView
+                android:id="@+id/tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+86 18553102514"
+                android:text="+86 18512345678"
                 android:textSize="14sp"
                 android:textColor="#ff8000"
                 />
@@ -85,6 +86,7 @@
                 android:text="重新发送"
                 />
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"

@@ -67,7 +67,13 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData(){
-        tvTitle.setText("手机通讯录朋友");
+        if ("register".equals(getIntent().getStringExtra("register"))){
+            tvTitle.setText("邀请手机好友赢49元旅行基金");
+            tvLeft.setText("跳过");
+            tvLeft.setBackgroundResource(R.color.white);
+        }else {
+            tvTitle.setText("手机通讯录朋友");
+        }
         tvRight.setText("邀请");
         numbers = new ArrayList<>();
         phoneAddressList = new ArrayList<>();
@@ -82,6 +88,11 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_left:
+                if ("register".equals(getIntent().getStringExtra("register"))){
+                    Intent intent = new Intent();
+                    intent.setClass(PhoneAddressActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.tv_right:

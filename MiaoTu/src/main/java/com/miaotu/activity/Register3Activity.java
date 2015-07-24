@@ -1,6 +1,11 @@
 package com.miaotu.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,12 +32,15 @@ import com.miaotu.util.StringUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Register3Activity extends BaseActivity implements View.OnClickListener {
-    private TextView tvLeft,tvRight,tvTitle,tvResend;
-    private Button btnNext;
+    private TextView tvLeft, tvRight, tvTitle, tvResend, tvNumber, tvTime;
     private RegisterInfo registerInfo;
     private EditText etSMS;
+    private int maxTime = 60;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,51 +49,84 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
         bindView();
         init();
     }
-    private void findView(){
+
+    private void findView() {
         tvRight = (TextView) findViewById(R.id.tv_right);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvResend = (TextView) findViewById(R.id.tv_resend);
-        btnNext = (Button) findViewById(R.id.btn_next);
+        tvNumber = (TextView) findViewById(R.id.tv_number);
+        tvTime = (TextView) findViewById(R.id.tv_time);
         etSMS = (EditText) findViewById(R.id.et_sms);
     }
-    private void bindView(){
+
+    private void bindView() {
         tvLeft.setOnClickListener(this);
-        btnNext.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
         tvResend.setOnClickListener(this);
     }
-    private void init(){
+
+    private void init() {
         tvTitle.setText("填写验证码");
         tvRight.setText("下一步");
         registerInfo = (RegisterInfo) getIntent().getSerializableExtra("registerInfo");
+        tvNumber.setText("+86 " + registerInfo.getPhone());
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Message message = handler.obtainMessage();
+                message.sendToTarget();
+                if (maxTime < 1) {
+                    cancel();
+                }
+            }
+        }, 0, 1000);
     }
-private boolean validate(){
-    if(StringUtil.isEmpty(etSMS.getText().toString())){
-        showToastMsg("请输入验证码！");
-        return false;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            maxTime--;
+            if (maxTime < 0){
+                maxTime = 0;
+            }
+            if (maxTime < 10){
+                tvTime.setText("00:0"+maxTime);
+            }else {
+                tvTime.setText("00:"+maxTime);
+            }
+        }
+    };
+
+    private boolean validate() {
+        if (StringUtil.isEmpty(etSMS.getText().toString())) {
+            showToastMsg("请输入验证码！");
+            return false;
+        }
+        return true;
     }
-    return true;
-}
+
     /**
      * 注册
+     *
      * @param registerInfo
      */
     private void register(final RegisterInfo registerInfo) {
         new BaseHttpAsyncTask<Void, Void, BaseResult>(this, true) {
             @Override
             protected void onCompleteTask(BaseResult result) {
-                if(tvLeft==null){
+                if (tvLeft == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("注册成功！");
-
                     login(registerInfo);
 
                 } else {
-                    if(StringUtil.isEmpty(result.getMsg())){
+                    if (StringUtil.isEmpty(result.getMsg())) {
                         showToastMsg("注册失败！");
-                    }else{
+                    } else {
                         showToastMsg(result.getMsg());
                     }
                 }
@@ -104,19 +145,18 @@ private boolean validate(){
         new BaseHttpAsyncTask<Void, Void, LoginResult>(this, true) {
             @Override
             protected void onCompleteTask(LoginResult result) {
-                if(tvLeft==null){
+                if (tvLeft == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("登录成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
-                    writePreference("token",result.getLogin().getToken());
-                    writePreference("name",result.getLogin().getName());
-                    writePreference("age",result.getLogin().getAge());
+                    writePreference("token", result.getLogin().getToken());
+                    writePreference("name", result.getLogin().getName());
+                    writePreference("age", result.getLogin().getAge());
                     writePreference("gender", result.getLogin().getGender());
-                    writePreference("headphoto",result.getLogin().getHeadPhoto());
-                    writePreference("job",result.getLogin().getJob());
+                    writePreference("headphoto", result.getLogin().getHeadPhoto());
+                    writePreference("job", result.getLogin().getJob());
                     writePreference("fanscount", result.getLogin().getFanscount());
                     writePreference("followcount", result.getLogin().getFollowcount());
                     writePreference("wxid", result.getLogin().getWxunionid());
@@ -126,13 +166,13 @@ private boolean validate(){
                     writePreference("status", result.getLogin().getStatus());   //1身份证验证 0未验证
                     writePreference("email", result.getLogin().getEmail());
                     writePreference("phone", result.getLogin().getPhone());
-                    writePreference("login_status","in");
-                    writePreference("workarea",result.getLogin().getWorkarea());
-                    writePreference("school",result.getLogin().getSchool());
-                    writePreference("freetime",result.getLogin().getFreetime());
-                    writePreference("budget",result.getLogin().getBudget());
-                    writePreference("home",result.getLogin().getHome());
-                    writePreference("lifearea",result.getLogin().getLifearea());
+                    writePreference("login_status", "in");
+                    writePreference("workarea", result.getLogin().getWorkarea());
+                    writePreference("school", result.getLogin().getSchool());
+                    writePreference("freetime", result.getLogin().getFreetime());
+                    writePreference("budget", result.getLogin().getBudget());
+                    writePreference("home", result.getLogin().getHome());
+                    writePreference("lifearea", result.getLogin().getLifearea());
 
                     EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
                             new EMCallBack() {//回调
@@ -164,18 +204,18 @@ private boolean validate(){
 //                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 //                        startActivity(intent);
 //                    }else{
-                    Intent intent = new Intent(Register3Activity.this,Register1Activity.class);
+                    Intent intent = new Intent(Register3Activity.this, Register1Activity.class);
                     intent.putExtra("registerInfo", registerInfo);
                     startActivity(intent);
 //                    }
                     setResult(1);
                     finish();
                 } else {
-                        if(StringUtil.isEmpty(result.getMsg())){
-                            showToastMsg("登录失败！");
-                        }else{
-                            showToastMsg(result.getMsg());
-                        }
+                    if (StringUtil.isEmpty(result.getMsg())) {
+                        showToastMsg("登录失败！");
+                    } else {
+                        showToastMsg(result.getMsg());
+                    }
                 }
             }
 
@@ -186,7 +226,8 @@ private boolean validate(){
 
         }.execute();
     }
-    class LoadIMInfoThread extends Thread{
+
+    class LoadIMInfoThread extends Thread {
         @Override
         public void run() {
             super.run();
@@ -211,19 +252,32 @@ private boolean validate(){
 //            }
         }
     }
+
     private void getSms() {
         new BaseHttpAsyncTask<Void, Void, BaseResult>(this, true) {
             @Override
             protected void onCompleteTask(BaseResult result) {
-                if(tvLeft==null){
+                if (tvLeft == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
                     showToastMsg("发送成功！");
+                    maxTime = 60;
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Message message = handler.obtainMessage();
+                            message.sendToTarget();
+                            if (maxTime < 1) {
+                                cancel();
+                            }
+                        }
+                    }, 0, 1000);
                 } else {
-                    if(StringUtil.isEmpty(result.getMsg())){
+                    if (StringUtil.isEmpty(result.getMsg())) {
                         showToastMsg("获取验证码失败！");
-                    }else{
+                    } else {
                         showToastMsg(result.getMsg());
                     }
                 }
@@ -236,9 +290,10 @@ private boolean validate(){
 
         }.execute();
     }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_left:
                 finish();
                 break;
@@ -249,12 +304,33 @@ private boolean validate(){
             case R.id.tv_right:
 //                Intent nextIntent = new Intent(Register3Activity.this,Register3Activity.class);
 //                startActivity(nextIntent);
-                if(validate()){
+                if (validate()) {
                     //执行注册
                     registerInfo.setCode(etSMS.getText().toString());
                     register(registerInfo);
                 }
                 break;
         }
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("Exit");
+        this.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(broadcastReceiver);
     }
 }
