@@ -47,7 +47,7 @@ private View root;
     private TogetherlistAdapter adapter;
     private List<Together> mList;
     private int page=1;
-    private final int PAGECOUNT = 5;
+    private final int PAGECOUNT = 10;
     private boolean isLoadMore = false;
     private View layoutMore;
     private GuideGallery gallery; // 自定义轮播控件

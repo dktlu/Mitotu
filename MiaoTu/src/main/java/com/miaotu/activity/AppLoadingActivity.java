@@ -173,7 +173,7 @@ public class AppLoadingActivity extends BaseActivity {
                  finish();
              }
     	}else{
-             Intent it = new Intent(AppLoadingActivity.this, ChooseLoginActivity.class);
+             Intent it = new Intent(AppLoadingActivity.this, LoginActivity.class);
              startActivityForResult(it, 1);
              finish();
          }

@@ -191,7 +191,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 EMChatManager.getInstance().logout();// 此方法为同步方法
                 MainActivity.getInstance().finish();
                 SettingActivity.this.finish();
-                Intent loginIntent = new Intent(SettingActivity.this,ChooseLoginActivity.class);
+                Intent loginIntent = new Intent(SettingActivity.this,LoginActivity.class);
                 startActivity(loginIntent);
                 break;
             case R.id.ll_comment:

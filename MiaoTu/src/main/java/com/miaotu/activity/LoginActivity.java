@@ -44,7 +44,7 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener,PlatformActionListener {
-private TextView tvLeft,tvTitle,tvFindPassword;
+private TextView tvLeft,tvRight,tvTitle,tvFindPassword;
     private Button btnLogin;
     private EditText etTel,etPassword;
     private ImageView ivWeibo,ivQQ,ivWechat;
@@ -58,6 +58,7 @@ private TextView tvLeft,tvTitle,tvFindPassword;
         init();
     }
 private void findView(){
+    tvRight = (TextView) findViewById(R.id.tv_right);
     tvLeft = (TextView) findViewById(R.id.tv_left);
     tvTitle = (TextView) findViewById(R.id.tv_title);
     tvFindPassword = (TextView) findViewById(R.id.tv_find_password);
@@ -69,6 +70,7 @@ private void findView(){
     ivWechat = (ImageView) findViewById(R.id.iv_wechat);
 }
 private void bindView(){
+    tvRight.setOnClickListener(this);
     tvLeft.setOnClickListener(this);
     tvFindPassword.setOnClickListener(this);
     btnLogin.setOnClickListener(this);
@@ -77,8 +79,8 @@ private void bindView(){
     ivWechat.setOnClickListener(this);
 }
 private void init(){
+    tvRight.setText("注册");
     tvTitle.setText("登录");
-
 }
     //登陆
     private void login(final RegisterInfo registerInfo, final boolean isTel) {
@@ -277,6 +279,10 @@ private void init(){
         switch (view.getId()){
             case R.id.tv_left:
                 finish();
+                break;
+            case R.id.tv_right:
+                Intent registerIntent = new Intent(LoginActivity.this, Register2Activity.class);
+                startActivity(registerIntent);
                 break;
             case R.id.tv_find_password:
                 Intent intent = new Intent(LoginActivity.this,FindPasswordActivity.class);

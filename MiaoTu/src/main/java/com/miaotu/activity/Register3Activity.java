@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Register3Activity extends BaseActivity implements View.OnClickListener {
-    private TextView tvLeft,tvTitle,tvResend;
+    private TextView tvLeft,tvRight,tvTitle,tvResend;
     private Button btnNext;
     private RegisterInfo registerInfo;
     private EditText etSMS;
@@ -42,6 +42,7 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
         init();
     }
     private void findView(){
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvResend = (TextView) findViewById(R.id.tv_resend);
@@ -54,7 +55,8 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
         tvResend.setOnClickListener(this);
     }
     private void init(){
-        tvTitle.setText("验证手机号（3/3）");
+        tvTitle.setText("填写验证码");
+        tvRight.setText("下一步");
         registerInfo = (RegisterInfo) getIntent().getSerializableExtra("registerInfo");
     }
 private boolean validate(){
@@ -112,7 +114,7 @@ private boolean validate(){
                     writePreference("token",result.getLogin().getToken());
                     writePreference("name",result.getLogin().getName());
                     writePreference("age",result.getLogin().getAge());
-                    writePreference("gender",result.getLogin().getGender());
+                    writePreference("gender", result.getLogin().getGender());
                     writePreference("headphoto",result.getLogin().getHeadPhoto());
                     writePreference("job",result.getLogin().getJob());
                     writePreference("fanscount", result.getLogin().getFanscount());
@@ -125,6 +127,12 @@ private boolean validate(){
                     writePreference("email", result.getLogin().getEmail());
                     writePreference("phone", result.getLogin().getPhone());
                     writePreference("login_status","in");
+                    writePreference("workarea",result.getLogin().getWorkarea());
+                    writePreference("school",result.getLogin().getSchool());
+                    writePreference("freetime",result.getLogin().getFreetime());
+                    writePreference("budget",result.getLogin().getBudget());
+                    writePreference("home",result.getLogin().getHome());
+                    writePreference("lifearea",result.getLogin().getLifearea());
 
                     EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
                             new EMCallBack() {//回调
@@ -156,7 +164,8 @@ private boolean validate(){
 //                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 //                        startActivity(intent);
 //                    }else{
-                    Intent intent = new Intent(Register3Activity.this,EveryDayPicActivity.class);
+                    Intent intent = new Intent(Register3Activity.this,Register1Activity.class);
+                    intent.putExtra("registerInfo", registerInfo);
                     startActivity(intent);
 //                    }
                     setResult(1);
@@ -237,7 +246,7 @@ private boolean validate(){
                 //重发验证码
                 getSms();
                 break;
-            case R.id.btn_next:
+            case R.id.tv_right:
 //                Intent nextIntent = new Intent(Register3Activity.this,Register3Activity.class);
 //                startActivity(nextIntent);
                 if(validate()){

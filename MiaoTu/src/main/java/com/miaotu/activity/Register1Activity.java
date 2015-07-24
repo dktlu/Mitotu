@@ -62,7 +62,7 @@ private TextView tvLeft,tvTitle;
         tvProtocol.setOnClickListener(this);
     }
     private void init(){
-        tvTitle.setText("创建个人资料（1/3）");
+        tvTitle.setText("填写基本资料");
         registerInfo = new RegisterInfo();
     }
     private boolean validate(){
@@ -92,7 +92,7 @@ private TextView tvLeft,tvTitle;
             tvCity.setText(data.getStringExtra("city"));
         }
     }
-    // 获取情感状态dialog
+    // 获取年龄状态dialog
     private void getMaritalStatusDialog(final View parent) {
         // 为dialog的listview赋值
         LayoutInflater lay = (LayoutInflater) this

@@ -30,7 +30,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 
 public class Register2Activity extends BaseActivity implements View.OnClickListener{
-    private TextView tvLeft,tvTitle;
+    private TextView tvLeft,tvTitle,tvRight;
     private Button btnNext;
     private RegisterInfo registerInfo;
     private EditText etTel,etPassword,etPasswordRe;
@@ -44,6 +44,7 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
         init();
     }
     private void findView(){
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         btnNext = (Button) findViewById(R.id.btn_next);
@@ -56,8 +57,10 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
         btnNext.setOnClickListener(this);
     }
     private void init(){
-        tvTitle.setText("设置账号和密码（2/3）");
-        registerInfo = (RegisterInfo) getIntent().getSerializableExtra("registerInfo");
+        tvTitle.setText("手机号注册");
+        tvRight.setText("下一步");
+//        registerInfo = (RegisterInfo) getIntent().getSerializableExtra("registerInfo");
+        registerInfo = new RegisterInfo();
     }
 private boolean validate(){
     if(StringUtil.isEmpty(etTel.getText().toString())){
@@ -154,7 +157,7 @@ private boolean validate(){
             case R.id.tv_left:
                 finish();
                 break;
-            case R.id.btn_next:
+            case R.id.tv_right:
                 if(validate()){
                     showDialog();
                 }

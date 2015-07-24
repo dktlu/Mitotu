@@ -2,12 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.miaotu.activity.Register1Activity"
-    android:background="#f1f3f6"
-    >
-<include
-    android:id="@+id/layout_top"
-    layout="@layout/top_bar"
-    ></include>
+    android:background="#f1f3f6" >
+    <include
+        android:id="@+id/layout_top"
+        layout="@layout/top_bar"/>
     <LinearLayout
         android:id="@+id/layout_input"
         android:layout_width="match_parent"
@@ -18,8 +16,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
-        android:layout_below="@+id/layout_top"
-        >
+        android:layout_below="@+id/layout_top" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -28,8 +25,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_input_login_item"
-            >
+            android:background="@drawable/bg_input_login_item" >
             <TextView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -39,14 +35,12 @@
                 android:textSize="12sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:background="@drawable/icon_name"
-                />
+                android:background="@drawable/icon_name"/>
             <ImageView
                 android:layout_width="1px"
                 android:layout_height="15dp"
                 android:background="#dcdcdc"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_gravity="center_vertical"/>
             <EditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
@@ -57,16 +51,14 @@
                 android:hint="请输入您的妙途用户名"
                 android:textSize="12sp"
                 android:maxLength="8"
-                android:textColorHint="#b4b4b4"
-                />
+                android:textColorHint="#b4b4b4"/>
         </LinearLayout>
         <RadioGroup
             android:id="@+id/rg_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal" >
             <RadioButton
                 android:id="@+id/rb_man"
                 android:layout_width="50dp"
@@ -78,8 +70,7 @@
                 android:background="@drawable/selector_gender"
                 android:button="@null"
                 android:paddingLeft="10dp"
-                android:drawablePadding="5dp"
-                />
+                android:drawablePadding="5dp" />
             <RadioButton
                 android:id="@+id/rb_woman"
                 android:layout_width="50dp"
@@ -92,8 +83,7 @@
                 android:button="@null"
                 android:background="@drawable/selector_gender"
                 android:paddingLeft="10dp"
-                android:drawablePadding="5dp"
-                />
+                android:drawablePadding="5dp" />
         </RadioGroup>
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,8 +93,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_input_login_item"
-            >
+            android:background="@drawable/bg_input_login_item" >
             <TextView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -114,14 +103,12 @@
                 android:textSize="12sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:background="@drawable/icon_city"
-                />
+                android:background="@drawable/icon_city"/>
             <ImageView
                 android:layout_width="1px"
                 android:layout_height="15dp"
                 android:background="#dcdcdc"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_gravity="center_vertical"/>
             <TextView
                 android:id="@+id/tv_city"
                 android:layout_width="match_parent"
@@ -133,8 +120,7 @@
                 android:hint="地域："
                 android:textSize="12sp"
                 android:textColorHint="#b4b4b4"
-                android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
-                />
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyz" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,8 +129,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_input_login_item"
-            >
+            android:background="@drawable/bg_input_login_item" >
             <TextView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -154,14 +139,12 @@
                 android:textSize="12sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:background="@drawable/icon_age"
-                />
+                android:background="@drawable/icon_age" />
             <ImageView
                 android:layout_width="1px"
                 android:layout_height="15dp"
                 android:background="#dcdcdc"
-                android:layout_gravity="center_vertical"
-                />
+                android:layout_gravity="center_vertical" />
             <TextView
                 android:id="@+id/tv_age"
                 android:layout_width="match_parent"
@@ -173,8 +156,7 @@
                 android:hint="年龄："
                 android:textSize="12sp"
                 android:textColorHint="#b4b4b4"
-                android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
-                />
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyz" />
         </LinearLayout>
     </LinearLayout>
     <Button
@@ -184,33 +166,29 @@
         android:layout_below="@+id/layout_input"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="下一步"
+        android:text="注册"
         android:textColor="#ffffff"
         android:textSize="14sp"
-        android:background="@drawable/bg_input_login_btn"
-        />
+        android:background="@drawable/bg_input_login_btn" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        >
+        android:layout_marginBottom="20dp" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点击下一步表示同意"
             android:textColor="#b5b5b5"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/tv_protocol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_protocol"
             android:textSize="14sp"
-            android:textColor="#4d99cd"
-            />
+            android:textColor="#4d99cd" />
     </LinearLayout>
 </RelativeLayout>

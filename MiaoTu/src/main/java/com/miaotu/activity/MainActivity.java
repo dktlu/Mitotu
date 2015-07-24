@@ -771,7 +771,7 @@ public class MainActivity extends BaseFragmentActivity implements
                         if(weibo.isValid()) {
                             weibo.removeAccount();
                         }
-                        Intent intent = new Intent(MainActivity.this,ChooseLoginActivity.class);
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
