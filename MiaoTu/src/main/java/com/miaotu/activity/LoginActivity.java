@@ -5,12 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,9 +19,11 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 import com.miaotu.R;
-import com.miaotu.app.App;
+import com.miaotu.adapter.LoginListAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
+import com.miaotu.db.LoginDbManager;
 import com.miaotu.http.HttpRequestUtil;
+import com.miaotu.model.Account;
 import com.miaotu.model.RegisterInfo;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.LoginResult;
@@ -33,9 +33,11 @@ import com.miaotu.util.StringUtil;
 import com.miaotu.view.LoadingDlg;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import cn.sharesdk.framework.Platform;
@@ -47,11 +49,16 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener,PlatformActionListener {
-private TextView tvLeft,tvRight,tvTitle,tvFindPassword;
+    private TextView tvLeft,tvRight,tvTitle,tvFindPassword;
     private Button btnLogin;
-    private EditText etTel,etPassword;
+    private EditText etPassword;
     private ImageView ivWeibo,ivQQ,ivWechat;
     protected Dialog loadingDlg; // 加载对话框
+    private LoginDbManager dbManager;
+    private List<String> accounts;
+    private AutoCompleteTextView tvAuto;
+    private LoginListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +68,12 @@ private TextView tvLeft,tvRight,tvTitle,tvFindPassword;
         init();
     }
 private void findView(){
+    tvAuto = (AutoCompleteTextView) findViewById(R.id.tv_auto);
     tvRight = (TextView) findViewById(R.id.tv_right);
     tvLeft = (TextView) findViewById(R.id.tv_left);
     tvTitle = (TextView) findViewById(R.id.tv_title);
     tvFindPassword = (TextView) findViewById(R.id.tv_find_password);
     btnLogin = (Button) findViewById(R.id.btn_login);
-    etTel = (EditText) findViewById(R.id.et_tel);
     etPassword = (EditText) findViewById(R.id.et_password);
     ivWeibo = (ImageView) findViewById(R.id.iv_weibo);
     ivQQ = (ImageView) findViewById(R.id.iv_qq);
@@ -81,10 +88,17 @@ private void bindView(){
     ivQQ.setOnClickListener(this);
     ivWechat.setOnClickListener(this);
 }
-private void init(){
-    tvRight.setText("注册");
-    tvTitle.setText("登录");
-    ShareSDK.initSDK(this);
+
+    private void init(){
+        tvRight.setText("注册");
+        tvTitle.setText("登录");
+        ShareSDK.initSDK(this);
+        dbManager = new LoginDbManager(this);
+//        dbManager.delete();
+        accounts = new ArrayList<>();
+        accounts = dbManager.queryName();
+        adapter = new LoginListAdapter(this, R.layout.item_phone, accounts);
+        tvAuto.setAdapter(adapter);
 }
     //登陆
     private void login(final RegisterInfo registerInfo, final boolean isTel) {
@@ -110,11 +124,7 @@ private void init(){
                     writePreference("job",result.getLogin().getJob());
                     writePreference("fanscount", result.getLogin().getFanscount());
                     writePreference("followcount", result.getLogin().getFollowcount());
-//                    writePreference("wxid", result.getLogin().getWxunionid());
-//                    writePreference("qqid", result.getLogin().getQqopenid());
-//                    writePreference("sinaid", result.getLogin().getSinauid());
                     writePreference("luckmoney", result.getLogin().getLuckymoney());
-//                    writePreference("status", result.getLogin().getStatus());   //1身份证验证 0未验证
                     writePreference("email", result.getLogin().getEmail());
                     writePreference("phone", result.getLogin().getPhone());
                     writePreference("login_status","in");
@@ -129,11 +139,6 @@ private void init(){
                             new EMCallBack() {//回调
                                 @Override
                                 public void onSuccess() {
-//                                    runOnUiThread(new Runnable() {
-//                                        public void run() {
-//
-//                                        }
-//                                    });
                                     new LoadIMInfoThread().start();
                                 }
 
@@ -157,6 +162,9 @@ private void init(){
                     }else{
                         Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
                         startActivityForResult(intent, 1);
+                    }
+                    if (!dbManager.isExit(tvAuto.getText().toString())){
+                        dbManager.save(tvAuto.getText().toString(), etPassword.getText().toString());
                     }
                     setResult(1);
                     finish();
@@ -313,11 +321,11 @@ private void init(){
         }.execute();
     }
     private boolean validate(){
-        if(StringUtil.isBlank(etTel.getText().toString())){
+        if(StringUtil.isBlank(tvAuto.getText().toString())){
             showToastMsg("请输入您的手机号！");
             return false;
         }
-        if(!StringUtil.isPhoneNumber(etTel.getText().toString())){
+        if(!StringUtil.isPhoneNumber(tvAuto.getText().toString())){
             showToastMsg("请输入正确的手机号码！");
         }
         if(StringUtil.isBlank(etPassword.getText().toString())){
@@ -366,7 +374,7 @@ private void init(){
             case R.id.btn_login:
                 if(validate()){
                     final RegisterInfo registerInfo = new RegisterInfo();
-                    registerInfo.setPhone(etTel.getText().toString());
+                    registerInfo.setPhone(tvAuto.getText().toString());
                     registerInfo.setPassword(etPassword.getText().toString());
                     login(registerInfo, true);
                 }
