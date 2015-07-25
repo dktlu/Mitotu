@@ -56,7 +56,7 @@ public class JPushReceiver extends BroadcastReceiver {
             //send the Registration Id to your server...
                         
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-        	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+        	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
         	processCustomMessage(context, bundle);
         
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
@@ -104,7 +104,7 @@ public class JPushReceiver extends BroadcastReceiver {
 	
 	//send msg to MainActivity
 	private void processCustomMessage(Context context, Bundle bundle) {
-		String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+		String message = bundle.getString(JPushInterface.EXTRA_EXTRA);
 		//PushMessage pushMessage = new PushMessage();
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -122,7 +122,7 @@ public class JPushReceiver extends BroadcastReceiver {
 				Intent msgIntent = new Intent(ACTION_JPUSH_INVITE_MESSAGE_RECIEVE);
 				msgIntent.putExtras(new Bundle());
 				context.sendOrderedBroadcast(msgIntent,null);
-			}else if(rootJson.get("Type").equals("like")){
+			}else if(rootJson.get("Type").equals("user")){
 				//消息-喜欢
 				LikeMessage likeMessage = new LikeMessage();
 				likeMessage = mapper.readValue(rootJson.getJSONObject("Content").toString(), LikeMessage.class);
@@ -137,7 +137,7 @@ public class JPushReceiver extends BroadcastReceiver {
 				Intent msgIntent = new Intent(ACTION_JPUSH_SYS_MESSAGE_RECIEVE);
 				msgIntent.putExtras(new Bundle());
 				context.sendOrderedBroadcast(msgIntent,null);
-			}else if(rootJson.get("Type").equals("yueyou_like")||rootJson.get("Type").equals("activity_like")){
+			}else if(rootJson.get("Type").equals("like")){
                 //消息-喜欢约游
 				LikeMessage likeMessage = new LikeMessage();
 				likeMessage = mapper.readValue(rootJson.getJSONObject("Content").toString(), LikeMessage.class);
@@ -157,7 +157,7 @@ public class JPushReceiver extends BroadcastReceiver {
                 Intent msgIntent = new Intent(ACTION_JPUSH_SYS_MESSAGE_RECIEVE);
                 msgIntent.putExtras(new Bundle());
                 context.sendOrderedBroadcast(msgIntent,null);
-            }else if(rootJson.get("Type").equals("yueyou_join")||rootJson.get("Type").equals("activity_join")){
+            }else if(rootJson.get("Type").equals("join")){
 				//消息-参加约游
 				LikeMessage likeMessage = new LikeMessage();
 				likeMessage = mapper.readValue(rootJson.getJSONObject("Content").toString(), LikeMessage.class);
@@ -177,7 +177,7 @@ public class JPushReceiver extends BroadcastReceiver {
 				Intent msgIntent = new Intent(ACTION_JPUSH_SYS_MESSAGE_RECIEVE);
 				msgIntent.putExtras(new Bundle());
 				context.sendOrderedBroadcast(msgIntent,null);
-            }else if(rootJson.get("Type").equals("yueyou_reply")||rootJson.get("Type").equals("activity_reply")){
+            }else if(rootJson.get("Type").equals("reply")){
 				//消息-参加约游
 				LikeMessage likeMessage = new LikeMessage();
 				likeMessage = mapper.readValue(rootJson.getJSONObject("Content").toString(), LikeMessage.class);
@@ -231,13 +231,10 @@ public class JPushReceiver extends BroadcastReceiver {
 				context.sendOrderedBroadcast(msgIntent,null);
             }
 		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		if (MainActivity.isForeground) {
