@@ -101,6 +101,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
 
     private void bindView() {
         tvLeft.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
         llWeibo.setOnClickListener(this);
         llWX.setOnClickListener(this);
         llQQ.setOnClickListener(this);
@@ -113,6 +114,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             tvTitle.setText("添加手机好友");
             tvRight.setText("跳过");
             llShareArea.setVisibility(View.GONE);
+            tvLeft.setVisibility(View.GONE);
         }else {
             tvTitle.setText("寻找妙友");
             tvRight.setVisibility(View.GONE);

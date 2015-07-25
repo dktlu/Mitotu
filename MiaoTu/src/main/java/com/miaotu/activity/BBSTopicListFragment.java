@@ -486,6 +486,7 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
             tvName.setText(recommends.get(0).getNickname());
             tvPs.setText(recommends.get(0).getContent());
             ivAdd.setTag(recommends.get(0).getUid());
+            ivAdd.setBackgroundResource(R.drawable.icon_add);
         }
     }
 

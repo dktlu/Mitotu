@@ -70,7 +70,15 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
         tvTitle.setText("填写验证码");
         tvRight.setText("下一步");
         registerInfo = (RegisterInfo) getIntent().getSerializableExtra("registerInfo");
-        tvNumber.setText("+86 " + registerInfo.getPhone());
+        String phone = "";
+        if (registerInfo.getPhone().length() == 11){
+            phone = registerInfo.getPhone().substring(0,3)+"****"+registerInfo.getPhone().substring(7,11);
+        }else if (StringUtil.isBlank(registerInfo.getPhone())){
+            phone = "号码为空";
+        }else {
+            phone = "号码错误";
+        }
+        tvNumber.setText("+86 " + phone);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

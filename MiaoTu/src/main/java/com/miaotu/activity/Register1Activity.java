@@ -364,11 +364,20 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     }
 
                     getPhoneContacts();
-                    String phones = "";
-                    for (String phone:mContactsNumber){
-                        phones += phone+",";
+                    if (mContactsNumber.size() > 0){
+                        String phones = "";
+                        for (String phone:mContactsNumber){
+                            phones += phone+",";
+                        }
+                        matchPhoneList(phones.substring(0,phones.length()-1));
+                    }else {
+                        Intent intent = new Intent();
+                        intent.setClass(Register1Activity.this, FindMFriendsActivity.class);
+                        intent.putExtra("register", "register");
+                        startActivity(intent);
+                        Register1Activity.this.sendBroadcast(new Intent().setAction("Exit"));
+                        Register1Activity.this.finish();
                     }
-                    matchPhoneList(phones.substring(0,phones.length()-1));
 
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
@@ -741,7 +750,6 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
             @Override
             protected void onCompleteTask(AddressListResult addressListResult) {
                 if (addressListResult.getCode() == BaseResult.SUCCESS){
-                    Register1Activity.this.sendBroadcast(new Intent().setAction("Exit"));
                     Intent intent = new Intent();
                     if (addressListResult.getAddressList().size() < 1){
                         intent.setClass(Register1Activity.this, PhoneAddressActivity.class);
@@ -751,6 +759,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                         intent.putExtra("register", "register");
                     }
                     startActivity(intent);
+                    Register1Activity.this.sendBroadcast(new Intent().setAction("Exit"));
                     Register1Activity.this.finish();
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
