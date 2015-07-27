@@ -807,8 +807,8 @@
                     android:layout_width="77dp"
                     android:layout_height="34dp"
                     android:gravity="center"
-                    android:text="标签"
-                    android:textColor="#b4b4b4"
+                    android:text="个人标签"
+                    android:textColor="#646464"
                     android:textSize="14sp" />
 
                 <View

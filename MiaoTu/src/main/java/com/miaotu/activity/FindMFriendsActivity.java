@@ -145,7 +145,12 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             if (mContactsNumber.size() > 1){
                 String phones = "";
                 for (String phone:mContactsNumber){
-                    phones+=phone+",";
+                    phone = phone.replace(" ","");
+                    phone = phone.replace("-","");
+                    if (phone.startsWith("+86")){
+                        phone = phone.substring(3);
+                    }
+                    phones = phones + phone + ",";
                 }
                 matchPhoneList(phones.substring(0, phones.length() - 1));
             }else {
@@ -276,7 +281,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     contactlist.addAll(addressListResult.getAddressList());
                     contactsadapter.notifyDataSetChanged();
                     setAdapterHeght(contactlist.size(), 60, rvFriends);
-                    tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\\n关注后和TA们一起，看更大的世界");
+                    tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
                         showToastMsg("匹配通讯录失败");

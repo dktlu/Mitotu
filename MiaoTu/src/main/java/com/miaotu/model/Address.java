@@ -15,6 +15,8 @@ public class Address {
     private String islike;
     @JsonProperty("IsOwn")
     private String isown;
+    @JsonProperty("Uid")
+    private String uid;
 
     public String getPhone() {
         return phone;
@@ -46,5 +48,13 @@ public class Address {
 
     public void setIsown(String isown) {
         this.isown = isown;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

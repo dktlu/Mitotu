@@ -12,6 +12,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="吃货"
-        android:textColor="#b4b4b4"
+        android:textColor="#646464"
         android:textSize="12sp" />
 </LinearLayout>

@@ -30,7 +30,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private TextView tv_username;
     private RelativeLayout rl_userinfo, rl_homepage, rl_setting, rl_hongbao,
             rl_order, rl_customer, rl_recommend;
-    private TextView tv_left, tv_title, tv_right;
+    private TextView tv_left, tv_title, tv_right, tv_wantgo;
     private LinearLayout llFans,llFollow,llSearch;
     private TextView tvFansCount,tvFollowCount;
     private TextView tvAge;
@@ -69,6 +69,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     }
 
     private void findView() {
+        tv_wantgo = (TextView) root.findViewById(R.id.tv_wantgo);
         tvAge = (TextView) root.findViewById(R.id.tv_age);
         ivGender = (ImageView) root.findViewById(R.id.iv_gender);
         llSexandAge = (LinearLayout) root.findViewById(R.id.ll_sexandage);
@@ -96,7 +97,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
      */
     private void initUserInfo() {
         String headimg = readPreference("headphoto");
-        String identity = readPreference("job");
+        String wantgo = readPreference("wantgo");
         String age = readPreference("age");
         String name = readPreference("name");
         String gender = readPreference("gender");
@@ -113,6 +114,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         tv_username.setText(name);
         tvFansCount.setText(fanscount);
         tvFollowCount.setText(followcount);
+        tv_wantgo.setText("想去"+wantgo);
     }
 
     private void init() {
