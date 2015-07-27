@@ -320,7 +320,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     }
                     recommendList.clear();
                     recommendList.addAll(recommendListResult.getRecommendList());
-                    recommendadapter.notifyItemChanged(recommendList.size() - 1);
+                    recommendadapter.notifyDataSetChanged();
                     setAdapterHeght(recommendList.size(), 60, rvRecommend);
                 }else {
                     if (StringUtil.isBlank(recommendListResult.getMsg())){
