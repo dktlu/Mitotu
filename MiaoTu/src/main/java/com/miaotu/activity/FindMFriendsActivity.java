@@ -274,7 +274,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     }
                     contactlist.clear();
                     contactlist.addAll(addressListResult.getAddressList());
-                    contactsadapter.notifyItemChanged(contactlist.size() - 1);
+                    contactsadapter.notifyDataSetChanged();
                     setAdapterHeght(contactlist.size(), 60, rvFriends);
                     tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\\n关注后和TA们一起，看更大的世界");
                 }else {
