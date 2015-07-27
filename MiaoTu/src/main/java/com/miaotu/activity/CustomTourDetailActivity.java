@@ -261,31 +261,31 @@ private WebView webView;
 //                    webView.reload();
 //                }
 //            });
-            if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
-                showToastMsg("当前未联网，请检查网络设置");
-                return;
-            }
-            if(isLike){
-                //喜欢成功
-                setResult(1003);
-            }else{
-                //取消喜欢成功
-               setResult(1004);
-            }
+                if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
+            showToastMsg("当前未联网，请检查网络设置");
+            return;
         }
-        @android.webkit.JavascriptInterface
-        public void enterUser(String uid) {
-            // 个人中心
-            if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
-                showToastMsg("当前未联网，请检查网络设置");
-                return;
-            }
-            Intent userIntent = new Intent(CustomTourDetailActivity.this,PersonCenterActivity.class);
-            userIntent.putExtra("uid", uid);
-            startActivity(userIntent);
+        if(isLike){
+            //喜欢成功
+            setResult(1003);
+        }else{
+            //取消喜欢成功
+            setResult(1004);
         }
-        @android.webkit.JavascriptInterface
-        public void pay(String orderId,String uid,String nickname,String headUrl,String groupId,String groupName,String remark) {
+    }
+    @android.webkit.JavascriptInterface
+    public void enterUser(String uid) {
+        // 个人中心
+        if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
+            showToastMsg("当前未联网，请检查网络设置");
+            return;
+        }
+        Intent userIntent = new Intent(CustomTourDetailActivity.this,PersonCenterActivity.class);
+        userIntent.putExtra("uid", uid);
+        startActivity(userIntent);
+    }
+    @android.webkit.JavascriptInterface
+    public void pay(String orderId,String uid,String nickname,String headUrl,String groupId,String groupName,String remark) {
             // 支付
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
                 showToastMsg("当前未联网，请检查网络设置");

@@ -187,4 +187,5 @@
     </string>
     <string name="title_activity_sign_notice">SignNoticeActivity</string>
     <string name="title_activity_phone_address">PhoneAddressActivity</string>
+    <string name="title_activity_order_list">OrderListActivity</string>
 </resources>

@@ -159,9 +159,11 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                 startActivityForResult(hongbaoIntent, 1001);
                 break;
             case R.id.rl_order:
-                showToastMsg("还没开发");
+                Intent orderIntent = new Intent(FourthPageFragment.this.getActivity(),
+                        OrderListActivity.class);
+                startActivity(orderIntent);
                 return;
-            case R.id.rl_customtour:  //一起走
+            case R.id.rl_customtour:  //约游秒旅团
                 showToastMsg("还没开发");
                 return;
             case R.id.rl_recommend: //应用推荐
