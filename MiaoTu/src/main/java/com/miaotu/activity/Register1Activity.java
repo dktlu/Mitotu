@@ -77,7 +77,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     private WheelTwoColumnDialog dialog;
     private int position;
     private Button btnRegister;
-    private static final int PHONES_NUMBER_INDEX = 1;
+    private static final int PHONES_NUMBER_INDEX = 0;
     private ArrayList<String> mContactsNumber = new ArrayList<String>();
     private static final String[] PHONES_PROJECTION = new String[]{
             ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -141,18 +141,27 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         if (StringUtil.isBlank(et_nickname.getText().toString()) ){
             showToastMsg("昵称不能为空");
             empty = true;
-        }if (StringUtil.isBlank(tv_gender.getText().toString()) ){
+            return empty;
+        }
+        if (StringUtil.isBlank(tv_gender.getText().toString()) ){
             showToastMsg("性别不能为空");
             empty = true;
-        }if (StringUtil.isBlank(tv_age.getText().toString()) ){
+            return empty;
+        }
+        if (StringUtil.isBlank(tv_age.getText().toString()) ){
             showToastMsg("年龄不能为空");
             empty = true;
-        }if (StringUtil.isBlank(tv_emotion.getText().toString()) ){
+            return empty;
+        }
+        if (StringUtil.isBlank(tv_emotion.getText().toString()) ){
             showToastMsg("情感状态不能为空");
             empty = true;
-        }if (StringUtil.isBlank(et_wantgo.getText().toString()) ){
+            return empty;
+        }
+        if (StringUtil.isBlank(et_wantgo.getText().toString()) ){
             showToastMsg("想去不能为空");
             empty = true;
+            return empty;
         }
         return empty;
     }
