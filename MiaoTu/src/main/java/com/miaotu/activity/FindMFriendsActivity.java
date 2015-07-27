@@ -38,6 +38,7 @@ import com.miaotu.util.Util;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.sharesdk.framework.Platform;
@@ -141,17 +142,8 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         }else {
             llFriend.setVisibility(View.VISIBLE);
             rvFriends.setVisibility(View.VISIBLE);
-            getPhoneContacts();
-            if (mContactsNumber.size() > 1){
-                String phones = "";
-                for (String phone:mContactsNumber){
-                    phone = phone.replace(" ","");
-                    phone = phone.replace("-","");
-                    if (phone.startsWith("+86")){
-                        phone = phone.substring(3);
-                    }
-                    phones = phones + phone + ",";
-                }
+            String phones = getPhoneContacts();
+            if (phones.length() > 1){
                 matchPhoneList(phones.substring(0, phones.length() - 1));
             }else {
                 showToastMsg("手机没有通讯录");
@@ -219,12 +211,11 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     /**
      * 得到手机通讯录联系人信息*
      */
-    private void getPhoneContacts() {
+    private String getPhoneContacts() {
         ContentResolver resolver = this.getContentResolver();
-
         // 获取手机联系人
         Cursor phoneCursor = resolver.query(Phone.CONTENT_URI, PHONES_PROJECTION, null, null, null);
-
+        String phones = "";
         if (phoneCursor != null) {
             while (phoneCursor.moveToNext()) {
                 //得到手机号码
@@ -250,13 +241,47 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     contactPhoto = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_head);
                 }
 
-                mContactsName.add(contactName);
-                mContactsNumber.add(phoneNumber);
-                mContactsPhonto.add(contactPhoto);
-            }
+                phoneNumber = phoneNumber.replace(" ","");
+                phoneNumber = phoneNumber.replace("-","");
+                /*if (phoneNumber.startsWith("+86")){
+                    phoneNumber = phoneNumber.substring(3);
+                }
+                if (phoneNumber.startsWith("+")){
+                    phoneNumber = phoneNumber.substring(1);
+                }*/
 
+                mContactsName.add(contactName);
+                mContactsPhonto.add(contactPhoto);
+//                mContactsNumber.add(phoneNumber);
+                if (!mContactsNumber.contains(phoneNumber)){
+                    mContactsNumber.add(phoneNumber);
+                    phones += phoneNumber + ",";
+                }
+            }
             phoneCursor.close();
         }
+        //去重操作
+        return phones;
+    }
+
+    /**
+     * 去重
+     * @param al
+     * @return
+     */
+    private ArrayList<String> singleElement(ArrayList al){
+        //定义一个临时容器
+        ArrayList<String> newAl = new ArrayList();
+        //在迭代是循环中next调用一次，就要hasNext判断一次
+        Iterator it = al.iterator();
+
+        while (it.hasNext()){
+            String obj = (String) it.next();//next()最好调用一次就hasNext()判断一次否则容易发生异常
+            if (!newAl.contains(obj))
+                newAl.add(obj);
+            Log.e("ERROR", obj.toString());
+        }
+        return newAl;
     }
 
     /**
@@ -315,7 +340,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
      * 获取寻找妙友的推荐好友
      */
     private void getRecommendList(){
-        new BaseHttpAsyncTask<Void, Void, RecommendListResult>(this, true){
+        new BaseHttpAsyncTask<Void, Void, RecommendListResult>(this, true) {
 
             @Override
             protected void onCompleteTask(RecommendListResult recommendListResult) {
