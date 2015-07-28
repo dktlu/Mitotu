@@ -1,24 +1,18 @@
 package com.miaotu.http;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 
-import com.miaotu.activity.BaseActivity;
 import com.miaotu.annotation.FormProperty;
 import com.miaotu.annotation.Ignore;
 import com.miaotu.form.MFriendsInfo;
 import com.miaotu.form.PublishCustomForm;
+import com.miaotu.form.PublishTogether;
 import com.miaotu.model.ModifyPersonInfo;
+import com.miaotu.model.RegisterInfo;
 import com.miaotu.result.AddressListResult;
+import com.miaotu.result.BaseResult;
 import com.miaotu.result.BlackResult;
 import com.miaotu.result.CustomTourResult;
 import com.miaotu.result.DeleteTopicMessageResult;
@@ -27,18 +21,13 @@ import com.miaotu.result.GroupDetailResult;
 import com.miaotu.result.GroupUserListResult;
 import com.miaotu.result.ImageWallResult;
 import com.miaotu.result.JoinedListResult;
-import com.miaotu.result.MyTogetherResult;
 import com.miaotu.result.LikeResult;
-import com.miaotu.result.LuckyResult;
-import com.miaotu.result.MessageResult;
-import com.miaotu.result.MoneyResult;
-import com.miaotu.result.MovementListResult;
-import com.miaotu.result.MyCustomTourResult;
-import com.miaotu.result.PersonInfoResult;
-import com.miaotu.form.PublishTogether;
-import com.miaotu.model.RegisterInfo;
-import com.miaotu.result.BaseResult;
 import com.miaotu.result.LoginResult;
+import com.miaotu.result.LuckyResult;
+import com.miaotu.result.MoneyResult;
+import com.miaotu.result.MyCustomTourResult;
+import com.miaotu.result.MyTogetherResult;
+import com.miaotu.result.PersonInfoResult;
 import com.miaotu.result.PhotoUploadResult;
 import com.miaotu.result.PublishTogetherResult;
 import com.miaotu.result.RecommendListResult;
@@ -47,7 +36,6 @@ import com.miaotu.result.RemindLikeCustomResult;
 import com.miaotu.result.RemindLikeResult;
 import com.miaotu.result.RemindLikeTogetherResult;
 import com.miaotu.result.RemindSysResult;
-import com.miaotu.result.ReviewResult;
 import com.miaotu.result.SearchTourResult;
 import com.miaotu.result.SearchUserResult;
 import com.miaotu.result.SymbolResult;
@@ -61,6 +49,14 @@ import com.miaotu.result.WeiboResult;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("SimpleDateFormat")
 public class HttpRequestUtil {

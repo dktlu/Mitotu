@@ -180,16 +180,16 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_wx:
                 ShareSDK.initSDK(this);
                 Wechat.ShareParams wcsp = new Wechat.ShareParams();
-                String headurl = "";
+                String headurl = "http://m.miaotu.com/image/share_divine.png";
                 if (StringUtil.isBlank(headurl)) {
                     wcsp.setShareType(Platform.SHARE_TEXT);
                 } else {
-//                    wcsp.setShareType(Platform.SHARE_WEBPAGE);
-//                    wcsp.setImageUrl(headurl + "200x200");
-//                    wcsp.setUrl("http://m.miaotu.com/ShareLine/?yid=" + yid);
+                    wcsp.setShareType(Platform.SHARE_WEBPAGE);
+                    wcsp.setImageUrl(headurl + "200x200");
+                    wcsp.setUrl("http://m.miaotu.com/");
                 }
                 wcsp.setTitle("妙途");
-                wcsp.setText("妙途" + "\n http://m.miaotu.com/");
+                wcsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
                 Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
                 wechat.setPlatformActionListener(new PlatFormListener());
                 wechat.share(wcsp);
@@ -197,10 +197,10 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_qq:
                 ShareSDK.initSDK(this);
                 QQ.ShareParams qqsp = new QQ.ShareParams();
-                qqsp.setTitle("妙途");
+                qqsp.setTitle("找个对的人去游山玩水，含泪推荐");
                 qqsp.setTitleUrl("http://m.miaotu.com/");
-                qqsp.setText("http://m.miaotu.com/");
-//                qqsp.setImageUrl("");
+                qqsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
+                qqsp.setImageUrl("http://m.miaotu.com/image/share_divine.png");
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);
                 qq.setPlatformActionListener(new PlatFormListener());
                 qq.share(qqsp);
