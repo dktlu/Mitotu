@@ -1,6 +1,7 @@
 package com.miaotu.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -48,6 +50,8 @@ import com.photoselector.model.PhotoModel;
 import com.photoselector.ui.PhotoPreviewActivity;
 import com.photoselector.util.CommonUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +134,17 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                 }
             }
 
+        });
+        lvTopics.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                etComment.setFocusable(true);
+                if (i>1){
+                    etComment.setText("@"+commentList.get(i-2).getNickname()+" ");
+                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         });
         etComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -265,8 +280,17 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                 ((TextView) view
                         .findViewById(R.id.tv_comment_count)).setText(topic.getDistance()+"km");
             }
-            ((TextView) view
-                    .findViewById(R.id.tv_top_date)).setText(topic.getCreated());
+//            ((TextView) view
+//                    .findViewById(R.id.tv_top_date)).setText(topic.getCreated());
+            try {
+                ((TextView) view
+                        .findViewById(R.id.tv_top_date)).setText(
+                        com.easemob.util.DateUtils.getTimestampString(
+                                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").
+                                        parse(topic.getCreated())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             ImageView ivLike = (ImageView) view.findViewById(R.id.iv_like);
 
 
@@ -527,8 +551,17 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     }
                     ((TextView) view
                             .findViewById(R.id.tv_comment_count)).setText(topic.getDistance()+"km");
-                    ((TextView) view
-                            .findViewById(R.id.tv_date)).setText(topic.getCreated());
+//                    ((TextView) view
+//                            .findViewById(R.id.tv_date)).setText(topic.getCreated());
+                    try {
+                        ((TextView) view
+                                .findViewById(R.id.tv_top_date)).setText(
+                                com.easemob.util.DateUtils.getTimestampString(
+                                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").
+                                                parse(topic.getCreated())));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     ImageView ivLike = (ImageView) view.findViewById(R.id.iv_like);
                     if ("false".equals(topic.getIslike())) {
                         ivLike.setBackgroundResource(R.drawable.icon_friend_dislike);

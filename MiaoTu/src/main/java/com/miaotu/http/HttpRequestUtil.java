@@ -39,6 +39,7 @@ import com.miaotu.result.RemindSysResult;
 import com.miaotu.result.SearchTourResult;
 import com.miaotu.result.SearchUserResult;
 import com.miaotu.result.SymbolResult;
+import com.miaotu.result.TogetherCommentResult;
 import com.miaotu.result.TogetherDetailResult;
 import com.miaotu.result.TogetherResult;
 import com.miaotu.result.TopicCommentsListResult;
@@ -294,13 +295,13 @@ public class HttpRequestUtil {
      * @param content
      * @return
      */
-    public BaseResult publishTogetherComment(String token, String yid, String content) {
+    public TogetherCommentResult publishTogetherComment(String token, String yid, String content) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("yid", yid));
         params.add(new BasicNameValuePair("content", content));
         return HttpDecoder.postForObject(
-                getUrl("yueyou/reply"), BaseResult.class,
+                getUrl("yueyou/reply"), TogetherCommentResult.class,
                 params);
 
     }

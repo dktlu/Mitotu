@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.easemob.util.DateUtils;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.activity.PersonCenterActivity;
@@ -20,6 +21,8 @@ import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 import com.miaotu.view.CircleImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -81,7 +84,7 @@ public class TopicCommentsAdapter extends BaseAdapter {
         holder.ivHeadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Util.isNetworkConnected(mContext)) {
+                if (!Util.isNetworkConnected(mContext)) {
                     return;
                 }
                 int pos = (int) view.getTag();
@@ -92,7 +95,12 @@ public class TopicCommentsAdapter extends BaseAdapter {
         });
         holder.tvNickname.setText(mList.get(position).getNickname());
         holder.tvContent.setText(mList.get(position).getContent());
-        holder.tvDate.setText(mList.get(position).getCreated());
+//        holder.tvDate.setText(mList.get(position).getCreated());
+        try {
+            holder.tvDate.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mList.get(position).getCreated())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return convertView;
     }
 

@@ -12,11 +12,13 @@ import android.text.TextPaint;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easemob.util.DateUtils;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.adapter.ImageItemAdapter;
@@ -40,6 +43,7 @@ import com.miaotu.model.Together;
 import com.miaotu.model.TogetherReply;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.LoginResult;
+import com.miaotu.result.TogetherCommentResult;
 import com.miaotu.result.TogetherDetailResult;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.MD5;
@@ -54,6 +58,8 @@ import com.photoselector.ui.PhotoPreviewActivity;
 import com.photoselector.util.CommonUtils;
 import com.umeng.analytics.MobclickAgent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -340,7 +346,6 @@ private Together together;
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
                             showToastMsg("当前未联网，请检查网络设置");
                             return;
@@ -361,8 +366,8 @@ private Together together;
         }
         layoutCommentList.removeAllViews();
         if(result.getTogether().getReplyList()!=null){
-            for(TogetherReply reply:result.getTogether().getReplyList()){
-                TextView textView = new TextView(this);
+            for(final TogetherReply reply:result.getTogether().getReplyList()){
+                /*TextView textView = new TextView(this);
                 SpannableStringBuilder style=new SpannableStringBuilder(reply.getNickname()+" "+reply.getContent());
                 style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.b4b4b4)), 0, reply.getNickname().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                 style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.grey64)), reply.getNickname().length(), reply.getNickname().length() + reply.getContent().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -370,9 +375,55 @@ private Together together;
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.bottomMargin = Util.dip2px(this,5);
                 textView.setLayoutParams(params);
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-                textView.setLineSpacing(0f,1.4f);
-                layoutCommentList.addView(textView);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                textView.setLineSpacing(0f, 1.4f);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        etComment.setText("@" + reply.getNickname() + " ");
+                        layoutMenu.setVisibility(View.GONE);
+                        layoutPublishComment.setVisibility(View.VISIBLE);
+                    }
+                });
+                layoutCommentList.addView(textView);*/
+                View view = LayoutInflater.from(TogetherDetailActivity.this).inflate(
+                        R.layout.item_topic_comment, null);
+                CircleImageView head = (CircleImageView) view.findViewById(R.id.iv_head_photo);
+                TextView tvName = (TextView) view.findViewById(R.id.tv_nickname);
+                TextView tvTime = (TextView) view.findViewById(R.id.tv_date);
+                TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+                UrlImageViewHelper.setUrlDrawable(head, reply.getHeadUrl(), R.drawable.icon_default_head);
+                tvName.setText(reply.getNickname());
+//                tvTime.setText(reply.getCreated());
+                try {
+                    tvTime.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(reply.getCreated())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tvContent.setText(reply.getContent());
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        etComment.setText("@" + reply.getNickname() + " ");
+                        layoutMenu.setVisibility(View.GONE);
+                        layoutPublishComment.setVisibility(View.VISIBLE);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                });
+                head.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
+                            showToastMsg("当前未联网，请检查网络设置");
+                            return;
+                        }
+                        Intent userIntent = new Intent(TogetherDetailActivity.this,PersonCenterActivity.class);
+                        userIntent.putExtra("uid", reply.getUid());
+                        startActivity(userIntent);
+                    }
+                });
+                layoutCommentList.addView(view);
             }
         }
 
@@ -446,9 +497,9 @@ private Together together;
      * 发表评论
      */
     private void publishComment() {
-        new BaseHttpAsyncTask<Void, Void, BaseResult>(this, true) {
+        new BaseHttpAsyncTask<Void, Void, TogetherCommentResult>(this, true) {
             @Override
-            protected void onCompleteTask(BaseResult result) {
+            protected void onCompleteTask(TogetherCommentResult result) {
                 if(tvLiked==null){
                     return;
                 }
@@ -458,7 +509,9 @@ private Together together;
                     layoutPublishComment.setVisibility(View.GONE);
                     TogetherReply reply1 = new TogetherReply();
                     reply1.setNickname(readPreference("name"));
-                    reply1.setContent(StringUtil.trimAll(etComment.getText().toString()));
+                    reply1.setCreated(result.getTogetherComment().getCreated());
+//                    StringUtil.trimAll(etComment.getText().toString())
+                    reply1.setContent(etComment.getText().toString().trim());
                     etComment.setText("");
                     if(togetherDetailResult.getTogether().getReplyList()==null){
                         togetherDetailResult.getTogether().setReplyList(new ArrayList<TogetherReply>());
@@ -466,8 +519,8 @@ private Together together;
                     togetherDetailResult.getTogether().getReplyList().add(0, reply1);
                     layoutCommentList.removeAllViews();
                     if(togetherDetailResult.getTogether().getReplyList()!=null){
-                        for(TogetherReply reply:togetherDetailResult.getTogether().getReplyList()){
-                            TextView textView = new TextView(TogetherDetailActivity.this);
+                        for(final TogetherReply reply:togetherDetailResult.getTogether().getReplyList()){
+                            /*TextView textView = new TextView(TogetherDetailActivity.this);
                             SpannableStringBuilder style=new SpannableStringBuilder(reply.getNickname()+" "+reply.getContent());
                             style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.b4b4b4)), 0, reply.getNickname().length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                             style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.grey64)), reply.getNickname().length(),(reply.getNickname()+" "+reply.getContent()).length()-1 , Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -477,7 +530,33 @@ private Together together;
                             textView.setLayoutParams(params);
                             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
                             textView.setLineSpacing(0f,1.4f);
-                            layoutCommentList.addView(textView);
+                            layoutCommentList.addView(textView);*/
+                            View view = LayoutInflater.from(TogetherDetailActivity.this).inflate(
+                                    R.layout.item_topic_comment, null);
+                            CircleImageView head = (CircleImageView) view.findViewById(R.id.iv_head_photo);
+                            TextView tvName = (TextView) view.findViewById(R.id.tv_nickname);
+                            TextView tvTime = (TextView) view.findViewById(R.id.tv_date);
+                            TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+                            UrlImageViewHelper.setUrlDrawable(head, reply.getHeadUrl(), R.drawable.icon_default_head);
+                            tvName.setText(reply.getNickname());
+                            tvTime.setText(reply.getCreated());
+//                            try {
+//                                tvTime.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(reply.getCreated())));
+//                            } catch (ParseException e) {
+//                                e.printStackTrace();
+//                            }
+                            tvContent.setText(reply.getContent());
+                            view.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    etComment.setText("@" + reply.getNickname() + " ");
+                                    layoutMenu.setVisibility(View.GONE);
+                                    layoutPublishComment.setVisibility(View.VISIBLE);
+                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                                }
+                            });
+                            layoutCommentList.addView(view);
                         }
                     }
                 } else {
@@ -490,8 +569,9 @@ private Together together;
             }
 
             @Override
-            protected BaseResult run(Void... params) {
-                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, StringUtil.trimAll(etComment.getText().toString()));
+            protected TogetherCommentResult run(Void... params) {
+//                StringUtil.trimAll(etComment.getText().toString())
+                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, etComment.getText().toString().trim());
             }
 
         }.execute();
@@ -671,6 +751,10 @@ private Together together;
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
                     showToastMsg("当前未联网，请检查网络设置");
                     return;
+                }
+                if(togetherDetailResult.getTogether().getUid().equals(readPreference("uid"))){
+                    showToastMsg("发起人不需要报名！");
+                    break;
                 }
                 if (togetherDetailResult.getTogether().isAddGroup() == true){
                     showToastMsg("您已经报过名了");
