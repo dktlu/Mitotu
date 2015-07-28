@@ -59,7 +59,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
                 if(isPay){
-                    webView.loadUrl("http://m.miaotu.com/App/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                    webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
                     webView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -86,7 +86,7 @@ private WebView webView;
         });
 
 
-                webView.loadUrl("http://m.miaotu.com/App/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
     }
     /**
      * js调用java的接口
@@ -96,7 +96,7 @@ private WebView webView;
     public final class JSInterface {
         //JavaScript脚本代码可以调用的函数onClick()处理
         @android.webkit.JavascriptInterface
-        public void share(String remark) {
+        public void share(String remark, String picurl) {
             ShareSDK.initSDK(CustomTourDetailActivity.this);
             OnekeyShare oks = new OnekeyShare();
             oks.setTheme(OnekeyShareTheme.CLASSIC);
@@ -116,6 +116,8 @@ private WebView webView;
             if (!StringUtil.isBlank(getIntent().getStringExtra("picurl"))){
                 oks.setImageUrl(getIntent().getStringExtra("picurl")
                         + "200x200");
+            }else if (!StringUtil.isBlank(picurl)){
+                oks.setImageUrl(picurl + "200x200");
             }
             // url仅在微信（包括好友和朋友圈）中使用
             oks.setUrl("http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
@@ -329,7 +331,7 @@ private WebView webView;
             showToastMsg("付款完成！");
             mHandler.post(new Runnable() {
                 public void run() {
-                    webView.loadUrl("http://m.miaotu.com/App/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                    webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
                 }
             });
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
@@ -343,7 +345,7 @@ private WebView webView;
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(isPay){
-            webView.loadUrl("http://m.miaotu.com/App/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+            webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
             webView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -414,7 +416,7 @@ private WebView webView;
                 if(result.equals("success")){
                         //支付成
                         showToastMsg("付款完成！");
-                        webView.loadUrl("http://m.miaotu.com/App/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                        webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
                         webView.postDelayed(new Runnable() {
                             @Override

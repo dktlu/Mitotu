@@ -615,6 +615,10 @@
             android:name=".activity.OrderListActivity"
             android:label="@string/title_activity_order_list" >
         </activity>
+        <activity
+            android:name=".activity.TogetherCustomerTourActivity"
+            android:label="@string/title_activity_together_customer_tour" >
+        </activity>
     </application>
 
 </manifest>

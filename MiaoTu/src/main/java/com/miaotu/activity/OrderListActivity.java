@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -92,6 +93,15 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 return;
             }
             showPayWindow(orderId);
+        }
+
+        @android.webkit.JavascriptInterface
+        private void contactMt(String number){
+            showToastMsg("电话//"+number);
+            /*Intent intent1 = new Intent();
+            intent1.setAction("android.intent.action.DIAL");
+            intent1.setData(Uri.parse("tel:"+number));
+            startActivity(intent1);*/
         }
     }
 
