@@ -61,7 +61,6 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
 
     private void bindView(){
         tvLeft.setOnClickListener(this);
-        tvTitle.setOnClickListener(this);
     }
 
     private void initData(){
@@ -86,48 +85,13 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
      */
     public final class JSInterface {
         @android.webkit.JavascriptInterface
-        private void callPay(final String orderId){
+        private void callPay(String orderId){
             // 支付
             if(!Util.isNetworkConnected(OrderListActivity.this)) {
                 showToastMsg("当前未联网，请检查网络设置");
                 return;
             }
-            /*new BaseHttpAsyncTask<Void, Void, String>(OrderListActivity.this, true) {
-                @Override
-                protected void onCompleteTask(String result) {
-                    if(tvTitle==null){
-                        return;
-                    }
-                    JSONTokener jsonTokener = new JSONTokener(result);
-                    JSONObject jb;
-                    String err="";
-                    String data="";
-                    try {
-                        jb = (JSONObject) jsonTokener.nextValue();
-                        err = jb.getString("Err");
-                        data = jb.getString("Items");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if(err.equals("0")){
-                        LogUtil.d("data", data);
-                        Intent intent = new Intent();
-                        String packageName = getPackageName();
-                        ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
-                        intent.setComponent(componentName);
-                        Log.d("data", data);
-                        intent.putExtra(PaymentActivity.EXTRA_CHARGE,data);
-                        startActivityForResult(intent, 1);
-                    }
-                }
-
-                @Override
-                protected String run(Void... params) {
-                    LogUtil.d("orderid",orderId);
-                    return HttpRequestUtil.getInstance().payOrder("alipay",orderId,readPreference("token"));
-                }
-            }.execute();*/
-            showPayWindow();
+            showPayWindow(orderId);
         }
     }
 
@@ -149,9 +113,6 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 }else {
                     finish();
                 }
-                break;
-            case R.id.tv_title:
-                showPayWindow();
                 break;
         }
     }
@@ -213,7 +174,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void showPayWindow(){
+    private void showPayWindow(final String orderId){
         if (popupWindow == null){
             LayoutInflater inflater = LayoutInflater.from(this);
             view = inflater.inflate(R.layout.pop_pay_option, null);
@@ -233,6 +194,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             public void onClick(View view) {
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
+                    setBlack(0.0f);
                 }
             }
         });
@@ -240,8 +202,10 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 showToastMsg("支付宝支付");
+                payOrder(orderId, "alipay");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
+                    setBlack(0.0f);
                 }
             }
         });
@@ -249,15 +213,68 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 showToastMsg("微信支付");
+                payOrder(orderId, "wx");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
+                    setBlack(0.0f);
                 }
             }
         });
+        setBlack(1.0f);
         popupWindow.setFocusable(true);
 //        popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
         popupWindow.showAtLocation(llWebview, Gravity.BOTTOM, 0, 0);
+    }
+
+    private void setBlack(float f){
+        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+        lp.dimAmount=f;
+        getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
+    /**
+     *
+     * @param orderId
+     * @param mode alipay/wx
+     */
+    private void payOrder(final String orderId, final String mode){
+        new BaseHttpAsyncTask<Void, Void, String>(OrderListActivity.this, true) {
+            @Override
+            protected void onCompleteTask(String result) {
+                if(tvTitle==null){
+                    return;
+                }
+                JSONTokener jsonTokener = new JSONTokener(result);
+                JSONObject jb;
+                String err="";
+                String data="";
+                try {
+                    jb = (JSONObject) jsonTokener.nextValue();
+                    err = jb.getString("Err");
+                    data = jb.getString("Items");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(err.equals("0")){
+                    LogUtil.d("data", data);
+                    Intent intent = new Intent();
+                    String packageName = getPackageName();
+                    ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
+                    intent.setComponent(componentName);
+                    Log.d("data", data);
+                    intent.putExtra(PaymentActivity.EXTRA_CHARGE,data);
+                    startActivityForResult(intent, 1);
+                }
+            }
+
+            @Override
+            protected String run(Void... params) {
+                LogUtil.d("orderid",orderId);
+                return HttpRequestUtil.getInstance().payOrder(mode, orderId, readPreference("token"));
+            }
+        }.execute();
     }
 
 }
