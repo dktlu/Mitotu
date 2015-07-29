@@ -180,7 +180,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_wx:
                 ShareSDK.initSDK(this);
                 Wechat.ShareParams wcsp = new Wechat.ShareParams();
-                String headurl = "http://m.miaotu.com/image/share_divine.png";
+                String headurl = "http://m.miaotu.com/Public/images/200.png";
                 if (StringUtil.isBlank(headurl)) {
                     wcsp.setShareType(Platform.SHARE_TEXT);
                 } else {
@@ -200,7 +200,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 qqsp.setTitle("找个对的人去游山玩水，含泪推荐");
                 qqsp.setTitleUrl("http://m.miaotu.com/");
                 qqsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
-                qqsp.setImageUrl("http://m.miaotu.com/image/share_divine.png");
+                qqsp.setImageUrl("http://m.miaotu.com/Public/images/200.png200x200");
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);
                 qq.setPlatformActionListener(new PlatFormListener());
                 qq.share(qqsp);

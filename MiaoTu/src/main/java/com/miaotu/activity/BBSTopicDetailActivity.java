@@ -140,7 +140,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 etComment.setFocusable(true);
                 if (i>1){
-                    etComment.setText("@"+commentList.get(i-2).getNickname()+" ");
+                    etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
                 }
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);

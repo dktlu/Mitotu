@@ -106,11 +106,11 @@ private WebView webView;
 //        oks.setNotification(R.drawable.ic_launcher,
 //                getString(R.string.app_name));
             // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-            oks.setTitle(remark + "\n http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setTitle(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-            oks.setTitleUrl("http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setTitleUrl("http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // text是分享文本，所有平台都需要这个字段
-            oks.setText(remark + "\n http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setText(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 
             if (!StringUtil.isBlank(getIntent().getStringExtra("picurl"))){
@@ -120,13 +120,13 @@ private WebView webView;
                 oks.setImageUrl(picurl + "200x200");
             }
             // url仅在微信（包括好友和朋友圈）中使用
-            oks.setUrl("http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setUrl("http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-            oks.setComment(remark + "\n http://m.miaotu.com/ShareLine/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setComment(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // site是分享此内容的网站名称，仅在QQ空间使用
             oks.setSite(getString(R.string.app_name));
             // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-            oks.setSiteUrl("http://m.miaotu.com/ShareLine/custom/?aid=" +getIntent().getStringExtra("id"));
+            oks.setSiteUrl("http://m.miaotu.com/ShareLine31/custom/?aid=" +getIntent().getStringExtra("id"));
 
             // 启动分享GUI
             oks.show(CustomTourDetailActivity.this);

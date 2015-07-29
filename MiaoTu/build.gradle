@@ -218,6 +218,8 @@ dependencies {
     compile files('libs/alipaysdk.jar')
     compile files('libs/alipaysecsdk.jar')
     compile files('libs/alipayutdid.jar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/libpingpp.jar')
     compile 'com.android.support:percent:22.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:recyclerview-v7:22.+'
