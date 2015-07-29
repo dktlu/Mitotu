@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -33,6 +34,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     private MyLikeAdapter adapter;
     private View root;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
+        View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
+        lvBlackList.setEmptyView(view);
         blackInfoList = new ArrayList<>();
         adapter = new MyLikeAdapter(this.getActivity(), blackInfoList);
         lvBlackList.setAdapter(adapter);
@@ -80,7 +84,6 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                 return false;
             }
         });
-
         getLikeList();
     }
 
@@ -95,7 +98,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                 if(blackResult.getCode() == BaseResult.SUCCESS){
                     blackInfoList.clear();
                     if(blackResult.getBlackInfos() == null){
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
                         return;
                     }
                     blackInfoList.addAll(blackResult.getBlackInfos());

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -49,7 +51,6 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
         blackInfoList = new ArrayList<>();
         adapter = new MyFansAdapter(this.getActivity(), blackInfoList, readPreference("token"));
         lvBlackList.setAdapter(adapter);
-
         getFansList();
     }
 
@@ -64,7 +65,8 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
                 if(blackResult.getCode() == BaseResult.SUCCESS){
                     blackInfoList.clear();
                     if(blackResult.getBlackInfos() == null){
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
+//                        viewStub.inflate();
                         return;
                     }
                     blackInfoList.addAll(blackResult.getBlackInfos());

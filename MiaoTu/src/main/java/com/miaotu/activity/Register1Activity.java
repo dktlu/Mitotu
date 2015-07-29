@@ -57,6 +57,9 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
+/**
+ * 新注册用户添加用户信息
+ */
 public class Register1Activity extends BaseActivity implements View.OnClickListener{
 
     private TextView tv_left, tv_title;
@@ -129,6 +132,14 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         tv_left.setVisibility(View.GONE);
         alltags = new ArrayList<>();
         userinfo = new ModifyPersonInfo();
+        if (!StringUtil.isBlank(getIntent().getStringExtra("third"))){
+            btnRegister.setText("下一步");
+            et_nickname.setText(getIntent().getStringExtra("name"));
+            tv_gender.setText(getIntent().getStringExtra("gender"));
+            tv_age.setText(getIntent().getStringExtra("age"));
+            tv_emotion.setText(getIntent().getStringExtra("emotion"));
+            et_wantgo.setText(getIntent().getStringExtra("wantgo"));
+        }
     }
 
     /**

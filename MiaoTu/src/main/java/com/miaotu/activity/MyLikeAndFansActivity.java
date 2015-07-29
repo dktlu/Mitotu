@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;

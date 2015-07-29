@@ -288,6 +288,17 @@ private void bindView(){
                     Calendar calendar = Calendar.getInstance();
                     SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
                     String sysDatetime = fmt.format(calendar.getTime())+readPreference("token");
+                    if (isEmpty(result)){
+                        Intent intent = new Intent(LoginActivity.this,Register1Activity.class);
+                        intent.putExtra("name", result.getLogin().getName());
+                        intent.putExtra("gender", result.getLogin().getGender());
+                        intent.putExtra("age", result.getLogin().getAge());
+                        intent.putExtra("emotion", result.getLogin().getMaritalstatus());
+                        intent.putExtra("wantgo", result.getLogin().getWantgo());
+                        intent.putExtra("third", "third");
+                        startActivityForResult(intent, 1);
+                        return;
+                    }
                     if(readPreference("everyday").equals(sysDatetime)){
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivityForResult(intent, 1);
@@ -539,5 +550,17 @@ private void bindView(){
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(broadcastReceiver);
+    }
+
+    private boolean isEmpty(LoginResult result){
+        boolean flag = false;
+        if (StringUtil.isBlank(result.getLogin().getName())||
+                StringUtil.isBlank(result.getLogin().getGender())||
+                StringUtil.isBlank(result.getLogin().getAge())||
+                StringUtil.isBlank(result.getLogin().getMaritalstatus())||
+                StringUtil.isBlank(result.getLogin().getWantgo())){
+            flag = true;
+        }
+        return flag;
     }
 }

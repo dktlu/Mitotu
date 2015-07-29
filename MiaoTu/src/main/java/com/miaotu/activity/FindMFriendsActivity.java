@@ -70,7 +70,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     private ContactListAdapter contactsadapter;
     private RecommendListAdapter recommendadapter;
     private TextView tvChange;
-    private TextView tvLeft,tvTitle, tvRight;
+    private TextView tvNext,tvLeft,tvTitle, tvRight;
     private LinearLayout llFriend,llShareArea;
     private TextView tvFriendCount;
 
@@ -86,6 +86,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
 
     private void initView() {
         llShareArea = (LinearLayout) this.findViewById(R.id.ll_share_area);
+        tvNext = (TextView) this.findViewById(R.id.tv_next);
         tvLeft = (TextView) this.findViewById(R.id.tv_left);
         tvRight = (TextView) this.findViewById(R.id.tv_right);
         tvTitle = (TextView) this.findViewById(R.id.tv_title);
@@ -119,6 +120,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
         }else {
             tvTitle.setText("寻找妙友");
             tvRight.setVisibility(View.GONE);
+            tvLeft.setVisibility(View.VISIBLE);
         }
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();

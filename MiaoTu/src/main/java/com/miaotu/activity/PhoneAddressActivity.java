@@ -33,7 +33,7 @@ import java.util.List;
 
 public class PhoneAddressActivity extends BaseActivity implements View.OnClickListener{
 
-    private TextView tvLeft,tvTitle,tvRight;
+    private TextView tvNext,tvLeft,tvTitle,tvRight;
     private ListView lvAddress;
     private List<NativePhoneAddress> phoneAddressList;
     private CharacterParser characterParser;
@@ -55,6 +55,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        tvNext = (TextView) this.findViewById(R.id.tv_next);
         tvLeft = (TextView) this.findViewById(R.id.tv_left);
         tvRight = (TextView) this.findViewById(R.id.tv_right);
         tvTitle = (TextView) this.findViewById(R.id.tv_title);
@@ -69,10 +70,13 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     private void initData(){
         if ("register".equals(getIntent().getStringExtra("register"))){
             tvTitle.setText("邀请手机好友赢49元旅行基金");
-            tvLeft.setText("跳过");
-            tvLeft.setBackgroundResource(R.color.white);
+            tvNext.setText("跳过");
+            tvNext.setVisibility(View.VISIBLE);
+            tvLeft.setVisibility(View.GONE);
         }else {
             tvTitle.setText("手机通讯录朋友");
+            tvNext.setVisibility(View.GONE);
+            tvLeft.setVisibility(View.VISIBLE);
         }
         tvRight.setText("邀请");
         numbers = new ArrayList<>();
