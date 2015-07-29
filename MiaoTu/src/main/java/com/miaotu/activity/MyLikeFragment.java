@@ -51,7 +51,6 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
         blackInfoList = new ArrayList<>();
         adapter = new MyLikeAdapter(this.getActivity(), blackInfoList);
         lvBlackList.setAdapter(adapter);
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
