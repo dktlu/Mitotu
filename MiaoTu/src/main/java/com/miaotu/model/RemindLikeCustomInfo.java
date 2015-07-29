@@ -14,7 +14,7 @@ public class RemindLikeCustomInfo implements Serializable{
     private String nickname;
     @JsonProperty("HeadUrl")
     private String headUrl;
-    @JsonProperty("Aid")
+    @JsonProperty("Value")
     private String aid;
     @JsonProperty("PicUrl")
     private String picUrl;

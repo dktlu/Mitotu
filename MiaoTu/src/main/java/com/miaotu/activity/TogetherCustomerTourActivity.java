@@ -1,6 +1,7 @@
 package com.miaotu.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,7 @@ public class TogetherCustomerTourActivity extends BaseActivity implements View.O
 
     private TextView tvLeft, tvTitle;
     private WebView webView;
+    Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,11 @@ public class TogetherCustomerTourActivity extends BaseActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_left:
-                finish();
+                if(webView.canGoBack()){
+                    webView.goBack();
+                }else {
+                    finish();
+                }
                 break;
         }
     }
@@ -65,11 +71,59 @@ public class TogetherCustomerTourActivity extends BaseActivity implements View.O
     public final class JSInterface {
         //JavaScript脚本代码可以调用的函数onClick()处理
         @android.webkit.JavascriptInterface
-        private void showDetail(String aid){
-            Intent intent = new Intent(TogetherCustomerTourActivity.this,
-                    CustomTourDetailActivity.class);
-            intent.putExtra("id", aid);
-            startActivityForResult(intent, 1001);
+        public void showDetail(final String aid){
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(TogetherCustomerTourActivity.this,
+                            CustomTourDetailActivity.class);
+                    intent.putExtra("id", aid);
+                    startActivityForResult(intent, 1001);
+                }
+            });
+        }
+        @android.webkit.JavascriptInterface
+        public void setTitle(final String title) {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+
+                    // Code in here
+                    tvTitle.setText(title);
+
+                }
+
+            });
+        }
+        @android.webkit.JavascriptInterface
+        public void showTip(final String text) {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+
+                    // Code in here
+                    showToastMsg(text);
+
+                }
+
+            });
+        }
+
+        @android.webkit.JavascriptInterface
+        public void backRefresh() {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+
+                    webView.reload();
+                    if (webView.canGoBack()){
+                        webView.goBack();
+                    }else {
+                        finish();
+                    }
+                }
+
+            });
         }
     }
 

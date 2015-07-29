@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context="com.miaotu.activity.CustomTourDetailActivity">
 <include
-    android:id="@+id/layout_top"
+    android:id="@+id/top_bar"
     layout="@layout/top_bar"
     ></include>
     <WebView

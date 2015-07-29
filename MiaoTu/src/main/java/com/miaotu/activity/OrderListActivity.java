@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,8 +41,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout llWebview;
     private boolean isPay=false;
     private PopupWindow popupWindow;
-    private View view;
+    private View view, topBar;
     private TextView tvCancel,tvWxPay,tvAliPay;
+    Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         tvTitle = (TextView) findViewById(R.id.tv_title);
         webView = (WebView) findViewById(R.id.webview);
         llWebview = (LinearLayout) findViewById(R.id.ll_webview);
+        topBar = findViewById(R.id.top_bar);
     }
 
     private void bindView(){
@@ -86,22 +89,41 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
      */
     public final class JSInterface {
         @android.webkit.JavascriptInterface
-        private void callPay(String orderId){
+        public void callPay(final String orderId){
             // 支付
-            if(!Util.isNetworkConnected(OrderListActivity.this)) {
-                showToastMsg("当前未联网，请检查网络设置");
-                return;
-            }
-            showPayWindow(orderId);
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    showPayWindow(orderId);
+                }
+            });
         }
 
         @android.webkit.JavascriptInterface
-        private void contactMt(String number){
-            showToastMsg("电话//"+number);
-            /*Intent intent1 = new Intent();
-            intent1.setAction("android.intent.action.DIAL");
-            intent1.setData(Uri.parse("tel:"+number));
-            startActivity(intent1);*/
+        public void contactMt(final String number){
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent1 = new Intent();
+                    intent1.setAction("android.intent.action.DIAL");
+                    intent1.setData(Uri.parse("tel:"+number));
+                    startActivity(intent1);
+                }
+            });
+        }
+
+        @android.webkit.JavascriptInterface
+        public void setTitle(final String title) {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+
+                    // Code in here
+                    tvTitle.setText(title);
+
+                }
+
+            });
         }
     }
 
@@ -164,6 +186,12 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 if(result.equals("success")){
                     //支付成
                     showToastMsg("付款完成！");
+                    webView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.reload();
+                        }
+                    });
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
 ////                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
 //                    webView.postDelayed(new Runnable() {
@@ -191,11 +219,6 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
             tvWxPay = (TextView) view.findViewById(R.id.tv_wxpay);
             tvAliPay = (TextView) view.findViewById(R.id.tv_alipay);
-//            DisplayMetrics dm = new DisplayMetrics();
-//            getWindowManager().getDefaultDisplay().getMetrics(dm);
-//            int screenWidth = dm.widthPixels;
-//            int screenHeigh = dm.heightPixels;
-//            view.getBackground().setAlpha(0);
             popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
@@ -203,8 +226,8 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 if (popupWindow.isShowing()){
+                    changeBackground(1.0f);
                     popupWindow.dismiss();
-                    setBlack(0.0f);
                 }
             }
         });
@@ -213,9 +236,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             public void onClick(View view) {
                 showToastMsg("支付宝支付");
                 payOrder(orderId, "alipay");
-                if (popupWindow.isShowing()){
+                if (popupWindow.isShowing()) {
+                    changeBackground(1.0f);
                     popupWindow.dismiss();
-                    setBlack(0.0f);
                 }
             }
         });
@@ -224,24 +247,17 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             public void onClick(View view) {
                 showToastMsg("微信支付");
                 payOrder(orderId, "wx");
-                if (popupWindow.isShowing()){
+                if (popupWindow.isShowing()) {
+                    changeBackground(1.0f);
                     popupWindow.dismiss();
-                    setBlack(0.0f);
                 }
             }
         });
-        setBlack(1.0f);
-        popupWindow.setFocusable(true);
-//        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
-        popupWindow.showAtLocation(llWebview, Gravity.BOTTOM, 0, 0);
-    }
-
-    private void setBlack(float f){
-        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
-        lp.dimAmount=f;
-        getWindow().setAttributes(lp);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(false);
+        changeBackground(0.2f);
+//        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.showAtLocation(webView, Gravity.BOTTOM, 0, 0);
     }
 
     /**
@@ -287,4 +303,9 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         }.execute();
     }
 
+    //改变背景透明度
+    private void changeBackground(float value){
+        topBar.setAlpha(value);
+        webView.setAlpha(value);
+    }
 }

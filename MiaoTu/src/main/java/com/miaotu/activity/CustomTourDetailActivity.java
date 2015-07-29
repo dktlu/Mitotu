@@ -7,13 +7,18 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,10 +52,15 @@ private WebView webView;
     Handler mHandler = new Handler();
     private String orderId,uid,nickname,headUrl,groupId,groupName,remark;
     private boolean isPay=false;
+    private PopupWindow popupWindow;
+    private View view, topBar;
+    private TextView tvCancel,tvWxPay,tvAliPay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_tour);
+        topBar = findViewById(R.id.top_bar);
         webView = (WebView) findViewById(R.id.webview);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText("线路详情");
@@ -288,19 +298,20 @@ private WebView webView;
     }
     @android.webkit.JavascriptInterface
     public void pay(String orderId,String uid,String nickname,String headUrl,String groupId,String groupName,String remark) {
-            // 支付
-            if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
-                showToastMsg("当前未联网，请检查网络设置");
-                return;
-            }
-            CustomTourDetailActivity.this.uid = uid;
-            CustomTourDetailActivity.this.orderId = orderId;
-            CustomTourDetailActivity.this.nickname = nickname;
-            CustomTourDetailActivity.this.headUrl = headUrl;
-            CustomTourDetailActivity.this.groupId = groupId;
-            CustomTourDetailActivity.this.groupName = groupName;
-            CustomTourDetailActivity.this.remark = remark;
-            payOrder();
+        // 支付
+        if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
+            showToastMsg("当前未联网，请检查网络设置");
+            return;
+        }
+        CustomTourDetailActivity.this.uid = uid;
+        CustomTourDetailActivity.this.orderId = orderId;
+        CustomTourDetailActivity.this.nickname = nickname;
+        CustomTourDetailActivity.this.headUrl = headUrl;
+        CustomTourDetailActivity.this.groupId = groupId;
+        CustomTourDetailActivity.this.groupName = groupName;
+        CustomTourDetailActivity.this.remark = remark;
+//        payOrder();
+        showPayWindow();
         }
 
         @android.webkit.JavascriptInterface
@@ -361,7 +372,7 @@ private WebView webView;
         }
         return super.onKeyDown(keyCode, event);
     }
-    private void payOrder() {
+    private void payOrder(final String channel) {
         new BaseHttpAsyncTask<Void, Void, String>(this, true) {
             @Override
             protected void onCompleteTask(String result) {
@@ -394,7 +405,7 @@ private WebView webView;
             @Override
             protected String run(Void... params) {
                 LogUtil.d("orderid",orderId);
-                return HttpRequestUtil.getInstance().payOrder("alipay",orderId,readPreference("token"));
+                return HttpRequestUtil.getInstance().payOrder(channel, orderId, readPreference("token"));
             }
         }.execute();
     }
@@ -434,5 +445,59 @@ private WebView webView;
                 Toast.makeText(this, "An invalid Credential was submitted.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void showPayWindow(){
+        if (popupWindow == null){
+            LayoutInflater inflater = LayoutInflater.from(this);
+            view = inflater.inflate(R.layout.pop_pay_option, null);
+            tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+            tvWxPay = (TextView) view.findViewById(R.id.tv_wxpay);
+            tvAliPay = (TextView) view.findViewById(R.id.tv_alipay);
+            popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+        }
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                    changeBackground(1.0f);
+                }
+            }
+        });
+        tvAliPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToastMsg("支付宝支付");
+                payOrder("alipay");
+                if (popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                    changeBackground(1.0f);
+                }
+            }
+        });
+        tvWxPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToastMsg("微信支付");
+                payOrder("wx");
+                if (popupWindow.isShowing()){
+                    popupWindow.dismiss();
+                    changeBackground(1.0f);
+                }
+            }
+        });
+        changeBackground(0.2f);
+//        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(false);
+//        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.showAtLocation(webView, Gravity.BOTTOM, 0, 0);
+    }
+
+    //改变背景透明度
+    private void changeBackground(float value){
+        topBar.setAlpha(value);
+        webView.setAlpha(value);
     }
 }
