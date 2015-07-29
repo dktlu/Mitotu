@@ -187,7 +187,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     wcsp.setShareType(Platform.SHARE_TEXT);
                 } else {
                     wcsp.setShareType(Platform.SHARE_WEBPAGE);
-                    wcsp.setImageUrl(headurl + "200x200");
+                    wcsp.setImageUrl(headurl);
                     wcsp.setUrl("http://m.miaotu.com/");
                 }
                 wcsp.setTitle("妙途");
@@ -202,7 +202,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 qqsp.setTitle("找个对的人去游山玩水，含泪推荐");
                 qqsp.setTitleUrl("http://m.miaotu.com/");
                 qqsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
-                qqsp.setImageUrl("http://m.miaotu.com/Public/images/200.png200x200");
+                qqsp.setImageUrl("http://m.miaotu.com/Public/images/200.png");
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);
                 qq.setPlatformActionListener(new PlatFormListener());
                 qq.share(qqsp);
@@ -307,7 +307,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     contactlist.clear();
                     contactlist.addAll(addressListResult.getAddressList());
                     contactsadapter.notifyDataSetChanged();
-                    setAdapterHeght(contactlist.size(), 60, rvFriends);
+                    setAdapterHeght(contactlist.size(), 61, rvFriends);
                     tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
@@ -353,7 +353,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     recommendList.clear();
                     recommendList.addAll(recommendListResult.getRecommendList());
                     recommendadapter.notifyDataSetChanged();
-                    setAdapterHeght(recommendList.size(), 60, rvRecommend);
+                    setAdapterHeght(recommendList.size(), 61, rvRecommend);
                 }else {
                     if (StringUtil.isBlank(recommendListResult.getMsg())){
                         showToastMsg("推荐好友获取失败");

@@ -382,7 +382,13 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     if (!StringUtil.isBlank(info.getBudget())){
                         writePreference("budget", info.getBudget());
                     }
-
+                    if (!StringUtil.isBlank(getIntent().getStringExtra("third"))){
+                        Intent intent = new Intent();
+                        intent.setClass(Register1Activity.this, MainActivity.class);
+                        startActivity(intent);
+                        Register1Activity.this.finish();
+                        return;
+                    }
                     getPhoneContacts();
                     if (mContactsNumber.size() > 0){
                         String phones = "";

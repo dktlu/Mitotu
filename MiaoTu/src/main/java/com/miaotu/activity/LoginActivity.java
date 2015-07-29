@@ -297,14 +297,15 @@ private void bindView(){
                         intent.putExtra("wantgo", result.getLogin().getWantgo());
                         intent.putExtra("third", "third");
                         startActivityForResult(intent, 1);
-                        return;
-                    }
-                    if(readPreference("everyday").equals(sysDatetime)){
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        startActivityForResult(intent, 1);
-                    }else{
-                        Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
-                        startActivityForResult(intent, 1);
+//                        return;
+                    }else {
+                        if(readPreference("everyday").equals(sysDatetime)){
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                            startActivityForResult(intent, 1);
+                        }else{
+                            Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
+                            startActivityForResult(intent, 1);
+                        }
                     }
                     setResult(1);
                     finish();

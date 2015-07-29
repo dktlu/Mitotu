@@ -49,6 +49,7 @@ public class RecommendListAdapter extends
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         viewHolder.ivControl.setTag(i);
         viewHolder.ivControl.setOnClickListener(this);
+        viewHolder.ivControl.setBackgroundResource(R.drawable.icon_add);
         viewHolder.tvName.setText(recommendList.get(i).getNickname());
         viewHolder.tvPs.setText("手机联系人：" + recommendList.get(i).getNickname() + "正在使用妙途");
     }
