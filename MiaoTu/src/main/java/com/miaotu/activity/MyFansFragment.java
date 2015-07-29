@@ -2,11 +2,13 @@ package com.miaotu.activity;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -48,6 +50,12 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
+        View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
+        ((ImageView)view.findViewById(R.id.iv_empty)).setBackgroundResource(R.drawable.icon_empty_fans);
+        ((LinearLayout)lvBlackList.getParent()).setGravity(Gravity.CENTER);
+        view.setVisibility(View.GONE);
+        ((LinearLayout)lvBlackList.getParent()).addView(view);
+        lvBlackList.setEmptyView(view);
         blackInfoList = new ArrayList<>();
         adapter = new MyFansAdapter(this.getActivity(), blackInfoList, readPreference("token"));
         lvBlackList.setAdapter(adapter);

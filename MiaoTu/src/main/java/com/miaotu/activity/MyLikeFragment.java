@@ -3,10 +3,12 @@ package com.miaotu.activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -51,6 +53,9 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
 
     private void initData(){
         View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
+        view.setVisibility(View.GONE);
+        ((LinearLayout)lvBlackList.getParent()).addView(view);
+        ((LinearLayout)lvBlackList.getParent()).setGravity(Gravity.CENTER);
         lvBlackList.setEmptyView(view);
         blackInfoList = new ArrayList<>();
         adapter = new MyLikeAdapter(this.getActivity(), blackInfoList);
