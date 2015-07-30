@@ -140,7 +140,8 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 etComment.setFocusable(true);
                 if (i>1){
-                    etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
+                    etComment.setHint("回复"+commentList.get(i-2).getNickname());
+//                    etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
                 }
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -679,7 +680,8 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
 
                 @Override
                 protected BaseResult run(Void... params) {
-                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"), etComment.getText().toString(), topic.getSid());
+                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"),
+                            "@"+topic.getNickname()+": "+etComment.getText().toString(), topic.getSid());
                 }
 
 //                @Override
