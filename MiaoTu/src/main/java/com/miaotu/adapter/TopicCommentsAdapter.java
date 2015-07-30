@@ -2,6 +2,10 @@ package com.miaotu.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +98,12 @@ public class TopicCommentsAdapter extends BaseAdapter {
             }
         });
         holder.tvNickname.setText(mList.get(position).getNickname());
-        holder.tvContent.setText(mList.get(position).getContent());
+        SpannableStringBuilder style = new SpannableStringBuilder(mList.get(position).getContent());
+        if (mList.get(position).getContent().startsWith("@")){
+            int count = mList.get(position).getContent().indexOf("：");
+            style.setSpan(new ForegroundColorSpan(Color.parseColor("#507daf")), 0, count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        holder.tvContent.setText(style);
 //        holder.tvDate.setText(mList.get(position).getCreated());
         try {
             holder.tvDate.setText(DateUtils.getTimestampString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(mList.get(position).getCreated())));

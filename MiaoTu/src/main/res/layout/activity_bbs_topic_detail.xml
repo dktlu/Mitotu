@@ -55,7 +55,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="70dp"
                 android:background="@drawable/bg_topic_comment"
-                android:hint="好评"
+                android:hint="写评论"
                 android:maxLength="60"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"

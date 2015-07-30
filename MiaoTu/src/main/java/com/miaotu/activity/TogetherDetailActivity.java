@@ -3,11 +3,13 @@ package com.miaotu.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
@@ -403,11 +405,17 @@ private Together together;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                tvContent.setText(reply.getContent());
+                SpannableStringBuilder style = new SpannableStringBuilder(reply.getContent());
+                if (reply.getContent().startsWith("@")){
+                    int count = reply.getContent().indexOf("：");
+                    style.setSpan(new ForegroundColorSpan(Color.parseColor("#507daf")), 0, count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                tvContent.setText(style);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        etComment.setText("@" + reply.getNickname() + ": ");
+                        etComment.setTag("@" + reply.getNickname() + "：");
+                        etComment.setHint("回复"+reply.getNickname());
                         layoutMenu.setVisibility(View.GONE);
                         layoutPublishComment.setVisibility(View.VISIBLE);
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -514,8 +522,10 @@ private Together together;
                     reply1.setNickname(readPreference("name"));
                     reply1.setCreated(result.getTogetherComment().getCreated());
 //                    StringUtil.trimAll(etComment.getText().toString())
-                    reply1.setContent(etComment.getText().toString().trim());
+                    reply1.setContent(etComment.getTag()+etComment.getText().toString().trim());
                     etComment.setText("");
+                    etComment.setHint("写评论");
+                    etComment.setTag("");
                     if(togetherDetailResult.getTogether().getReplyList()==null){
                         togetherDetailResult.getTogether().setReplyList(new ArrayList<TogetherReply>());
                     }
@@ -548,11 +558,17 @@ private Together together;
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            tvContent.setText(reply.getContent());
+                            SpannableStringBuilder style = new SpannableStringBuilder(reply.getContent());
+                            if (reply.getContent().startsWith("@")){
+                                int count = reply.getContent().indexOf("：");
+                                style.setSpan(new ForegroundColorSpan(Color.parseColor("#507daf")), 0, count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            }
+                            tvContent.setText(style);
                             view.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    etComment.setText("@" + reply.getNickname() + ": ");
+                                    etComment.setTag("@" + reply.getNickname() + "：");
+                                    etComment.setHint("回复"+reply.getNickname());
                                     layoutMenu.setVisibility(View.GONE);
                                     layoutPublishComment.setVisibility(View.VISIBLE);
                                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -574,7 +590,11 @@ private Together together;
             @Override
             protected TogetherCommentResult run(Void... params) {
 //                StringUtil.trimAll(etComment.getText().toString())
-                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, etComment.getText().toString().trim());
+                String param = etComment.getText().toString().trim();
+                if (!StringUtil.isBlank((String) etComment.getTag())){
+                    param = (String) etComment.getTag() + etComment.getText().toString().trim();
+                }
+                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, param);
             }
 
         }.execute();
@@ -786,7 +806,7 @@ private Together together;
     }
 
     /**
-     * 将UTC时间转换为东八区时间
+     * 将UTC时间转换时间
      * @param
      * @return
      */

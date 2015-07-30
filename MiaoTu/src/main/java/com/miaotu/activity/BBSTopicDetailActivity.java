@@ -3,11 +3,15 @@ package com.miaotu.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,6 +145,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                 etComment.setFocusable(true);
                 if (i>1){
                     etComment.setHint("回复"+commentList.get(i-2).getNickname());
+                    etComment.setTag(commentList.get(i-2).getNickname());
 //                    etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
                 }
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -667,6 +672,8 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     }
                     if (result.getCode() == BaseResult.SUCCESS) {
                         showToastMsg("评论成功！");
+                        etComment.setTag("");
+                        etComment.setHint("写评论");
                         etComment.setText("");
                         getComments(false);
                     } else {
@@ -680,8 +687,11 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
 
                 @Override
                 protected BaseResult run(Void... params) {
-                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"),
-                            "@"+topic.getNickname()+": "+etComment.getText().toString(), topic.getSid());
+                    String param = etComment.getText().toString();
+                    if (!StringUtil.isBlank((String) etComment.getTag())){
+                        param = "@"+(String) etComment.getTag()+"："+etComment.getText().toString();
+                    }
+                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"), param, topic.getSid());
                 }
 
 //                @Override
