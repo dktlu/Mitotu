@@ -62,7 +62,7 @@ import kankan.wheel.widget.adapters.ArrayWheelAdapter;
  */
 public class Register1Activity extends BaseActivity implements View.OnClickListener{
 
-    private TextView tv_left, tv_title;
+    private TextView tv_left, tv_title ,tv_right;
     private Button btn_add;
     private EditText et_tag;
     private FlowLayout fl_tags;
@@ -110,6 +110,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         et_nickname = (EditText) this.findViewById(R.id.et_nickname);
         tv_title = (TextView) this.findViewById(R.id.tv_title);
         tv_left = (TextView) this.findViewById(R.id.tv_left);
+        tv_right = (TextView) this.findViewById(R.id.tv_right);
         btn_add = (Button) this.findViewById(R.id.btn_add);
         et_tag = (EditText) this.findViewById(R.id.et_tag);
         fl_tags = (FlowLayout) this.findViewById(R.id.fl_tags);
@@ -117,6 +118,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     }
     private void bindView(){
         tv_left.setOnClickListener(this);
+        tv_right.setOnClickListener(this);
         btn_add.setOnClickListener(this);
         rl_changephoto.setOnClickListener(this);
         tv_age.setOnClickListener(this);
@@ -134,6 +136,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         userinfo = new ModifyPersonInfo();
         if (!StringUtil.isBlank(getIntent().getStringExtra("third"))){
             btnRegister.setText("下一步");
+            tv_right.setText("跳过");
             et_nickname.setText(getIntent().getStringExtra("name"));
             tv_gender.setText(getIntent().getStringExtra("gender"));
             tv_age.setText(getIntent().getStringExtra("age"));
@@ -214,6 +217,12 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_left:
+                finish();
+                break;
+            case R.id.tv_right:
+                Intent intent = new Intent();
+                intent.setClass(Register1Activity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.btn_register:
