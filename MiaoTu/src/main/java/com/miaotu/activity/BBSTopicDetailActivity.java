@@ -139,6 +139,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 etComment.setFocusable(true);
+                showToastMsg("111");
                 if (i>1){
                     etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
                 }
