@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewCallback;
@@ -49,8 +50,9 @@ import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class EveryDayPicActivity extends BaseActivity implements View.OnClickListener{
 private ImageView ivPic,ivShare,ivDownload;
-    private TextView tvDate1,tvDate2;
+//    private TextView tvDate1,tvDate2;
     private Button btnJump;
+    private RelativeLayout rlPic;
     private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +69,10 @@ private ImageView ivPic,ivShare,ivDownload;
         ivPic = (ImageView) findViewById(R.id.iv_pic);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         ivDownload = (ImageView) findViewById(R.id.iv_download);
-        tvDate1 = (TextView) findViewById(R.id.tv_date1);
-        tvDate2 = (TextView) findViewById(R.id.tv_date2);
+//        tvDate1 = (TextView) findViewById(R.id.tv_date1);
+//        tvDate2 = (TextView) findViewById(R.id.tv_date2);
         btnJump = (Button) findViewById(R.id.btn_jump);
+        rlPic = (RelativeLayout) findViewById(R.id.rl_pic);
     }
     private void bindView(){
         ivPic.setOnClickListener(this);
@@ -83,23 +86,23 @@ private ImageView ivPic,ivShare,ivDownload;
         Point size = new Point();
         wm.getDefaultDisplay().getSize(size);
         int width = size.x;
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ivPic.getLayoutParams();
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) rlPic.getLayoutParams();
         params.height = width;
-        ivPic.setLayoutParams(params);
+        rlPic.setLayoutParams(params);
         getDay();
     }
     private void getDay(){
         new BaseHttpAsyncTask<Void, Void, EveryDayResult>(this, true) {
             @Override
             protected void onCompleteTask(EveryDayResult result) {
-                if(tvDate1==null){
+                if(ivPic==null){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
                     UrlImageViewHelper.setUrlDrawable(ivPic, result.getEveryDayInfo().getPicUrl() + "800x800", R.drawable.icon_default_day_pic);
                     url = result.getEveryDayInfo().getPicUrl();
-                    tvDate1.setText(result.getEveryDayInfo().getDate1());
-                    tvDate2.setText(result.getEveryDayInfo().getDate2());
+//                    tvDate1.setText(result.getEveryDayInfo().getDate1());
+//                    tvDate2.setText(result.getEveryDayInfo().getDate2());
                     Calendar calendar = Calendar.getInstance();
                     SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
                     String sysDatetime = fmt.format(calendar.getTime())+readPreference("token");
