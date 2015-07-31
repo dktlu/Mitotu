@@ -190,8 +190,8 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     wcsp.setImageUrl(headurl);
                     wcsp.setUrl("http://m.miaotu.com/");
                 }
-                wcsp.setTitle("妙途");
-                wcsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
+                wcsp.setTitle("找对的人去旅行！含泪推荐！！");
+                wcsp.setText("老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！");
                 Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
                 wechat.setPlatformActionListener(new PlatFormListener());
                 wechat.share(wcsp);
@@ -199,9 +199,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_qq:
                 ShareSDK.initSDK(this);
                 QQ.ShareParams qqsp = new QQ.ShareParams();
-                qqsp.setTitle("找个对的人去游山玩水，含泪推荐");
+                qqsp.setTitle("找对的人去旅行！含泪推荐！！");
                 qqsp.setTitleUrl("http://m.miaotu.com/");
-                qqsp.setText("刚下了一个叫妙途的软件，不错的。自由行，找约伴，不求人。玩一阵真感觉是居家旅行、约会、玩耍的必备神器。戳进来耍耍吧，等你额！");
+                qqsp.setText("老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！");
                 qqsp.setImageUrl("http://m.miaotu.com/Public/images/200.png");
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);
                 qq.setPlatformActionListener(new PlatFormListener());

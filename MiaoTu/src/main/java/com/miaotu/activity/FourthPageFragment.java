@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
+import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 import com.miaotu.view.CircleImageView;
 
@@ -36,6 +38,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private TextView tvAge;
     private ImageView ivGender;
     private LinearLayout llSexandAge;
+    private RelativeLayout rlTip;
+    private View line;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,9 +70,12 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         llSearch.setOnClickListener(this);
         llFollow.setOnClickListener(this);
         llFans.setOnClickListener(this);
+        rlTip.setOnClickListener(this);
     }
 
     private void findView() {
+        rlTip = (RelativeLayout) root.findViewById(R.id.rl_info_tip);
+        line = root.findViewById(R.id.view1);
         tv_wantgo = (TextView) root.findViewById(R.id.tv_wantgo);
         tvAge = (TextView) root.findViewById(R.id.tv_age);
         ivGender = (ImageView) root.findViewById(R.id.iv_gender);
@@ -115,6 +122,13 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         tvFansCount.setText(fanscount);
         tvFollowCount.setText(followcount);
         tv_wantgo.setText("想去"+wantgo);
+        if (isEmpty()){
+            line.setVisibility(View.GONE);
+            rlTip.setVisibility(View.VISIBLE);
+        }else {
+            line.setVisibility(View.VISIBLE);
+            rlTip.setVisibility(View.GONE);
+        }
     }
 
     private void init() {
@@ -194,6 +208,13 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                         FindMFriendsActivity.class);
                 startActivityForResult(searchIntent, 1);
                 break;
+            case R.id.rl_info_tip:
+                Intent findIntent = new Intent();
+                findIntent.setClass(FourthPageFragment.this.getActivity(),
+                        Register1Activity.class);
+                findIntent.putExtra("third","third");
+                startActivityForResult(findIntent, 1001);
+                break;
             default:
                 break;
         }
@@ -266,5 +287,40 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     public void onResume() {
         super.onResume();
         initUserInfo();
+    }
+
+    /**
+     * 判断必填字段是否全为空
+     *
+     * @return
+     */
+    private boolean isEmpty() {
+        boolean empty = false;
+        if (StringUtil.isBlank(readPreference("name")) ){
+            showToastMsg("昵称不能为空");
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("gender")) ){
+            showToastMsg("性别不能为空");
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("age")) ){
+            showToastMsg("年龄不能为空");
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("emotion")) ){
+            showToastMsg("情感状态不能为空");
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("wantgo")) ){
+            showToastMsg("想去不能为空");
+            empty = true;
+            return empty;
+        }
+        return empty;
     }
 }

@@ -143,6 +143,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
             tv_emotion.setText(getIntent().getStringExtra("emotion"));
             et_wantgo.setText(getIntent().getStringExtra("wantgo"));
         }
+        setResult(1);
     }
 
     /**
