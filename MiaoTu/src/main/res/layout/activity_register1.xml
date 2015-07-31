@@ -245,11 +245,12 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_center_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
-                android:textColor="#ff8000"
+                android:textColor="#b4b4b4"
                 android:textSize="12sp"
                 android:text="设定身份找到合适的玩伴机会更大一些（选填）"
                 />

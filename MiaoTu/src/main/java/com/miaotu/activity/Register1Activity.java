@@ -9,13 +9,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,6 +84,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     private WheelTwoColumnDialog dialog;
     private int position;
     private Button btnRegister;
+    private TextView tvCenterTip;
     private static final int PHONES_NUMBER_INDEX = 0;
     private ArrayList<String> mContactsNumber = new ArrayList<String>();
     private static final String[] PHONES_PROJECTION = new String[]{
@@ -94,6 +99,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         init();
     }
     private void findView(){
+        tvCenterTip = (TextView) this.findViewById(R.id.tv_center_tip);
         et_school = (EditText) this.findViewById(R.id.et_school);
         et_worksite = (EditText) this.findViewById(R.id.et_worksite);
         et_free = (EditText) this.findViewById(R.id.et_free);
@@ -131,17 +137,27 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     }
     private void init(){
         tv_title.setText("编辑个人资料");
+        SpannableStringBuilder style = new SpannableStringBuilder("设定身份找到合适的玩伴机会更大一些（选填）");
+        style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 17, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvCenterTip.setText(style);
         tv_left.setVisibility(View.GONE);
         alltags = new ArrayList<>();
         userinfo = new ModifyPersonInfo();
         if (!StringUtil.isBlank(getIntent().getStringExtra("third"))){
             btnRegister.setText("下一步");
-            tv_right.setText("跳过");
-            et_nickname.setText(getIntent().getStringExtra("name"));
+            SpannableStringBuilder style1 = new SpannableStringBuilder("逛一逛");
+            style1.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            tv_right.setText(style1);
+            /*et_nickname.setText(getIntent().getStringExtra("name"));
             tv_gender.setText(getIntent().getStringExtra("gender"));
             tv_age.setText(getIntent().getStringExtra("age"));
             tv_emotion.setText(getIntent().getStringExtra("emotion"));
-            et_wantgo.setText(getIntent().getStringExtra("wantgo"));
+            et_wantgo.setText(getIntent().getStringExtra("wantgo"));*/
+            et_nickname.setText(readPreference("name"));
+            tv_gender.setText(readPreference("gender"));
+            tv_age.setText(readPreference("age"));
+            tv_emotion.setText(readPreference("emotion"));
+            et_wantgo.setText(readPreference("wantgo"));
         }
         setResult(1);
     }

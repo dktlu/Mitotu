@@ -8,6 +8,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,6 +84,12 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
             phone = "号码错误";
         }
         tvNumber.setText("+86 " + phone);
+        SpannableString sp = new SpannableString("重新发送");
+        sp.setSpan(new URLSpan(""), 0, sp.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sp.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.text_href)),
+                0, sp.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        tvResend.setText(sp);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

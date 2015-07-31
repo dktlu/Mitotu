@@ -30,6 +30,7 @@ import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.PhotoInfo;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.EveryDayResult;
+import com.miaotu.result.LoginResult;
 import com.miaotu.util.StringUtil;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -205,8 +206,14 @@ private ImageView ivPic,ivShare,ivDownload;
                 });
                 break;
             case R.id.btn_jump:
-                Intent intent = new Intent(EveryDayPicActivity.this,MainActivity.class);
-                startActivityForResult(intent, 1);
+                if (isEmpty()){
+                    Intent intent = new Intent(EveryDayPicActivity.this,Register1Activity.class);
+                    intent.putExtra("third", "third");
+                    startActivityForResult(intent, 1);
+                }else {
+                    Intent intent = new Intent(EveryDayPicActivity.this,MainActivity.class);
+                    startActivityForResult(intent, 1);
+                }
                 finish();
                 break;
         }
@@ -219,5 +226,35 @@ private ImageView ivPic,ivShare,ivDownload;
             setResult(1);
             finish();
         }
+    }
+
+    /**
+     * 判断必填字段是否全为空
+     *
+     * @return
+     */
+    private boolean isEmpty() {
+        boolean empty = false;
+        if (StringUtil.isBlank(readPreference("name")) ){
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("gender")) ){
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("age")) ){
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("emotion")) ){
+            empty = true;
+            return empty;
+        }
+        if (StringUtil.isBlank(readPreference("wantgo")) ){
+            empty = true;
+            return empty;
+        }
+        return empty;
     }
 }

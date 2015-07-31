@@ -237,9 +237,9 @@ public class TopiclistAdapter extends BaseAdapter {
         if (StringUtil.isBlank(mList.get(position).getAge())){
             holder.tvAge.setText("0岁");
         }
-        holder.ivGender.setBackgroundResource(R.drawable.mine_girl);
+        holder.ivGender.setBackgroundResource(R.drawable.icon_woman);
         if ("男".equals(mList.get(position).getGender())){
-            holder.ivGender.setBackgroundResource(R.drawable.mine_boy);
+            holder.ivGender.setBackgroundResource(R.drawable.icon_man);
         }
         holder.tvEmotion.setText(mList.get(position).getEmotion());
         holder.tvEmotion.setVisibility(View.VISIBLE);

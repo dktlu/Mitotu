@@ -56,16 +56,16 @@
                     android:id="@+id/iv_gender"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="@drawable/mine_boy"
+                    android:background="@drawable/icon_man"
                     android:scaleType="fitCenter" />
 
                 <TextView
                     android:id="@+id/tv_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="24"
+                    android:text="24岁"
                     android:textColor="#505050"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <TextView
@@ -79,7 +79,7 @@
                 android:paddingRight="3dp"
                 android:text="已婚"
                 android:textColor="#505050"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tv_top_date"
@@ -100,7 +100,7 @@
                 android:layout_toRightOf="@id/iv_head_photo"
                 android:text="想去 米兰"
                 android:textColor="#b4b4b4"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <ImageView
                 android:id="@+id/iv_like"

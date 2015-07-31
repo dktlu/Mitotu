@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -13,7 +14,10 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,6 +126,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             tvRight.setVisibility(View.GONE);
             tvLeft.setVisibility(View.VISIBLE);
         }
+        SpannableStringBuilder style = new SpannableStringBuilder(tvFriendCount.getText().toString());
+        int count = tvFriendCount.getText().toString().indexOf("个");
+        style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 2, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();
         contactsadapter = new ContactListAdapter(this, contactlist);

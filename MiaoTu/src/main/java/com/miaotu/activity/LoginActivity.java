@@ -288,24 +288,23 @@ private void bindView(){
                     Calendar calendar = Calendar.getInstance();
                     SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
                     String sysDatetime = fmt.format(calendar.getTime())+readPreference("token");
-                    if (isEmpty(result)){
-                        Intent intent = new Intent(LoginActivity.this,Register1Activity.class);
-                        intent.putExtra("name", result.getLogin().getName());
-                        intent.putExtra("gender", result.getLogin().getGender());
-                        intent.putExtra("age", result.getLogin().getAge());
-                        intent.putExtra("emotion", result.getLogin().getMaritalstatus());
-                        intent.putExtra("wantgo", result.getLogin().getWantgo());
-                        intent.putExtra("third", "third");
-                        startActivityForResult(intent, 1);
-//                        return;
-                    }else {
-                        if(readPreference("everyday").equals(sysDatetime)){
+                    if(readPreference("everyday").equals(sysDatetime)){
+                        if (isEmpty(result)){
+                            Intent intent = new Intent(LoginActivity.this,Register1Activity.class);
+                            intent.putExtra("name", result.getLogin().getName());
+                            intent.putExtra("gender", result.getLogin().getGender());
+                            intent.putExtra("age", result.getLogin().getAge());
+                            intent.putExtra("emotion", result.getLogin().getMaritalstatus());
+                            intent.putExtra("wantgo", result.getLogin().getWantgo());
+                            intent.putExtra("third", "third");
+                            startActivityForResult(intent, 1);
+                        }else {
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                             startActivityForResult(intent, 1);
-                        }else{
-                            Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
-                            startActivityForResult(intent, 1);
                         }
+                    }else{
+                        Intent intent = new Intent(LoginActivity.this,EveryDayPicActivity.class);
+                        startActivityForResult(intent, 1);
                     }
                     setResult(1);
                     finish();

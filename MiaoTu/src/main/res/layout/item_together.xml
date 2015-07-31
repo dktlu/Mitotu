@@ -56,19 +56,19 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tv_name"
-            android:layout_alignTop="@id/tv_name"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/tv_name"
             android:background="@drawable/bg_sexandagetag"
             android:orientation="horizontal"
+            android:gravity="center"
             android:paddingLeft="3dp"
             android:paddingRight="3dp">
 
             <ImageView
                 android:id="@+id/iv_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/icon_woman"
                 android:scaleType="fitCenter" />

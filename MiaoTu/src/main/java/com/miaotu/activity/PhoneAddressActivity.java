@@ -65,6 +65,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     private void findView(){
         tvLeft.setOnClickListener(this);
         tvRight.setOnClickListener(this);
+        tvNext.setOnClickListener(this);
     }
 
     private void initData(){
@@ -92,6 +93,9 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_left:
+                finish();
+                break;
+            case R.id.tv_next:
                 if ("register".equals(getIntent().getStringExtra("register"))){
                     Intent intent = new Intent();
                     intent.setClass(PhoneAddressActivity.this, MainActivity.class);
@@ -100,7 +104,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_right:
-                String sms_content = "你好";
+                String sms_content = "老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！";
                 if(numbers.size() < 1) {
                     showToastMsg("没有选择联系人");
                 } else {

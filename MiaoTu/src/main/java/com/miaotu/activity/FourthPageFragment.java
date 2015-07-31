@@ -297,27 +297,22 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private boolean isEmpty() {
         boolean empty = false;
         if (StringUtil.isBlank(readPreference("name")) ){
-            showToastMsg("昵称不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(readPreference("gender")) ){
-            showToastMsg("性别不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(readPreference("age")) ){
-            showToastMsg("年龄不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(readPreference("emotion")) ){
-            showToastMsg("情感状态不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(readPreference("wantgo")) ){
-            showToastMsg("想去不能为空");
             empty = true;
             return empty;
         }
