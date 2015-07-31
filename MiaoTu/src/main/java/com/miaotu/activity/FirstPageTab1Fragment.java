@@ -128,7 +128,6 @@ private View root;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void init() {
-        showToastMsg("yiqiqu");
         lvPull.getRefreshableView().addHeaderView(head,null,false);
         mList = new ArrayList<>();
         adapter = new TogetherlistAdapter(getActivity(),mList,false, false);
