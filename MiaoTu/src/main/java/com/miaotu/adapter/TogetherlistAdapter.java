@@ -393,13 +393,24 @@ public class TogetherlistAdapter extends BaseAdapter {
      * @param content
      */
     private void showMyToast(Activity context, String content) {
-        View view = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
-        TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
-        tvContent.setText(content);
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
         Toast toast = new Toast(context);
-        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
-        toast.setView(view);
+        changeBackground(tv, 0.8f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
         toast.show();
+    }
+
+    //改变背景透明度
+    private void changeBackground(View view, float value){
+        view.setAlpha(value);
     }
 }

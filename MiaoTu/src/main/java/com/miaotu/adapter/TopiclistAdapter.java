@@ -1,9 +1,7 @@
 package com.miaotu.adapter;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,17 +19,14 @@ import android.widget.Toast;
 import com.easemob.util.DateUtils;
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
-import com.miaotu.activity.BaseActivity;
 import com.miaotu.activity.BaseFragmentActivity;
 import com.miaotu.activity.CustomTourDetailActivity;
 import com.miaotu.activity.PersonCenterActivity;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
-import com.miaotu.model.LikeInfo;
 import com.miaotu.model.PhotoInfo;
 import com.miaotu.model.Topic;
 import com.miaotu.result.BaseResult;
-import com.miaotu.result.LikeResult;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
 import com.miaotu.view.CircleImageView;
@@ -288,17 +280,21 @@ public class TopiclistAdapter extends BaseAdapter {
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS) {
                     if (!islike) {
-                        Toast.makeText(mContext, "喜欢成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "喜欢成功", Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity)mContext, "喜欢成功");
                         iv.setBackgroundResource(R.drawable.icon_friend_like);
                     } else {
-                        Toast.makeText(mContext, "取消喜欢成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "取消喜欢成功", Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity)mContext, "取消喜欢成功");
                         iv.setBackgroundResource(R.drawable.icon_friend_dislike);
                     }
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        Toast.makeText(mContext, "操作失败", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "操作失败", Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity)mContext, "操作失败");
                     } else {
-                        Toast.makeText(mContext, baseResult.getMsg(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, baseResult.getMsg(), Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity) mContext, baseResult.getMsg());
                     }
                 }
             }
@@ -308,5 +304,28 @@ public class TopiclistAdapter extends BaseAdapter {
                 return HttpRequestUtil.getInstance().likeState(token, sid);
             }
         }.execute();
+    }
+
+    /**
+     * 显示自定义的Toast
+     *
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
+        tv.setAlpha(0.8f);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
+        toast.show();
     }
 }
