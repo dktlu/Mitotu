@@ -121,7 +121,7 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
 
     private boolean validate() {
         if (StringUtil.isEmpty(etSMS.getText().toString())) {
-            showToastMsg("请输入验证码！");
+            Register3Activity.this.showMyToast("请输入验证码！");
             return false;
         }
         return true;
@@ -144,9 +144,9 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
 
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("注册失败！");
+                        Register3Activity.this.showMyToast("注册失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        Register3Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -231,9 +231,9 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
                     finish();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("登录失败！");
+                        Register3Activity.this.showMyToast("登录失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        Register3Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -280,7 +280,7 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("发送成功！");
+                    Register3Activity.this.showMyToast("发送成功！");
                     maxTime = 60;
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -295,9 +295,9 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
                     }, 0, 1000);
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取验证码失败！");
+                        Register3Activity.this.showMyToast("获取验证码失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        Register3Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }

@@ -122,14 +122,14 @@ public class RemindLikeCustomFragment extends BaseFragment implements View.OnCli
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindLikeCustomFragment.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindLikeCustomFragment.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindLikeCustomFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

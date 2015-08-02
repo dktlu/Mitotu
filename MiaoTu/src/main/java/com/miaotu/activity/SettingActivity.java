@@ -210,13 +210,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                                 UmengUpdateAgent.showUpdateDialog(SettingActivity.this, updateInfo);
                                 break;
                             case UpdateStatus.No: // has no update
-                                showToastMsg("没有更新");
+                                SettingActivity.this.showMyToast("没有更新");
                                 break;
                             case UpdateStatus.NoneWifi: // none wifi
-                                showToastMsg("没有wifi连接， 只在wifi下更新");
+                                SettingActivity.this.showMyToast("没有wifi连接， 只在wifi下更新");
                                 break;
                             case UpdateStatus.Timeout: // time out
-                                showToastMsg("超时");
+                                SettingActivity.this.showMyToast("超时");
                                 break;
                         }
                     }

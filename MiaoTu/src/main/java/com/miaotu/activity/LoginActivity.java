@@ -109,7 +109,7 @@ private void bindView(){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("登录成功！");
+                    LoginActivity.this.showMyToast("登录成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
@@ -171,9 +171,9 @@ private void bindView(){
                 } else {
                     if(isTel){
                         if(StringUtil.isEmpty(result.getMsg())){
-                            showToastMsg("登录失败！");
+                            LoginActivity.this.showMyToast("登录失败！");
                         }else{
-                            showToastMsg(result.getMsg());
+                            LoginActivity.this.showMyToast(result.getMsg());
                         }
                     }/*else{
                         register(registerInfo);
@@ -232,7 +232,7 @@ private void bindView(){
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
 //                    login(registerInfo,false);
-                    showToastMsg("登录成功！");
+                    LoginActivity.this.showMyToast("登录成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
@@ -310,9 +310,9 @@ private void bindView(){
                     finish();
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("登陆失败！");
+                        LoginActivity.this.showMyToast("登陆失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        LoginActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -333,14 +333,14 @@ private void bindView(){
     }
     private boolean validate(){
         if(StringUtil.isBlank(tvAuto.getText().toString())){
-            showToastMsg("请输入您的手机号！");
+            LoginActivity.this.showMyToast("请输入您的手机号！");
             return false;
         }
         if(!StringUtil.isPhoneNumber(tvAuto.getText().toString())){
-            showToastMsg("请输入正确的手机号码！");
+            LoginActivity.this.showMyToast("请输入正确的手机号码！");
         }
         if(StringUtil.isBlank(etPassword.getText().toString())){
-            showToastMsg("请输入您的登录密码！");
+            LoginActivity.this.showMyToast("请输入您的登录密码！");
             return false;
         }
         return true;

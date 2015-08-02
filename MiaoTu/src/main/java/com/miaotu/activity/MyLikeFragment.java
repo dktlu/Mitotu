@@ -111,9 +111,9 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                     writePreference("followcount", blackInfoList.size()+"");
                 }else {
                     if(StringUtil.isBlank(blackResult.getMsg())){
-                        showToastMsg("获取黑名单失败");
+                        MyLikeFragment.this.showMyToast("获取黑名单失败");
                     }else {
-                        showToastMsg(blackResult.getMsg());
+                        MyLikeFragment.this.showMyToast(blackResult.getMsg());
                     }
                 }
             }
@@ -150,9 +150,9 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                             (Integer.parseInt(readPreference("followcount"))-1)+"");
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("操作失败");
+                        MyLikeFragment.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        MyLikeFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

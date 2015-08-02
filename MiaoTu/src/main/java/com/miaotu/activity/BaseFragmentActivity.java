@@ -191,7 +191,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 	 *
 	 * @param content
 	 */
-	private void showMyToast(String content) {
+	public void showMyToast(String content) {
 		View toastView = LayoutInflater.from(this).inflate(R.layout.toast_like, null);
 		DisplayMetrics dm = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -213,7 +213,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 	 *
 	 * @param content
 	 */
-	private void showMyToast(int yoffset, String content) {
+	public void showMyToast(int yoffset, String content) {
 		View toastView = LayoutInflater.from(this).inflate(R.layout.toast_like, null);
 		DisplayMetrics dm = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(dm);

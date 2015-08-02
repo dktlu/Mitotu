@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
@@ -231,7 +234,7 @@ public class JoinedListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (!Util.isNetworkConnected(mcontext)) {
-                    ((BaseActivity) mcontext).showToastMsg("当前未联网，请检查网络设置");
+                    showMyToast((BaseActivity) mcontext, "当前未联网，请检查网络设置");
                     return;
                 }
                 //同意的接口
@@ -272,10 +275,9 @@ public class JoinedListAdapter extends BaseAdapter {
                     }
                 }else {
                     if (StringUtil.isBlank(reviewResult.getMsg())){
-                        ((BaseActivity)mcontext).showToastMsg("操作失败");
+                        showMyToast((BaseActivity)mcontext, "操作失败");
                     }else {
-                        ((BaseActivity)mcontext).showToastMsg(reviewResult.getMsg());
-
+                        showMyToast((BaseActivity) mcontext, reviewResult.getMsg());
                     }
                 }
             }
@@ -286,5 +288,28 @@ public class JoinedListAdapter extends BaseAdapter {
                         ((BaseActivity)mcontext).readPreference("token"), yid, uid, status);
             }
         }.execute();
+    }
+
+    /**
+     * 显示自定义的Toast
+     *
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        tv.setAlpha(0.8f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
+        toast.show();
     }
 }

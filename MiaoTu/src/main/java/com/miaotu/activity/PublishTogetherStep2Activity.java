@@ -204,7 +204,7 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("发布成功！");
+                    PublishTogetherStep2Activity.this.showMyToast("发布成功！");
                     String hearurl = "";
                     if (publishTogether.getImg() != null &&
                             publishTogether.getImg().split(",").length > 0) {
@@ -220,9 +220,9 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
                     finish();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("发布失败！");
+                        PublishTogetherStep2Activity.this.showMyToast("发布失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishTogetherStep2Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -240,14 +240,14 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
             case R.id.tv_right:
                 if (!StringUtil.isBlank(etComment.getText().toString().trim())) {
                     if (isMinus){
-                        showToastMsg("字数超限");
+                        PublishTogetherStep2Activity.this.showMyToast("字数超限");
                         return;
                     }
                     publishTogether.setRemark(etComment.getText().toString().trim());
                     publishTogether.setToken(readPreference("token"));
                     publish();
                 } else {
-                    showToastMsg("请输入旅行推荐语！");
+                    PublishTogetherStep2Activity.this.showMyToast("请输入旅行推荐语！");
                 }
                 break;
             case R.id.tv_left:
@@ -327,17 +327,17 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
 
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-            showToastMsg("分享成功");
+            PublishTogetherStep2Activity.this.showMyToast("分享成功");
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
-            showToastMsg("分享失败");
+            PublishTogetherStep2Activity.this.showMyToast("分享失败");
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
-            showToastMsg("取消分享");
+            PublishTogetherStep2Activity.this.showMyToast("取消分享");
         }
     }
 

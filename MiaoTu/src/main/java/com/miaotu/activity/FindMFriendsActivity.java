@@ -155,7 +155,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             if (phones.length() > 1){
                 matchPhoneList(phones.substring(0, phones.length() - 1));
             }else {
-                showToastMsg("手机没有通讯录");
+                FindMFriendsActivity.this.showMyToast("手机没有通讯录");
                 llFriend.setVisibility(View.GONE);
             }
         }
@@ -318,9 +318,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
-                        showToastMsg("匹配通讯录失败");
+                        FindMFriendsActivity.this.showMyToast("匹配通讯录失败");
                     }else {
-                        showToastMsg(addressListResult.getMsg());
+                        FindMFriendsActivity.this.showMyToast(addressListResult.getMsg());
                     }
                 }
             }
@@ -363,9 +363,9 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     setAdapterHeght(recommendList.size(), 61, rvRecommend);
                 }else {
                     if (StringUtil.isBlank(recommendListResult.getMsg())){
-                        showToastMsg("推荐好友获取失败");
+                        FindMFriendsActivity.this.showMyToast("推荐好友获取失败");
                     }else {
-                        showToastMsg(recommendListResult.getMsg());
+                        FindMFriendsActivity.this.showMyToast(recommendListResult.getMsg());
                     }
                 }
             }
@@ -396,17 +396,16 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
     private class PlatFormListener implements PlatformActionListener {
         @Override
         public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-            showToastMsg("发送完成");
+            FindMFriendsActivity.this.showMyToast("发送完成");
         }
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
-            showToastMsg("发送失败");
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
-            showToastMsg("取消发送");
+            FindMFriendsActivity.this.showMyToast("取消发送");
         }
     }
 }

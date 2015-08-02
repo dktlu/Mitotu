@@ -123,14 +123,14 @@ public class RemindLikeTogetherFragment extends BaseFragment implements View.OnC
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindLikeTogetherFragment.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindLikeTogetherFragment.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindLikeTogetherFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

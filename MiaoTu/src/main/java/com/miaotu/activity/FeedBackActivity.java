@@ -76,11 +76,11 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                 String email = etEmail.getText().toString().trim();
                 String content = etContent.getText().toString().trim();
                 if (StringUtil.isBlank(email)){
-                    showToastMsg("请输入邮箱");
+                    FeedBackActivity.this.showMyToast("请输入邮箱");
                     return;
                 }
                 if(!isEmail(email)){
-                    showToastMsg("邮箱格式不正确");
+                    FeedBackActivity.this.showMyToast("邮箱格式不正确");
                     return;
                 }
                 feedBack(email,content);
@@ -104,14 +104,14 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg(baseResult.getMsg());
+                    FeedBackActivity.this.showMyToast(baseResult.getMsg());
                     etEmail.setText("");
                     etContent.setText("");
                 }else {
                     if (StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("发送失败");
+                        FeedBackActivity.this.showMyToast("发送失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        FeedBackActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

@@ -95,9 +95,9 @@ public class RemindCommentTogetherFragment extends BaseFragment implements View.
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(remindLikeResult.getMsg())){
-                        showToastMsg("获取列表失败");
+                        RemindCommentTogetherFragment.this.showMyToast("获取列表失败");
                     }else {
-                        showToastMsg(remindLikeResult.getMsg());
+                        RemindCommentTogetherFragment.this.showMyToast(remindLikeResult.getMsg());
                     }
                 }
             }
@@ -118,14 +118,14 @@ public class RemindCommentTogetherFragment extends BaseFragment implements View.
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindCommentTogetherFragment.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindCommentTogetherFragment.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindCommentTogetherFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

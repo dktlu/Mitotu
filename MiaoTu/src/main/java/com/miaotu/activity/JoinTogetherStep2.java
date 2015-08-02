@@ -67,15 +67,15 @@ public class JoinTogetherStep2 extends BaseActivity implements View.OnClickListe
 
     private boolean validate() {
         if (StringUtil.isBlank(etName.getText().toString())) {
-            showToastMsg("请输入姓名！");
+            JoinTogetherStep2.this.showMyToast("请输入姓名！");
             return false;
         }
         if (StringUtil.isBlank(etTel.getText().toString())) {
-            showToastMsg("请输入手机号！");
+            JoinTogetherStep2.this.showMyToast("请输入手机号！");
             return false;
         }
         if (!StringUtil.isPhoneNumber(etTel.getText().toString())) {
-            showToastMsg("请输入正确手机号！");
+            JoinTogetherStep2.this.showMyToast("请输入正确手机号！");
             return false;
         }
         return true;
@@ -89,7 +89,7 @@ public class JoinTogetherStep2 extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("报名成功！");
+                    JoinTogetherStep2.this.showMyToast("报名成功！");
                     Intent intent = new Intent(JoinTogetherStep2.this,
                             JoinFinishedActicity.class);
                     intent.putExtra("uid", together.getUid());
@@ -106,9 +106,9 @@ public class JoinTogetherStep2 extends BaseActivity implements View.OnClickListe
                     setResult(1);
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("报名约游失败");
+                        JoinTogetherStep2.this.showMyToast("报名约游失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        JoinTogetherStep2.this.showMyToast(result.getMsg());
                     }
                 }
             }

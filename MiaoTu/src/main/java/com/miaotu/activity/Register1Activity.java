@@ -170,27 +170,27 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
     private boolean isEmpty() {
         boolean empty = false;
         if (StringUtil.isBlank(et_nickname.getText().toString()) ){
-            showToastMsg("昵称不能为空");
+            Register1Activity.this.showMyToast("昵称不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(tv_gender.getText().toString()) ){
-            showToastMsg("性别不能为空");
+            Register1Activity.this.showMyToast("性别不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(tv_age.getText().toString()) ){
-            showToastMsg("年龄不能为空");
+            Register1Activity.this.showMyToast("年龄不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(tv_emotion.getText().toString()) ){
-            showToastMsg("情感状态不能为空");
+            Register1Activity.this.showMyToast("情感状态不能为空");
             empty = true;
             return empty;
         }
         if (StringUtil.isBlank(et_wantgo.getText().toString()) ){
-            showToastMsg("想去不能为空");
+            Register1Activity.this.showMyToast("想去不能为空");
             empty = true;
             return empty;
         }
@@ -291,7 +291,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     addTag(content);
                 }else {
                     et_tag.setText("");
-                    showToastMsg("最多输入6个标签");
+                    Register1Activity.this.showMyToast("最多输入6个标签");
                 }
                 break;
             case R.id.rl_changephoto:
@@ -362,7 +362,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("修改成功");
+                    Register1Activity.this.showMyToast("修改成功");
                     if (isChangeHead){
                         return;
                     }
@@ -433,9 +433,9 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
 
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("修改信息失败");
+                        Register1Activity.this.showMyToast("修改信息失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        Register1Activity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -517,9 +517,9 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     modifyUserInfo(info, isChangeHeader);
                 } else {
                     if (StringUtil.isBlank(result.getMsg())) {
-                        showToastMsg("操作失败");
+                        Register1Activity.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        Register1Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -815,9 +815,9 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     Register1Activity.this.finish();
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
-                        showToastMsg("匹配通讯录失败");
+                        Register1Activity.this.showMyToast("匹配通讯录失败");
                     }else {
-                        showToastMsg(addressListResult.getMsg());
+                        Register1Activity.this.showMyToast(addressListResult.getMsg());
                     }
                 }
             }

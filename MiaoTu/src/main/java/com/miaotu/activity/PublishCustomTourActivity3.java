@@ -93,27 +93,27 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
     };
     private boolean validate(){
         if(StringUtil.isEmpty(etTel.getText().toString())){
-            showToastMsg("请输入您的手机号码！");
+            PublishCustomTourActivity3.this.showMyToast("请输入您的手机号码！");
             return false;
         }
         if(!StringUtil.isPhoneNumber(etTel.getText().toString())){
-            showToastMsg("请输入正确的手机号码！");
+            PublishCustomTourActivity3.this.showMyToast("请输入正确的手机号码！");
             return false;
         }
         if(StringUtil.isEmpty(etId.getText().toString())){
-            showToastMsg("请输入身份证号码！");
+            PublishCustomTourActivity3.this.showMyToast("请输入身份证号码！");
             return false;
         }
         if(etId.getText().toString().length()<15){
-            showToastMsg("请输入至少15位身份证号码！");
+            PublishCustomTourActivity3.this.showMyToast("请输入至少15位身份证号码！");
             return false;
         }
         if(file1==null){
-            showToastMsg("请上传身份证正面照片！");
+            PublishCustomTourActivity3.this.showMyToast("请上传身份证正面照片！");
             return false;
         }
         if(file2==null){
-            showToastMsg("请上传身份证反面照片！");
+            PublishCustomTourActivity3.this.showMyToast("请上传身份证反面照片！");
             return false;
         }
         return true;
@@ -214,9 +214,9 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
                     startActivityForResult(intent,3);
                 } else {
                     if (StringUtil.isBlank(result.getMsg())) {
-                        showToastMsg("操作失败");
+                        PublishCustomTourActivity3.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishCustomTourActivity3.this.showMyToast(result.getMsg());
                     }
                 }
             }

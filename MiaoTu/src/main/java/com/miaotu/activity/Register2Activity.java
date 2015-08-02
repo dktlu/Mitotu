@@ -66,27 +66,27 @@ public class Register2Activity extends BaseActivity implements View.OnClickListe
     }
 private boolean validate(){
     if(StringUtil.isEmpty(etTel.getText().toString())){
-        showToastMsg("请输入手机号！");
+        Register2Activity.this.showMyToast("请输入手机号！");
         return false;
     }
     if(!StringUtil.isPhoneNumber(etTel.getText().toString())){
-        showToastMsg("请输入正确的手机号！");
+        Register2Activity.this.showMyToast("请输入正确的手机号！");
         return false;
     }
     if(StringUtil.isEmpty(etPassword.getText().toString())){
-        showToastMsg("请输入密码！");
+        Register2Activity.this.showMyToast("请输入密码！");
         return false;
     }
     if(etPassword.getText().toString().length()<6){
-        showToastMsg("请输入6-8位密码！");
+        Register2Activity.this.showMyToast("请输入6-8位密码！");
         return false;
     }
     if(StringUtil.isEmpty(etPasswordRe.getText().toString())){
-        showToastMsg("请重复输入密码！");
+        Register2Activity.this.showMyToast("请重复输入密码-8位密码！");
         return false;
     }
     if(!etPasswordRe.getText().toString().equals(etPassword.getText().toString())){
-        showToastMsg("两次密码输入不一致，请重新输入！");
+        Register2Activity.this.showMyToast("两次密码输入不一致，请重新输入！");
         return false;
     }
     return true;
@@ -140,9 +140,9 @@ private boolean validate(){
                     startActivity(nextIntent);
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("获取验证码失败！");
+                        Register2Activity.this.showMyToast("获取验证码失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        Register2Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }

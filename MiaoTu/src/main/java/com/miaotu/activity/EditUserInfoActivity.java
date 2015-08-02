@@ -226,7 +226,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                     addTag(content);
                 }else {
                     et_tag.setText("");
-                    showToastMsg("最多输入6个标签");
+                    EditUserInfoActivity.this.showMyToast("最多输入6个标签");
                 }
                 break;
             case R.id.tv_right:
@@ -296,7 +296,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("修改成功");
+                    EditUserInfoActivity.this.showMyToast("修改成功");
 
                     if (!StringUtil.isBlank(info.getWork())) {
                         writePreference("job", info.getWork());
@@ -345,9 +345,9 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
 //                            R.drawable.icon_default_head_photo);
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("修改信息失败");
+                        EditUserInfoActivity.this.showMyToast("修改信息失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        EditUserInfoActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -429,9 +429,9 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                     modifyUserInfo(info);
                 } else {
                     if (StringUtil.isBlank(result.getMsg())) {
-                        showToastMsg("操作失败");
+                        EditUserInfoActivity.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        EditUserInfoActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }

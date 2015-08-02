@@ -95,9 +95,9 @@ public class RemindCommentCustomFragment extends BaseFragment implements View.On
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(remindLikeResult.getMsg())){
-                        showToastMsg("获取列表失败");
+                        RemindCommentCustomFragment.this.showMyToast("获取列表失败");
                     }else {
-                        showToastMsg(remindLikeResult.getMsg());
+                        RemindCommentCustomFragment.this.showMyToast(remindLikeResult.getMsg());
                     }
                 }
             }
@@ -118,14 +118,14 @@ public class RemindCommentCustomFragment extends BaseFragment implements View.On
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindCommentCustomFragment.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindCommentCustomFragment.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindCommentCustomFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

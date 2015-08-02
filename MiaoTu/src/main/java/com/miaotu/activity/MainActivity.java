@@ -488,7 +488,8 @@ public class MainActivity extends BaseFragmentActivity implements
         Timer tExit = null;
         if (isExit == false) {
             isExit = true; // 准备退出
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            MainActivity.this.showMyToast("再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
@@ -740,7 +741,8 @@ public class MainActivity extends BaseFragmentActivity implements
                 public void run() {
                     if (error == EMError.CONNECTION_CONFLICT) {
                         // 显示帐号在其他设备登陆
-                        showToastMsg("您的账户已经在其他设备登录，请重新登录！");
+//                        showToastMsg("您的账户已经在其他设备登录，请重新登录！");
+                        MainActivity.this.showMyToast("您的账户已经在其他设备登录，请重新登录！");
                         writePreference("login_status", "out");
                         writePreference("gender", "");
                         writePreference("tour_join_count","0");

@@ -1,12 +1,17 @@
 package com.miaotu.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miaotu.R;
 import com.miaotu.activity.BaseActivity;
@@ -17,6 +22,7 @@ import com.miaotu.model.Recommend;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.LikeResult;
 import com.miaotu.util.StringUtil;
+import com.miaotu.util.Util;
 
 import java.util.List;
 
@@ -99,18 +105,22 @@ public class RecommendListAdapter extends
                         if (count < 0){
                             count = 0;
                         }
-                        ((BaseActivity)mContext).showToastMsg("取消喜欢成功");
+//                        ((BaseActivity)mContext).showToastMsg("取消喜欢成功");
+                        showMyToast((BaseActivity)mContext, "取消喜欢成功");
                     }else {
                         view.setBackgroundResource(R.drawable.icon_minus);
                         count+=1;
-                        ((BaseActivity)mContext).showToastMsg("喜欢成功");
+                        showMyToast((BaseActivity)mContext, "喜欢成功");
+//                        ((BaseActivity)mContext).showToastMsg("喜欢成功");
                     }
                     ((BaseActivity)mContext).writePreference("followcount", count + "");
                 }else {
                     if (StringUtil.isBlank(result.getMsg())){
-                        ((BaseActivity)mContext).showToastMsg("添加好友失败");
+                        showMyToast((BaseActivity)mContext, "添加好友失败");
+//                        ((BaseActivity)mContext).showToastMsg("添加好友失败");
                     }else {
-                        ((BaseActivity)mContext).showToastMsg(result.getMsg());
+                        showMyToast((BaseActivity)mContext, result.getMsg());
+//                        ((BaseActivity)mContext).showToastMsg(result.getMsg());
                     }
                 }
             }
@@ -120,5 +130,28 @@ public class RecommendListAdapter extends
                 return HttpRequestUtil.getInstance().likeforparam(token, touid);
             }
         }.execute();
+    }
+
+    /**
+     * 显示自定义的Toast
+     *
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        tv.setAlpha(0.8f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
+        toast.show();
     }
 }

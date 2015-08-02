@@ -97,9 +97,9 @@ public class RemindJoinTogetherFragment extends BaseFragment implements View.OnC
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(remindLikeResult.getMsg())){
-                        showToastMsg("获取列表失败");
+                        RemindJoinTogetherFragment.this.showMyToast("获取列表失败");
                     }else {
-                        showToastMsg(remindLikeResult.getMsg());
+                        RemindJoinTogetherFragment.this.showMyToast(remindLikeResult.getMsg());
                     }
                 }
             }
@@ -120,14 +120,14 @@ public class RemindJoinTogetherFragment extends BaseFragment implements View.OnC
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindJoinTogetherFragment.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindJoinTogetherFragment.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindJoinTogetherFragment.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

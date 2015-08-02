@@ -106,7 +106,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_right:
                 String sms_content = "老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！";
                 if(numbers.size() < 1) {
-                    showToastMsg("没有选择联系人");
+                    PhoneAddressActivity.this.showMyToast("没有选择联系人");
                 } else {
                     SmsManager smsManager = SmsManager.getDefault();
                     for (String number:numbers){
@@ -120,7 +120,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
                         }
                         break;
                     }
-                    showToastMsg("发送完毕");
+                    PhoneAddressActivity.this.showMyToast("发送完毕");
                 }
                 break;
         }

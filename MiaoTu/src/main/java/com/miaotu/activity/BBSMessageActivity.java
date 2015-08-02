@@ -162,9 +162,9 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
                     adapter.notifyDataSetChanged();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题失败！");
+                        BBSMessageActivity.this.showMyToast("获取话题失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSMessageActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -201,9 +201,9 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("读取失败");
+                        BBSMessageActivity.this.showMyToast("读取失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSMessageActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -219,7 +219,7 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(!Util.isNetworkConnected(BBSMessageActivity.this)) {
-            showToastMsg("当前未联网，请检查网络设置");
+            BBSMessageActivity.this.showMyToast("当前未联网，请检查网络设置");
             return;
         }
         switch (view.getId()){
@@ -240,7 +240,7 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onClick(View view) {
                         if (!Util.isNetworkConnected(BBSMessageActivity.this)) {
-                            showToastMsg("当前未联网，请检查网络设置");
+                            BBSMessageActivity.this.showMyToast("当前未联网，请检查网络设置");
                             return;
                         }
                         emptyMessages(readPreference("token"));
@@ -271,14 +271,14 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    BBSMessageActivity.this.showMyToast("操作成功");
                     mList.clear();
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("操作失败");
+                        BBSMessageActivity.this.showMyToast("操作失败");
                     }else{
-                        showToastMsg(baseResult.getMsg());
+                        BBSMessageActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -303,12 +303,12 @@ public class BBSMessageActivity extends BaseActivity implements View.OnClickList
                         mList.remove(position);
                         adapter.notifyDataSetChanged();
                     }
-                    showToastMsg("操作成功");
+                    BBSMessageActivity.this.showMyToast("操作成功");
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("操作失败");
+                        BBSMessageActivity.this.showMyToast("操作失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        BBSMessageActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

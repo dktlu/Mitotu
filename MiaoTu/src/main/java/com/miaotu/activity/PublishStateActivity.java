@@ -166,9 +166,9 @@ public class PublishStateActivity extends BaseActivity implements View.OnClickLi
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        PublishStateActivity.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishStateActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -205,9 +205,9 @@ public class PublishStateActivity extends BaseActivity implements View.OnClickLi
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        PublishStateActivity.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishStateActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }

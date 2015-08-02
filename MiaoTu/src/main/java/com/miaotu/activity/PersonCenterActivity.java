@@ -300,9 +300,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     initPersonInfoData(personInfoResult);
                 }else{
                     if(StringUtil.isEmpty(personInfoResult.getMsg())){
-                        showToastMsg("获取用户信息失败");
+                        PersonCenterActivity.this.showMyToast("获取用户信息失败");
                     }else{
-                        showToastMsg(personInfoResult.getMsg());
+                        PersonCenterActivity.this.showMyToast(personInfoResult.getMsg());
                     }
                 }
             }
@@ -473,9 +473,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     writePreference("followcount", count+"");
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("操作失败");
+                        PersonCenterActivity.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        PersonCenterActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -557,9 +557,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     modifyUserInfo(info);
                 } else {
                     if (StringUtil.isBlank(result.getMsg())) {
-                        showToastMsg("操作失败");
+                        PersonCenterActivity.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PersonCenterActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -581,12 +581,12 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("修改成功");
+                    PersonCenterActivity.this.showMyToast("修改成功");
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("修改信息失败");
+                        PersonCenterActivity.this.showMyToast("修改信息失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        PersonCenterActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -619,9 +619,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     imageWallAdapter.notifyItemChanged(imageWallList.size()-1);
                 }else {
                     if (StringUtil.isBlank(imageWallResult.getMsg())){
-                        showToastMsg("获取图片墙失败");
+                        PersonCenterActivity.this.showMyToast("获取图片墙失败");
                     }else {
-                        showToastMsg(imageWallResult.getMsg());
+                        PersonCenterActivity.this.showMyToast(imageWallResult.getMsg());
                     }
                 }
             }

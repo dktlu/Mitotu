@@ -82,9 +82,9 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
                     writePreference("fanscount", blackInfoList.size() + "");
                 }else {
                     if(StringUtil.isBlank(blackResult.getMsg())){
-                        showToastMsg("获取黑名单失败");
+                        MyFansFragment.this.showMyToast("获取黑名单失败");
                     }else {
-                        showToastMsg(blackResult.getMsg());
+                        MyFansFragment.this.showMyToast(blackResult.getMsg());
                     }
                 }
             }

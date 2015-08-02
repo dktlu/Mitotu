@@ -105,9 +105,9 @@ public class RemindLikeActivity extends BaseActivity implements View.OnClickList
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(remindLikeResult.getMsg())){
-                        showToastMsg("获取关注列表失败");
+                        RemindLikeActivity.this.showToastMsg("获取关注列表失败");
                     }else {
-                        showToastMsg(remindLikeResult.getMsg());
+                        RemindLikeActivity.this.showToastMsg(remindLikeResult.getMsg());
                     }
                 }
             }
@@ -128,14 +128,14 @@ public class RemindLikeActivity extends BaseActivity implements View.OnClickList
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindLikeActivity.this.showMyToast("操作成功");
                     remindLikes.remove(position);
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindLikeActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindLikeActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -155,14 +155,14 @@ public class RemindLikeActivity extends BaseActivity implements View.OnClickList
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindLikeActivity.this.showMyToast("操作成功");
                     remindLikes.clear();
                     adapter.notifyDataSetChanged();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindLikeActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindLikeActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -181,7 +181,7 @@ public class RemindLikeActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tv_right:
                 if(remindLikes.size()==0){
-                    showToastMsg("没有关注提醒，无需清空！");
+                    RemindLikeActivity.this.showMyToast("没有关注提醒，无需清空！");
                     break;
                 }
                 delAllLike();

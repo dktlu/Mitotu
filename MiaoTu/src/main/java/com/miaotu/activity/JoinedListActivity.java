@@ -105,9 +105,9 @@ public class JoinedListActivity extends BaseActivity implements View.OnClickList
                     adapter.notifyDataSetChanged();
                 }else {
                     if (StringUtil.isBlank(joinedListResult.getMsg())){
-                        showToastMsg("获取报名列表失败");
+                        JoinedListActivity.this.showMyToast("获取报名列表失败");
                     }else {
-                        showToastMsg(joinedListResult.getMsg());
+                        JoinedListActivity.this.showMyToast(joinedListResult.getMsg());
                     }
                 }
             }
@@ -139,9 +139,9 @@ public class JoinedListActivity extends BaseActivity implements View.OnClickList
                     adapter.notifyDataSetChanged();
                 }else {
                     if (StringUtil.isBlank(joinedListResult.getMsg())){
-                        showToastMsg("获取报名列表失败");
+                        JoinedListActivity.this.showMyToast("获取报名列表失败");
                     }else {
-                        showToastMsg(joinedListResult.getMsg());
+                        JoinedListActivity.this.showMyToast(joinedListResult.getMsg());
                     }
                 }
             }

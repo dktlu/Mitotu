@@ -116,13 +116,13 @@ public class RemindCommentTourActivity extends BaseFragmentActivity implements V
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindCommentTourActivity.this.showMyToast("操作成功");
                     mTab01.getRemindList();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindCommentTourActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindCommentTourActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -142,13 +142,13 @@ public class RemindCommentTourActivity extends BaseFragmentActivity implements V
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindCommentTourActivity.this.showMyToast("操作成功");
                     mTab02.getRemindList();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindCommentTourActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindCommentTourActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

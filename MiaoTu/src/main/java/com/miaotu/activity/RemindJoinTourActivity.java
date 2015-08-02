@@ -117,13 +117,13 @@ public class RemindJoinTourActivity extends BaseFragmentActivity implements View
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindJoinTourActivity.this.showMyToast("操作成功");
                     mTab01.getRemindList();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindJoinTourActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindJoinTourActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -143,13 +143,13 @@ public class RemindJoinTourActivity extends BaseFragmentActivity implements View
             @Override
             protected void onCompleteTask(BaseResult baseResult) {
                 if(baseResult.getCode() == BaseResult.SUCCESS){
-                    showToastMsg("操作成功");
+                    RemindJoinTourActivity.this.showMyToast("操作成功");
                     mTab02.getRemindList();
                 }else {
                     if(StringUtil.isBlank(baseResult.getMsg())){
-                        showToastMsg("删除失败");
+                        RemindJoinTourActivity.this.showMyToast("删除失败");
                     }else {
-                        showToastMsg(baseResult.getMsg());
+                        RemindJoinTourActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }

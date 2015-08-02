@@ -165,9 +165,9 @@ public class RedPackageActivity extends BaseActivity implements OnClickListener 
 //                    tvMoney.setText(result.getLuckMoney());
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取红包记录失败！");
+                        RedPackageActivity.this.showMyToast("获取红包记录失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        RedPackageActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -309,7 +309,7 @@ public class RedPackageActivity extends BaseActivity implements OnClickListener 
                     writePreference("luckmoney", newMoney + "");
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取红包金额失败！");
+                        RedPackageActivity.this.showMyToast("获取红包金额失败！");
                     } else {
 //                        showToastMsg(result.getMsg());
                         finishDialog();
@@ -411,7 +411,7 @@ public class RedPackageActivity extends BaseActivity implements OnClickListener 
      */
     private void exchange(final String code) {
         if (StringUtil.isEmpty(code)) {
-            showToastMsg("兑换码不能为空！");
+            RedPackageActivity.this.showMyToast("兑换码不能为空！");
             return;
         } else {
             new BaseHttpAsyncTask<Void, Void, LuckyResult>(this,
@@ -426,7 +426,7 @@ public class RedPackageActivity extends BaseActivity implements OnClickListener 
                     }
                     if (result.getCode() == BaseResult.SUCCESS) {
                         //兑换成功
-                        showToastMsg("红包兑换成功");
+                        RedPackageActivity.this.showMyToast("红包兑换成功");
                         double origionmoney = Double.parseDouble(tvMoney.getText().toString().trim());
                         if (StringUtil.isBlank(result.getLuckyInfo().getMoney())){
                             result.getLuckyInfo().setMoney("0");
@@ -441,9 +441,9 @@ public class RedPackageActivity extends BaseActivity implements OnClickListener 
                         dialog.dismiss();
                     } else {
                         if (StringUtil.isEmpty(result.getMsg())) {
-                            showToastMsg("红包兑换失败！");
+                            RedPackageActivity.this.showMyToast("红包兑换失败！");
                         } else {
-                            showToastMsg(result.getMsg());
+                            RedPackageActivity.this.showMyToast(result.getMsg());
                         }
                     }
                 }

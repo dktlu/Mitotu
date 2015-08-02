@@ -228,8 +228,8 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
                         startdate = sdf.parse(currentYear + "-" + currentMonth + "-"
                                 + currentDay);
                         if (compareDate(startdate, enddate)){
-                            showToastMsg("时光机还未发明 返回时间没法早于出发时间哦");
-                            ((TextView)parent).setText("");
+                            PublishTogetherStep1Activity.this.showMyToast("时光机还未发明 返回时间没法早于出发时间哦");
+                                    ((TextView) parent).setText("");
                         }else {
                             ((TextView)parent).setText(currentYear + "-" + currentMonth + "-"
                                     + currentDay);
@@ -239,16 +239,16 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
                     }
                 }else { //结束日期
                     if (StringUtil.isBlank(tvStartDate.getText().toString())){
-                        showToastMsg("选择开始日期");
-                        ((TextView)parent).setText("");
+                        PublishTogetherStep1Activity.this.showMyToast("选择开始日期");
+                                ((TextView) parent).setText("");
                     }else {
                         try {
                             startdate = sdf.parse(tvStartDate.getText().toString());
                             enddate = sdf.parse(currentYear + "-" + currentMonth + "-"
                                     + currentDay);
                             if (compareDate(startdate, enddate)){
-                                showToastMsg("时光机还未发明 返回时间没法早于出发时间哦");
-                                ((TextView)parent).setText("");
+                                PublishTogetherStep1Activity.this.showMyToast("时光机还未发明 返回时间没法早于出发时间哦");
+                                        ((TextView) parent).setText("");
                             }else {
                                 ((TextView)parent).setText(currentYear + "-" + currentMonth + "-"
                                         + currentDay);
@@ -279,19 +279,19 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
     }
     private boolean validate(){
         if(StringUtil.isBlank(etDesCity.getText().toString())){
-            showToastMsg("请选择目的城市！");
+            PublishTogetherStep1Activity.this.showMyToast("请选择目的城市！");
             return false;
         }
         if(StringUtil.isBlank(etOrigiCity.getText().toString())){
-            showToastMsg("请选择出发城市！");
+            PublishTogetherStep1Activity.this.showMyToast("请选择出发城市！");
             return false;
         }
         if (StringUtil.isBlank(tvCount.getText().toString())){
-            showToastMsg("选择旅伴人数");
+            PublishTogetherStep1Activity.this.showMyToast("选择旅伴人数！");
             return false;
         }
         if (StringUtil.isBlank(tvEndDate.getText().toString())){
-            showToastMsg("选择结束日期");
+            PublishTogetherStep1Activity.this.showMyToast("选择结束日期！");
             return false;
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -300,11 +300,11 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
             Date date2 = format.parse(tvEndDate.getText().toString());
             Date now = format.parse(format.format(new Date()));
             if (now.after(date1)){
-                showToastMsg("开始日期不能早于当前日期！");
+                PublishTogetherStep1Activity.this.showMyToast("开始日期不能早于当前日期！");
                 return false;
             }
             if (date1.after(date2)){
-                showToastMsg("结束日期不能早于开始日期！");
+                PublishTogetherStep1Activity.this.showMyToast("结束日期不能早于开始日期！");
                 return false;
             }
         } catch (ParseException e) {
@@ -350,7 +350,7 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
             String ext = Util.getExtName(file);
             LogUtil.d("后缀名"+ext);
             if(ext.equals("gif")||ext.equals("GIF")){
-                showToastMsg("暂时不支持上传gif动图(⊙o⊙)");
+                PublishTogetherStep1Activity.this.showMyToast("暂时不支持上传gif动图(⊙o⊙)");
                 gifFlg = true;
                 break;
             }
@@ -374,9 +374,9 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
                     next();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("图片上传失败！");
+                        PublishTogetherStep1Activity.this.showMyToast("图片上传失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishTogetherStep1Activity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -497,7 +497,7 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
             case R.id.btn_tag_add:
                 //添加标签
                 if(StringUtil.isBlank(etTag.getText().toString())){
-                    showToastMsg("请输入标签！");
+                    PublishTogetherStep1Activity.this.showMyToast("请输入标签！");
                     return;
                 }
                 if(layoutTags.getChildCount()<6){
@@ -519,7 +519,7 @@ public class PublishTogetherStep1Activity extends BaseActivity implements OnClic
                     layoutTags.addView(viewTemp);
                     layoutTags.requestLayout();
                 }else {
-                    showToastMsg("最多只能添加6个线路标签");
+                    PublishTogetherStep1Activity.this.showMyToast("最多只能添加6个线路标签");
                 }
                 break;
             case R.id.layout_next:

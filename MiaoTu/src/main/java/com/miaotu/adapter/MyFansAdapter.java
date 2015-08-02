@@ -3,11 +3,14 @@ package com.miaotu.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,7 +95,7 @@ public class MyFansAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 if(!Util.isNetworkConnected(context)) {
-                    ((BaseFragmentActivity)context).showToastMsg("当前未联网，请检查网络设置");
+                    showMyToast((BaseFragmentActivity)context, "当前未联网，请检查网络设置");
                     return;
                 }
                 int pos = (int) view.getTag();
@@ -136,9 +139,9 @@ public class MyFansAdapter extends BaseAdapter{
                     }
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity)context, "操作失败");
                     } else {
-                        Toast.makeText(context, baseResult.getMsg(), Toast.LENGTH_SHORT).show();
+                        showMyToast((BaseFragmentActivity) context, baseResult.getMsg());
                     }
                 }
             }
@@ -149,5 +152,28 @@ public class MyFansAdapter extends BaseAdapter{
                         blackInfos.get(position).getUid());
             }
         }.execute();
+    }
+
+    /**
+     * 显示自定义的Toast
+     *
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        tv.setAlpha(0.8f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
+        toast.show();
     }
 }

@@ -74,19 +74,19 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
     };
     private boolean validate(){
         if(StringUtil.isEmpty(etDesCity.getText().toString())){
-            showToastMsg("请输入目的城市！");
+            PublishCustomTourActivity2.this.showMyToast("请输入目的城市！");
             return false;
         }
         if(StringUtil.isEmpty(etOriginCity.getText().toString())){
-            showToastMsg("请输入出发城市！");
+            PublishCustomTourActivity2.this.showMyToast("请输入出发城市！");
             return false;
         }
         if (StringUtil.isBlank(tvStartDate.getText().toString())){
-            showToastMsg("选择开始日期");
+            PublishCustomTourActivity2.this.showMyToast("选择开始日期！");
             return false;
         }
         if (StringUtil.isBlank(tvEndDate.getText().toString())){
-            showToastMsg("选择结束日期");
+            PublishCustomTourActivity2.this.showMyToast("选择结束日期！");
             return false;
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,11 +95,11 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
             Date date2 = format.parse(tvEndDate.getText().toString());
             Date now = format.parse(format.format(new Date()));
             if (now.after(date1)){
-                showToastMsg("开始日期不能早于当前日期！");
+                PublishCustomTourActivity2.this.showMyToast("开始日期不能早于当前日期！");
                 return false;
             }
             if (date1.after(date2)){
-                showToastMsg("结束日期不能早于开始日期！");
+                PublishCustomTourActivity2.this.showMyToast("结束日期不能早于开始日期！");
                 return false;
             }
         } catch (ParseException e) {
@@ -174,8 +174,8 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
                         startdate = sdf.parse(currentYear + "-" + currentMonth + "-"
                                 + currentDay);
                         if (compareDate(startdate, enddate)){
-                            showToastMsg("时光机还未发明 返回时间没法早于出发时间哦");
-                            ((TextView)parent).setText("");
+                            PublishCustomTourActivity2.this.showMyToast("时光机还未发明 返回时间没法早于出发时间哦");
+                                    ((TextView) parent).setText("");
                         }else {
                             ((TextView)parent).setText(currentYear + "-" + currentMonth + "-"
                                     + currentDay);
@@ -185,16 +185,16 @@ public class PublishCustomTourActivity2 extends BaseActivity implements OnClickL
                     }
                 }else { //结束日期
                     if (StringUtil.isBlank(tvStartDate.getText().toString())){
-                        showToastMsg("选择开始日期");
-                        ((TextView)parent).setText("");
+                        PublishCustomTourActivity2.this.showMyToast("选择开始日期");
+                                ((TextView) parent).setText("");
                     }else {
                         try {
                             startdate = sdf.parse(tvStartDate.getText().toString());
                             enddate = sdf.parse(currentYear + "-" + currentMonth + "-"
                                     + currentDay);
                             if (compareDate(startdate, enddate)){
-                                showToastMsg("时光机还未发明 返回时间没法早于出发时间哦");
-                                ((TextView)parent).setText("");
+                                PublishCustomTourActivity2.this.showMyToast("时光机还未发明 返回时间没法早于出发时间哦");
+                                        ((TextView) parent).setText("");
                             }else {
                                 ((TextView)parent).setText(currentYear + "-" + currentMonth + "-"
                                         + currentDay);

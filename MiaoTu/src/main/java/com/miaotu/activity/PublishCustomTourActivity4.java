@@ -76,9 +76,9 @@ public class PublishCustomTourActivity4 extends BaseActivity implements OnClickL
                     finish();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("发布失败！");
+                        PublishCustomTourActivity4.this.showMyToast("发布失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        PublishCustomTourActivity4.this.showMyToast(result.getMsg());
                     }
                 }
             }
