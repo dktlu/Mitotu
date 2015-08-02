@@ -4,9 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.miaotu.R;
 import com.miaotu.util.Util;
 import com.miaotu.view.LoadingDlg;
 
@@ -71,7 +78,8 @@ public abstract class BaseHttpAsyncTask<Params, Progress, Result> extends
 		onPreExcuted = true;
 		super.onPreExecute();
 		if (!Util.isNetworkConnected(activity)) {
-			Toast.makeText(activity, "没有网络连接", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(activity, "没有网络连接", Toast.LENGTH_SHORT).show();
+            showToast("没有网络连接");
 //			finallyRun();
 			this.cancel(true);
 			return;
@@ -99,7 +107,8 @@ public abstract class BaseHttpAsyncTask<Params, Progress, Result> extends
 		// 如果throwable不为空，则执行任务时捕获到了异常
 		if (throwable != null || result == null) {
 			if(showTip){
-				Toast.makeText(activity, "服务器响应超时", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(activity, "服务器响应超时", Toast.LENGTH_SHORT).show();
+				showToast("服务器响应超时");
 			}
 		}else{
 			onCompleteTask(result);
@@ -157,5 +166,27 @@ public abstract class BaseHttpAsyncTask<Params, Progress, Result> extends
 		if (mLoadingDlg != null && mLoadingDlg.isShowing()) {
 			mLoadingDlg.dismiss();
 		}
+	}
+
+	/**
+	 * 显示自定义的Toast
+	 *
+	 * @param content
+	 */
+	public void showToast(String content) {
+		View toastView = LayoutInflater.from(activity).inflate(R.layout.toast_like, null);
+		DisplayMetrics dm = new DisplayMetrics();
+		activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+		TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+		tv.setLayoutParams(params);
+		tv.setText(content);
+		Toast toast = new Toast(activity);
+		toast.setGravity(Gravity.TOP, 0, Util.dip2px(activity, 44));
+		tv.setAlpha(0.8f);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastView);
+		toast.show();
 	}
 }

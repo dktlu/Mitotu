@@ -156,7 +156,7 @@ public class BaseFragment extends Fragment {
 	 *
 	 * @param content
 	 */
-	private void showMyToast(String content) {
+	public void showMyToast(String content) {
 		View toastView = LayoutInflater.from(getActivity()).inflate(R.layout.toast_like, null);
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -173,4 +173,25 @@ public class BaseFragment extends Fragment {
 		toast.show();
 	}
 
+	/**
+	 * 显示自定义的Toast
+	 *
+	 * @param content
+	 */
+	public void showMyToast(int offset, String content) {
+		View toastView = LayoutInflater.from(getActivity()).inflate(R.layout.toast_like, null);
+		DisplayMetrics dm = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+		TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+		tv.setLayoutParams(params);
+		tv.setText(content);
+		Toast toast = new Toast(getActivity());
+		toast.setGravity(Gravity.TOP, 0, Util.dip2px(getActivity(), offset));
+		tv.setAlpha(0.8f);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastView);
+		toast.show();
+	}
 }

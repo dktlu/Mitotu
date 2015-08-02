@@ -3,34 +3,25 @@ package com.miaotu.activity;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miaotu.R;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.imutil.ContactInfo;
 import com.miaotu.imutil.IMDatabaseHelper;
-import com.miaotu.model.CustomTour;
-import com.miaotu.model.CustomTourInfo;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.MD5;
 import com.miaotu.util.StringUtil;
@@ -164,7 +155,7 @@ private WebView webView;
 
                     // Code in here
 //                    showToastMsg(text);
-                    showMyToast(CustomTourDetailActivity.this, text);
+                    CustomTourDetailActivity.this.showMyToast(0,text);
 
                 }
 
@@ -183,12 +174,12 @@ private WebView webView;
             //私聊
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
                 return;
             }
             if(uid.equals(readPreference("uid"))){
 //                showToastMsg("不能和自己聊天！");
-                showMyToast(CustomTourDetailActivity.this, "不能和自己聊天！");
+                CustomTourDetailActivity.this.showMyToast(0, "不能和自己聊天！");
                 return ;
             }
             Intent chatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -217,12 +208,12 @@ private WebView webView;
                     // Code in here
                     if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                        showToastMsg("当前未联网，请检查网络设置");
-                        showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                        CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
                         return;
                     }
                     if (uid.equals(readPreference("uid"))) {
 //                        showToastMsg("不能和自己聊天！");
-                        showMyToast(CustomTourDetailActivity.this, "不能和自己聊天！");
+                        CustomTourDetailActivity.this.showMyToast(0, "不能和自己聊天！");
                         return;
                     }
                     Intent chatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -242,7 +233,7 @@ private WebView webView;
             //群聊
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
                 return;
             }
             Intent groupChatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -261,7 +252,7 @@ private WebView webView;
                     // Code in here
                     if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                        showToastMsg("当前未联网，请检查网络设置");
-                        showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                        CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
                         return;
                     }
                     Intent groupChatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -284,7 +275,7 @@ private WebView webView;
 //            });
                 if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-                    showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                    CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
             return;
         }
         if(isLike){
@@ -300,7 +291,7 @@ private WebView webView;
         // 个人中心
         if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-            showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
             return;
         }
         Intent userIntent = new Intent(CustomTourDetailActivity.this,PersonCenterActivity.class);
@@ -312,7 +303,7 @@ private WebView webView;
         // 支付
         if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-            showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
             return;
         }
         CustomTourDetailActivity.this.uid = uid;
@@ -330,7 +321,7 @@ private WebView webView;
         public void payRedPackage(String amount, final String uid, final String nickname, final String headUrl, final String groupId, final String groupName, final String remark){
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
                 return;
             }
             boolean isSuccess = false;
@@ -353,7 +344,7 @@ private WebView webView;
             }
             if (isSuccess)
 //            showToastMsg("付款完成！");
-                showMyToast(CustomTourDetailActivity.this, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
             mHandler.post(new Runnable() {
                 public void run() {
                     webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
@@ -441,7 +432,7 @@ private WebView webView;
                 if(result.equals("success")){
                         //支付成
 //                        showToastMsg("付款完成！");
-                    showMyToast(CustomTourDetailActivity.this, "付款完成！");
+                    CustomTourDetailActivity.this.showMyToast(0, "付款完成！");
                         webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
                         webView.postDelayed(new Runnable() {
@@ -453,14 +444,14 @@ private WebView webView;
                     isPay=true;
                 }else{
 //                    Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
-                    showMyToast(CustomTourDetailActivity.this, "付款未完成");
+                    CustomTourDetailActivity.this.showMyToast(0, "付款未完成");
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
 //                Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
-                showMyToast(CustomTourDetailActivity.this, "付款未完成");
+                CustomTourDetailActivity.this.showMyToast(0, "付款未完成");
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
 //                Toast.makeText(this, "An invalid Credential was submitted.", Toast.LENGTH_SHORT).show();
-                showMyToast(CustomTourDetailActivity.this, "An invalid Credential was submitted.");
+                CustomTourDetailActivity.this.showMyToast(0, "An invalid Credential was submitted.");
             }
         }
     }
@@ -488,7 +479,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("支付宝支付");
-                showMyToast(CustomTourDetailActivity.this, "支付宝支付");
+                CustomTourDetailActivity.this.showMyToast(0, "支付宝支付");
                 payOrder("alipay");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
@@ -500,7 +491,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("微信支付");
-                showMyToast(CustomTourDetailActivity.this, "微信支付");
+                CustomTourDetailActivity.this.showMyToast(0, "微信支付");
                 payOrder("wx");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
@@ -521,26 +512,4 @@ private WebView webView;
         webView.setAlpha(value);
     }
 
-    /**
-     * 显示自定义的Toast
-     *
-     * @param context
-     * @param content
-     */
-    private void showMyToast(Activity context, String content) {
-        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
-        DisplayMetrics dm = new DisplayMetrics();
-        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int mScreenWidth = dm.widthPixels;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
-        tv.setLayoutParams(params);
-        tv.setText(content);
-        tv.setAlpha(0.8f);
-        Toast toast = new Toast(context);
-        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(toastView);
-        toast.show();
-    }
 }

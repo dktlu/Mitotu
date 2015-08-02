@@ -216,7 +216,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                 @Override
                 public void onClick(View view) {
                     if(!Util.isNetworkConnected(BBSTopicDetailActivity.this)) {
-                        showToastMsg("当前未联网，请检查网络设置");
+                        BBSTopicDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                         return;
                     }
                     Intent intent = new Intent(BBSTopicDetailActivity.this, PersonCenterActivity.class);
@@ -373,9 +373,9 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        BBSTopicDetailActivity.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -413,9 +413,9 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        BBSTopicDetailActivity.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -485,7 +485,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                         @Override
                         public void onClick(View view) {
                             if(!Util.isNetworkConnected(BBSTopicDetailActivity.this)) {
-                                showToastMsg("当前未联网，请检查网络设置");
+                                BBSTopicDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                                 return;
                             }
                             Intent intent = new Intent(BBSTopicDetailActivity.this, PersonCenterActivity.class);
@@ -614,9 +614,9 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
 
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题失败！");
+                        BBSTopicDetailActivity.this.showMyToast("获取话题失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -671,16 +671,16 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                         return;
                     }
                     if (result.getCode() == BaseResult.SUCCESS) {
-                        showToastMsg("评论成功！");
+                        BBSTopicDetailActivity.this.showMyToast("评论成功！");
                         etComment.setTag("");
                         etComment.setHint("写评论");
                         etComment.setText("");
                         getComments(false);
                     } else {
                         if (StringUtil.isEmpty(result.getMsg())) {
-                            showToastMsg("评论话题失败！");
+                            BBSTopicDetailActivity.this.showMyToast("评论话题失败！");
                         } else {
-                            showToastMsg(result.getMsg());
+                            BBSTopicDetailActivity.this.showMyToast(result.getMsg());
                         }
                     }
                 }
@@ -717,7 +717,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             protected void onCompleteTask(BaseResult baseResult) {
                 if (baseResult.getCode() == BaseResult.SUCCESS) {
                     if(!islike){
-                        showToastMsg("喜欢成功");
+                        BBSTopicDetailActivity.this.showMyToast("喜欢成功");
                         iv.setBackgroundResource(R.drawable.icon_friend_like);
                         isLike = 1001;
 
@@ -731,7 +731,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                         view.findViewById(R.id.ll_likeuser).setVisibility(View.VISIBLE);
 
                     }else {
-                        showToastMsg("取消喜欢成功");
+                        BBSTopicDetailActivity.this.showMyToast("取消喜欢成功");
                         iv.setBackgroundResource(R.drawable.icon_friend_dislike);
                         isLike = 1002;
 
@@ -753,9 +753,9 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     setResult(isLike);
                 } else {
                     if (StringUtil.isBlank(baseResult.getMsg())) {
-                        showToastMsg("操作失败");
+                        BBSTopicDetailActivity.this.showMyToast("操作失败");
                     } else {
-                        showToastMsg(baseResult.getMsg());
+                        BBSTopicDetailActivity.this.showMyToast(baseResult.getMsg());
                     }
                 }
             }
@@ -793,7 +793,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                 @Override
                 public void onClick(View view) {
                     if(!Util.isNetworkConnected(BBSTopicDetailActivity.this)) {
-                        showToastMsg("当前未联网，请检查网络设置");
+                        BBSTopicDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                         return;
                     }
                     int pos = (int) view.getTag();

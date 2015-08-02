@@ -208,4 +208,25 @@ public class BaseFragmentActivity extends FragmentActivity {
 		toast.show();
 	}
 
+	/**
+	 * 显示自定义的Toast
+	 *
+	 * @param content
+	 */
+	private void showMyToast(int yoffset, String content) {
+		View toastView = LayoutInflater.from(this).inflate(R.layout.toast_like, null);
+		DisplayMetrics dm = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+		TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+		tv.setLayoutParams(params);
+		tv.setText(content);
+		Toast toast = new Toast(this);
+		toast.setGravity(Gravity.TOP, 0, Util.dip2px(this, yoffset));
+		tv.setAlpha(0.8f);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastView);
+		toast.show();
+	}
 }

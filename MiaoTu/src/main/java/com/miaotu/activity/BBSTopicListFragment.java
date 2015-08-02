@@ -287,9 +287,9 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        BBSTopicListFragment.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicListFragment.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -327,9 +327,9 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                     }
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("获取话题列表失败！");
+                        BBSTopicListFragment.this.showMyToast("获取话题列表失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicListFragment.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -506,18 +506,18 @@ public class BBSTopicListFragment extends BaseFragment implements View.OnClickLi
                         if (count < 0){
                             count = 0;
                         }
-                        showToastMsg("取消喜欢成功");
+                        BBSTopicListFragment.this.showMyToast("取消喜欢成功");
                     }else {
                         ivAdd.setBackgroundResource(R.drawable.icon_minus);
                         count+=1;
-                        showToastMsg("喜欢成功");
+                        BBSTopicListFragment.this.showMyToast("喜欢成功");
                     }
                     writePreference("followcount", count+"");
                 }else {
                     if (StringUtil.isBlank(result.getMsg())){
-                        showToastMsg("添加好友失败");
+                        BBSTopicListFragment.this.showMyToast("添加好友失败");
                     }else {
-                        showToastMsg(result.getMsg());
+                        BBSTopicListFragment.this.showMyToast(result.getMsg());
                     }
                 }
             }

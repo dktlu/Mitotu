@@ -178,9 +178,10 @@ private Together together;
                     writeDetail(result);
                 } else {
                    if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("获取约游详情失败");
+                       TogetherDetailActivity.this.showMyToast("获取约游详情失败");
+
                     }else{
-                        showToastMsg(result.getMsg());
+                       TogetherDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -296,7 +297,7 @@ private Together together;
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                            showToastMsg("当前未联网，请检查网络设置");
+                            TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                             return;
                         }
                         MobclickAgent.onEvent(TogetherDetailActivity.this, "线路详情页-感兴趣的人");
@@ -335,7 +336,7 @@ private Together together;
                     @Override
                     public void onClick(View v) {
                         if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                            showToastMsg("当前未联网，请检查网络设置");
+                            TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                             return;
                         }
                         MobclickAgent.onEvent(TogetherDetailActivity.this, "线路详情页-感兴趣的人");
@@ -409,7 +410,7 @@ private Together together;
                     @Override
                     public void onClick(View view) {
                         if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                            showToastMsg("当前未联网，请检查网络设置");
+                            TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                             return;
                         }
                         Intent userIntent = new Intent(TogetherDetailActivity.this,PersonCenterActivity.class);
@@ -434,7 +435,7 @@ private Together together;
                 if (result.getCode() == BaseResult.SUCCESS) {
                     if(islike){
                         ivLike.setBackgroundResource(R.drawable.icon_unlike);
-                        showToastMsg("取消喜欢成功！");
+                        TogetherDetailActivity.this.showMyToast("取消喜欢成功！");
                         islike=false;
                         for(PersonInfo p:togetherDetailResult.getTogether().getLikeList()){
                             if(p.getUid().equals(readPreference("uid"))){
@@ -452,7 +453,7 @@ private Together together;
                         togetherDetailResult.getTogether().setLikeCount(count + "");
                         setResult(1002);
                     }else{
-                        showToastMsg("喜欢成功！");
+                        TogetherDetailActivity.this.showMyToast("喜欢成功！");
                         ivLike.setBackgroundResource(R.drawable.icon_like);
                         islike=true;
                         PersonInfo personInfo = new PersonInfo();
@@ -472,9 +473,9 @@ private Together together;
                     writeDetail(togetherDetailResult);
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("失败！");
+                        TogetherDetailActivity.this.showMyToast("失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        TogetherDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -498,7 +499,7 @@ private Together together;
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                        showToastMsg("评论发表成功！");
+                    TogetherDetailActivity.this.showMyToast("评论发表成功！");
                     layoutMenu.setVisibility(View.VISIBLE);
                     layoutPublishComment.setVisibility(View.GONE);
                     TogetherReply reply1 = new TogetherReply();
@@ -563,9 +564,9 @@ private Together together;
                     }
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("评论发表失败！");
+                        TogetherDetailActivity.this.showMyToast("评论发表失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        TogetherDetailActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -667,6 +668,10 @@ private Together together;
                 break;
             case R.id.layout_like:
                 // 感兴趣
+                if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
+                    return;
+                }
                 like();
                 break;
 //            case R.id.layout_joined_more:
@@ -690,7 +695,7 @@ private Together together;
             case R.id.iv_head_photo:
                 // 个人中心
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                    showToastMsg("当前未联网，请检查网络设置");
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                     return;
                 }
                 Intent userIntent = new Intent(TogetherDetailActivity.this,PersonCenterActivity.class);
@@ -700,11 +705,11 @@ private Together together;
             case R.id.iv_chat:
                 //私聊
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                    showToastMsg("当前未联网，请检查网络设置");
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                     return;
                 }
                 if(togetherDetailResult.getTogether().getUid().equals(readPreference("uid"))){
-                    showToastMsg("不能和自己聊天！");
+                    TogetherDetailActivity.this.showMyToast("不能和自己聊天！");
                     break;
                 }
                 Intent chatIntent = new Intent(TogetherDetailActivity.this, ChatsActivity.class);
@@ -726,7 +731,7 @@ private Together together;
             case R.id.iv_group_chat:
                 //群聊
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                    showToastMsg("当前未联网，请检查网络设置");
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                     return;
                 }
                 if(togetherDetailResult.getTogether().isAddGroup()){
@@ -736,13 +741,13 @@ private Together together;
                     groupChatIntent.putExtra("chatType", 2);
                     startActivity(groupChatIntent);
                 }else{
-                    showToastMsg("您还未报名此次活动，不能参与群聊！");
+                    TogetherDetailActivity.this.showMyToast("您还未报名此次活动，不能参与群聊！");
                 }
                 break;
             case R.id.iv_share:
                 //分享
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                    showToastMsg("当前未联网，请检查网络设置");
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                     return;
                 }
                 showShare();
@@ -755,15 +760,15 @@ private Together together;
             case R.id.layout_join:
                 // 参加
                 if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
-                    showToastMsg("当前未联网，请检查网络设置");
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                     return;
                 }
                 if(togetherDetailResult.getTogether().getUid().equals(readPreference("uid"))){
-                    showToastMsg("发起人不需要报名！");
+                    TogetherDetailActivity.this.showMyToast("发起人不需要报名！");
                     break;
                 }
                 if (togetherDetailResult.getTogether().isAddGroup() == true){
-                    showToastMsg("您已经报过名了");
+                    TogetherDetailActivity.this.showMyToast("您已经报过名了");
                     return;
                 }
                 Intent joinIntent = new Intent(TogetherDetailActivity.this,JoinTogetherStep1.class);
@@ -777,7 +782,10 @@ private Together together;
                 break;
             case R.id.tv_publish_comment:
                 //发表评论
-
+                if(!Util.isNetworkConnected(TogetherDetailActivity.this)) {
+                    TogetherDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
+                    return;
+                }
                 if(StringUtil.isBlank(StringUtil.trimAll(etComment.getText().toString()))){
                     layoutMenu.setVisibility(View.VISIBLE);
                     layoutPublishComment.setVisibility(View.GONE);
