@@ -1,10 +1,12 @@
 package com.miaotu.adapter;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
@@ -207,10 +210,12 @@ public class CustomTourlistAdapter extends BaseAdapter {
             protected void onCompleteTask(BaseResult result) {
                 if (result.getCode() == BaseResult.SUCCESS) {
                     if(mList.get(position).isLike()){
-                        ((BaseFragmentActivity)mContext).showToastMsg("取消喜欢成功！");
+//                        ((BaseFragmentActivity)mContext).showToastMsg("取消喜欢成功！");
+                        showMyToast((BaseFragmentActivity)mContext, "取消喜欢成功！");
                         mList.get(position).setIsLike(false);
                     }else{
-                        ((BaseFragmentActivity)mContext).showToastMsg("喜欢成功！");
+//                        ((BaseFragmentActivity)mContext).showToastMsg("喜欢成功！");
+                        showMyToast((BaseFragmentActivity) mContext, "喜欢成功！");
                         mList.get(position).setIsLike(true);
                     }
                     if (LikeCustomTour == 1){   //我喜欢的秒旅团
@@ -219,9 +224,12 @@ public class CustomTourlistAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        ((BaseFragmentActivity)mContext).showToastMsg("失败！");
+//                        ((BaseFragmentActivity)mContext).showToastMsg("失败！");
+                        showMyToast((BaseFragmentActivity) mContext, "失败！");
                     }else{
-                        ((BaseFragmentActivity)mContext).showToastMsg(result.getMsg());
+//                        ((BaseFragmentActivity)mContext).showToastMsg(result.getMsg());
+                        showMyToast((BaseFragmentActivity) mContext, result.getMsg());
+
                     }
                 }
             }
@@ -246,4 +254,27 @@ public class CustomTourlistAdapter extends BaseAdapter {
         private ImageView ivLike = null;
         private FlowLayout layoutTag = null;
 	}
+
+    /**
+     * 显示自定义的Toast
+     *
+     * @param context
+     * @param content
+     */
+    private void showMyToast(Activity context, String content) {
+        View toastView = LayoutInflater.from(context).inflate(R.layout.toast_like, null);
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int mScreenWidth = dm.widthPixels;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+        tv.setLayoutParams(params);
+        tv.setText(content);
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
+        tv.setAlpha(0.8f);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(toastView);
+        toast.show();
+    }
 }

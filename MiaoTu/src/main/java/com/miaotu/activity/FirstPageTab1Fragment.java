@@ -47,6 +47,7 @@ private View root;
     private TogetherlistAdapter adapter;
     private List<Together> mList;
     private int page=1;
+    private int bannerCount = 0;
     private final int PAGECOUNT = 10;
     private boolean isLoadMore = false;
     private View layoutMore;
@@ -102,6 +103,7 @@ private View root;
                                 | DateUtils.FORMAT_ABBREV_ALL);
 
                 // Update the LastUpdatedLabel
+                bannerCount = 0;
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
                 getTogether(false);
 
@@ -118,7 +120,7 @@ private View root;
             @Override
             public void onLastItemVisible() {
 //                showToastMsg("滑动到底了");
-                if (!isLoadMore&&mList.size()==page*PAGECOUNT) {
+                if (!isLoadMore&&mList.size()==(page*PAGECOUNT+bannerCount)) {
                     loadMore(false);
                 }
             }
@@ -279,6 +281,7 @@ private View root;
                         return;
                     }
                     if (result.getBannerList() != null && result.getBannerList().size() > 0){
+                        bannerCount += result.getBannerList().size();
                         Together together = new Together();
                         together.setExtend(result.getBannerList().get(0).getExtend());
                         together.setPicurl(result.getBannerList().get(0).getPicUrl());
@@ -309,7 +312,7 @@ private View root;
             @Override
             protected void finallyRun() {
                 isLoadMore=false;
-                if(mList.size()!=PAGECOUNT*page){
+                if(mList.size()!=(PAGECOUNT*page+bannerCount)){
                     lvPull.getRefreshableView().removeFooterView(layoutMore);
                 }
                 super.finallyRun();

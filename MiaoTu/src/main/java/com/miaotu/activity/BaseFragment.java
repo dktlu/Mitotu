@@ -1,9 +1,18 @@
 package com.miaotu.activity;
 
+import com.miaotu.R;
+import com.miaotu.util.Util;
 import com.umeng.analytics.MobclickAgent;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BaseFragment extends Fragment {
@@ -141,4 +150,27 @@ public class BaseFragment extends Fragment {
 		editor.clear();
 		editor.commit();
 	}
+
+	/**
+	 * 显示自定义的Toast
+	 *
+	 * @param content
+	 */
+	private void showMyToast(String content) {
+		View toastView = LayoutInflater.from(getActivity()).inflate(R.layout.toast_like, null);
+		DisplayMetrics dm = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+		TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+		tv.setLayoutParams(params);
+		tv.setText(content);
+		Toast toast = new Toast(getActivity());
+		toast.setGravity(Gravity.TOP, 0, Util.dip2px(getActivity(), 44));
+		tv.setAlpha(0.8f);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastView);
+		toast.show();
+	}
+
 }

@@ -3,11 +3,19 @@ package com.miaotu.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.miaotu.R;
+import com.miaotu.util.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BaseActivity extends Activity {
@@ -179,5 +187,27 @@ public class BaseActivity extends Activity {
 		Editor editor = sharedPreferences.edit();
 		editor.clear();
 		editor.commit();
+	}
+
+	/**
+	 * 显示自定义的Toast
+	 *
+	 * @param content
+	 */
+	private void showMyToast(String content) {
+		View toastView = LayoutInflater.from(this).inflate(R.layout.toast_like, null);
+		DisplayMetrics dm = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int mScreenWidth = dm.widthPixels;
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mScreenWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+		TextView tv = (TextView) toastView.findViewById(R.id.tv_content);
+		tv.setLayoutParams(params);
+		tv.setText(content);
+		Toast toast = new Toast(this);
+		toast.setGravity(Gravity.TOP, 0, Util.dip2px(this, 44));
+		tv.setAlpha(0.8f);
+		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setView(toastView);
+		toast.show();
 	}
 }
