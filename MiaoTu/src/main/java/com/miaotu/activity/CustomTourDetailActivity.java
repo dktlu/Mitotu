@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.imutil.ContactInfo;
 import com.miaotu.imutil.IMDatabaseHelper;
+import com.miaotu.result.BaseResult;
 import com.miaotu.util.LogUtil;
 import com.miaotu.util.MD5;
 import com.miaotu.util.StringUtil;
@@ -41,11 +43,11 @@ import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class CustomTourDetailActivity extends BaseActivity {
 private WebView webView;
-    private TextView tvLeft,tvTitle;
+    private TextView tvLeft,tvTitle,tvRight;
     Handler mHandler = new Handler();
     private String orderId,uid,nickname,headUrl,groupId,groupName,remark;
     private boolean isPay=false;
-    private PopupWindow popupWindow;
+    private PopupWindow popupWindow,claimWindow;
     private View view, topBar;
     private TextView tvCancel,tvWxPay,tvAliPay;
 
@@ -56,13 +58,15 @@ private WebView webView;
         topBar = findViewById(R.id.top_bar);
         webView = (WebView) findViewById(R.id.webview);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvTitle.setText("线路详情");
+//        tvRight.setBackgroundResource(R.drawable.icon_caim);
         tvLeft = (TextView) findViewById(R.id.tv_left);
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isPay){
-                    webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                    webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
                     webView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -77,6 +81,27 @@ private WebView webView;
                 }
             }
         });
+        /*tvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (claimWindow == null){
+                    View claimView = LayoutInflater.from(CustomTourDetailActivity.this).inflate(
+                            R.layout.layout_claim, null);
+                    claimView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            claimLine(getIntent().getStringExtra("id"));
+                            claimWindow.dismiss();
+                        }
+                    });
+                    claimWindow = new PopupWindow(claimView, LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                }
+                claimWindow.setOutsideTouchable(true);
+                claimWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_caim));
+                claimWindow.showAsDropDown(tvRight);
+            }
+        });*/
         WebSettings wSet = webView.getSettings();
         wSet.setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new JSInterface(), "native");
@@ -89,7 +114,7 @@ private WebView webView;
         });
 
 
-                webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
     }
     /**
      * js调用java的接口
@@ -155,14 +180,35 @@ private WebView webView;
 
                     // Code in here
 //                    showToastMsg(text);
-                    CustomTourDetailActivity.this.showMyToast(0,text);
+                    CustomTourDetailActivity.this.showMyToast(text);
 
                 }
 
             });
         }
+
         @android.webkit.JavascriptInterface
-          public String getToken() {
+        public void hideBtn() {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+//                    tvRight.setVisibility(View.GONE);
+                }
+
+            });
+        }
+        @android.webkit.JavascriptInterface
+        public void showBtn() {
+            mHandler.post(new Runnable() {
+
+                public void run() {
+//                    tvRight.setVisibility(View.VISIBLE);
+                }
+
+            });
+        }
+        @android.webkit.JavascriptInterface
+        public String getToken() {
             return readPreference("token");
         }
         @android.webkit.JavascriptInterface
@@ -174,12 +220,12 @@ private WebView webView;
             //私聊
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                 return;
             }
             if(uid.equals(readPreference("uid"))){
 //                showToastMsg("不能和自己聊天！");
-                CustomTourDetailActivity.this.showMyToast(0, "不能和自己聊天！");
+                CustomTourDetailActivity.this.showMyToast("不能和自己聊天！");
                 return ;
             }
             Intent chatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -208,12 +254,12 @@ private WebView webView;
                     // Code in here
                     if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                        showToastMsg("当前未联网，请检查网络设置");
-                        CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                        CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                         return;
                     }
                     if (uid.equals(readPreference("uid"))) {
 //                        showToastMsg("不能和自己聊天！");
-                        CustomTourDetailActivity.this.showMyToast(0, "不能和自己聊天！");
+                        CustomTourDetailActivity.this.showMyToast("不能和自己聊天！");
                         return;
                     }
                     Intent chatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -233,7 +279,7 @@ private WebView webView;
             //群聊
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                 return;
             }
             Intent groupChatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -252,7 +298,7 @@ private WebView webView;
                     // Code in here
                     if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                        showToastMsg("当前未联网，请检查网络设置");
-                        CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                        CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                         return;
                     }
                     Intent groupChatIntent = new Intent(CustomTourDetailActivity.this, ChatsActivity.class);
@@ -275,7 +321,7 @@ private WebView webView;
 //            });
                 if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-                    CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                    CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             return;
         }
         if(isLike){
@@ -291,7 +337,7 @@ private WebView webView;
         // 个人中心
         if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             return;
         }
         Intent userIntent = new Intent(CustomTourDetailActivity.this,PersonCenterActivity.class);
@@ -303,7 +349,7 @@ private WebView webView;
         // 支付
         if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
-            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             return;
         }
         CustomTourDetailActivity.this.uid = uid;
@@ -321,7 +367,7 @@ private WebView webView;
         public void payRedPackage(String amount, final String uid, final String nickname, final String headUrl, final String groupId, final String groupName, final String remark){
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
-                CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+                CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                 return;
             }
             boolean isSuccess = false;
@@ -344,10 +390,10 @@ private WebView webView;
             }
             if (isSuccess)
 //            showToastMsg("付款完成！");
-            CustomTourDetailActivity.this.showMyToast(0, "当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             mHandler.post(new Runnable() {
                 public void run() {
-                    webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                    webView.loadUrl("http://m.miaotu.com/App31/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
                 }
             });
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
@@ -361,7 +407,7 @@ private WebView webView;
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(isPay){
-            webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+            webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
             webView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -432,8 +478,8 @@ private WebView webView;
                 if(result.equals("success")){
                         //支付成
 //                        showToastMsg("付款完成！");
-                    CustomTourDetailActivity.this.showMyToast(0, "付款完成！");
-                        webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                    CustomTourDetailActivity.this.showMyToast("付款完成！");
+                        webView.loadUrl("http://m.miaotu.com/App31/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
                         webView.postDelayed(new Runnable() {
                             @Override
@@ -444,14 +490,14 @@ private WebView webView;
                     isPay=true;
                 }else{
 //                    Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
-                    CustomTourDetailActivity.this.showMyToast(0, "付款未完成");
+                    CustomTourDetailActivity.this.showMyToast("付款未完成");
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
 //                Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
-                CustomTourDetailActivity.this.showMyToast(0, "付款未完成");
+                CustomTourDetailActivity.this.showMyToast("付款未完成");
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
 //                Toast.makeText(this, "An invalid Credential was submitted.", Toast.LENGTH_SHORT).show();
-                CustomTourDetailActivity.this.showMyToast(0, "An invalid Credential was submitted.");
+                CustomTourDetailActivity.this.showMyToast("An invalid Credential was submitted.");
             }
         }
     }
@@ -479,7 +525,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("支付宝支付");
-                CustomTourDetailActivity.this.showMyToast(0, "支付宝支付");
+                CustomTourDetailActivity.this.showMyToast("支付宝支付");
                 payOrder("alipay");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
@@ -491,7 +537,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("微信支付");
-                CustomTourDetailActivity.this.showMyToast(0, "微信支付");
+                CustomTourDetailActivity.this.showMyToast("微信支付");
                 payOrder("wx");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
@@ -507,9 +553,46 @@ private WebView webView;
     }
 
     //改变背景透明度
-    private void changeBackground(float value){
-        topBar.setAlpha(value);
-        webView.setAlpha(value);
+    private void changeBackground(final float value){
+        topBar.post(new Runnable() {
+            @Override
+            public void run() {
+                topBar.setAlpha(value);
+            }
+        });
+        webView.post(new Runnable() {
+            @Override
+            public void run() {
+                webView.setAlpha(value);
+            }
+        });
+    }
+
+    /**
+     * 投诉线路
+     */
+    private void claimLine(final String aid){
+        new BaseHttpAsyncTask<Void, Void, BaseResult>(this){
+
+            @Override
+            protected void onCompleteTask(BaseResult baseResult) {
+                if (baseResult.getCode() == BaseResult.SUCCESS){
+                    CustomTourDetailActivity.this.showMyToast("投诉成功");
+                }else {
+                    if (StringUtil.isBlank(baseResult.getMsg())){
+                        CustomTourDetailActivity.this.showMyToast("投诉失败");
+                    }else {
+                        CustomTourDetailActivity.this.showMyToast(baseResult.getMsg());
+                    }
+                }
+            }
+
+            @Override
+            protected BaseResult run(Void... params) {
+                return HttpRequestUtil.getInstance().addBlackListAndReport(readPreference("token"),
+                        aid, "线路投诉", "activity");
+            }
+        }.execute();
     }
 
 }

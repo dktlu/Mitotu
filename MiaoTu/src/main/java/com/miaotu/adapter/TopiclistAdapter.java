@@ -324,7 +324,7 @@ public class TopiclistAdapter extends BaseAdapter {
         tv.setAlpha(0.8f);
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastView);
         toast.show();
     }

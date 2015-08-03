@@ -63,11 +63,11 @@ import java.util.List;
 @SuppressLint("SimpleDateFormat")
 public class HttpRequestUtil {
     //    正式环境
-//	private static final String SYM_HOST = "http://api.miaotu.com/v1.1/";
-//	private static final String IMG_SYM_HOST = "http://img2.miaotu.com/";
+	private static final String SYM_HOST = "http://api.miaotu.com/v1.1/";
+	private static final String IMG_SYM_HOST = "http://img2.miaotu.com/";
     //测试环境
-    private static final String SYM_HOST = "http://dev.miaotu.com:80/v1.1/";
-    private static final String IMG_SYM_HOST = "http://img1.miaotu.com/";
+//    private static final String SYM_HOST = "http://dev.miaotu.com:80/v1.1/";
+//    private static final String IMG_SYM_HOST = "http://img1.miaotu.com/";
 
     public static String getServer() {
         return SYM_HOST;

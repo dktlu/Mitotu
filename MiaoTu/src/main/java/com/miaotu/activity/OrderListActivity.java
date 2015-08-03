@@ -185,7 +185,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
 //                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 if(result.equals("success")){
                     //支付成
-                    showToastMsg("付款完成！");
+                    OrderListActivity.this.showMyToast("付款完成！");
                     webView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -202,12 +202,12 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
 //                    }, 1000);
                     isPay=true;
                 }else{
-                    Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
+                    OrderListActivity.this.showMyToast("付款未完成");
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "付款未完成", Toast.LENGTH_SHORT).show();
+                OrderListActivity.this.showMyToast("付款未完成");
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Toast.makeText(this, "An invalid Credential was submitted.", Toast.LENGTH_SHORT).show();
+                OrderListActivity.this.showMyToast("An invalid Credential was submitted.");
             }
         }
     }
@@ -234,7 +234,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         tvAliPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToastMsg("支付宝支付");
+                OrderListActivity.this.showMyToast("支付宝支付");
                 payOrder(orderId, "alipay");
                 if (popupWindow.isShowing()) {
                     changeBackground(1.0f);
@@ -245,7 +245,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         tvWxPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToastMsg("微信支付");
+                OrderListActivity.this.showMyToast("微信支付");
                 payOrder(orderId, "wx");
                 if (popupWindow.isShowing()) {
                     changeBackground(1.0f);

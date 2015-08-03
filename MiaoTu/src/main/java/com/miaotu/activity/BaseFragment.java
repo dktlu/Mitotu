@@ -168,7 +168,7 @@ public class BaseFragment extends Fragment {
 		Toast toast = new Toast(getActivity());
 		toast.setGravity(Gravity.TOP, 0, Util.dip2px(getActivity(), 44));
 		tv.setAlpha(0.8f);
-		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.setView(toastView);
 		toast.show();
 	}
@@ -190,7 +190,7 @@ public class BaseFragment extends Fragment {
 		Toast toast = new Toast(getActivity());
 		toast.setGravity(Gravity.TOP, 0, Util.dip2px(getActivity(), offset));
 		tv.setAlpha(0.8f);
-		toast.setDuration(Toast.LENGTH_LONG);
+		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.setView(toastView);
 		toast.show();
 	}

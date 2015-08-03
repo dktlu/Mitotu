@@ -158,7 +158,7 @@ public class ContactListAdapter extends
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.TOP, 0, Util.dip2px(context, 44));
         tv.setAlpha(0.8f);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastView);
         toast.show();
     }
