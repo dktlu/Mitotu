@@ -35,6 +35,7 @@ import com.miaotu.model.TogetherReply;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.TogetherCommentResult;
 import com.miaotu.result.TogetherDetailResult;
+import com.miaotu.util.LogUtil;
 import com.miaotu.util.MD5;
 import com.miaotu.util.StringUtil;
 import com.miaotu.util.Util;
@@ -506,7 +507,10 @@ private Together together;
                     reply1.setNickname(readPreference("name"));
                     reply1.setCreated(result.getTogetherComment().getCreated());
 //                    StringUtil.trimAll(etComment.getText().toString())
-                    reply1.setContent(etComment.getTag()+etComment.getText().toString().trim());
+                    reply1.setContent(etComment.getText().toString().trim());
+                    if (!StringUtil.isBlank((String) etComment.getTag())){
+                        reply1.setContent(etComment.getTag()+etComment.getText().toString().trim());
+                    }
                     etComment.setText("");
                     etComment.setHint("写评论");
                     etComment.setTag("");
@@ -576,7 +580,7 @@ private Together together;
 //                StringUtil.trimAll(etComment.getText().toString())
                 String param = etComment.getText().toString().trim();
                 if (!StringUtil.isBlank((String) etComment.getTag())){
-                    param = (String) etComment.getTag() + etComment.getText().toString().trim();
+                    param = etComment.getTag().toString() + etComment.getText().toString().trim();
                 }
                 return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, param);
             }

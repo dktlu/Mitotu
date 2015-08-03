@@ -458,7 +458,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     if("true".equals(result.getPersonInfo().getIslike())){
                         changeBtnFollow(false);
                         result.getPersonInfo().setIslike("false");
-                        showToastMsg("已取消关注");
+                        PersonCenterActivity.this.showMyToast("已取消关注");
                         count-=1;
                         if (count < 1){
                             count = 0;
@@ -466,7 +466,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                     }else{
                         changeBtnFollow(true);
                         result.getPersonInfo().setIslike("true");
-                        showToastMsg("已关注");
+                        PersonCenterActivity.this.showMyToast("已关注");
                         count+=1;
                     }
                     setResult(1001);

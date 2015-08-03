@@ -65,12 +65,12 @@ private void init (){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("验证码已经发送");
+                    FindPasswordActivity.this.showMyToast("验证码已经发送");
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("获取验证码失败！");
+                        FindPasswordActivity.this.showMyToast("获取验证码失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        FindPasswordActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -94,9 +94,9 @@ private void init (){
                     login(registerInfo);
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("密码找回失败！");
+                        FindPasswordActivity.this.showMyToast("密码找回失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        FindPasswordActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -117,7 +117,7 @@ private void init (){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("密码重置成功！");
+                    FindPasswordActivity.this.showMyToast("密码重置成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
@@ -174,9 +174,9 @@ private void init (){
                     finish();
                 } else {
                     if(StringUtil.isEmpty(result.getMsg())){
-                        showToastMsg("登录失败！");
+                        FindPasswordActivity.this.showMyToast("登录失败！");
                     }else{
-                        showToastMsg(result.getMsg());
+                        FindPasswordActivity.this.showMyToast(result.getMsg());
                     }
                 }
             }
@@ -221,42 +221,42 @@ private void init (){
                 break;
             case R.id.tv_send_validate:
                 if(StringUtil.isEmpty(etTel.getText().toString())){
-                    showToastMsg("请输入手机号！");
+                    FindPasswordActivity.this.showMyToast("请输入手机号！");
                     break;
                 }
                 if(!StringUtil.isPhoneNumber(etTel.getText().toString())){
-                    showToastMsg("请输入合法的手机号！");
+                    FindPasswordActivity.this.showMyToast("请输入合法的手机号！");
                     break;
                 }
                 if(StringUtil.isEmpty(etPassword.getText().toString())){
-                    showToastMsg("请输入新密码");
+                    FindPasswordActivity.this.showMyToast("请输入新密码！");
                     break;
                 }
                 if(etPassword.getText().toString().length()<6){
-                    showToastMsg("请输入至少6位密码");
+                    FindPasswordActivity.this.showMyToast("请输入至少6位密码！");
                     break;
                 }
                 getSms(etTel.getText().toString());
                 break;
             case R.id.btn_login:
                 if(StringUtil.isEmpty(etTel.getText().toString())){
-                    showToastMsg("请输入手机号！");
+                    FindPasswordActivity.this.showMyToast("请输入手机号！");
                     break;
                 }
                 if(!StringUtil.isPhoneNumber(etTel.getText().toString())){
-                    showToastMsg("请输入合法的手机号！");
+                    FindPasswordActivity.this.showMyToast("请输入合法的手机号！");
                     break;
                 }
                 if(StringUtil.isEmpty(etPassword.getText().toString())){
-                    showToastMsg("请输入新密码");
+                    FindPasswordActivity.this.showMyToast("请输入新密码！");
                     break;
                 }
                 if(etPassword.getText().toString().length()<6){
-                    showToastMsg("请输入至少6位密码");
+                    FindPasswordActivity.this.showMyToast("请输入至少6位密码！");
                     break;
                 }
                 if(StringUtil.isEmpty(etValidate.getText().toString())){
-                    showToastMsg("请输入验证码");
+                    FindPasswordActivity.this.showMyToast("请输入验证码！");
                     break;
                 }
                 RegisterInfo registerInfo = new RegisterInfo();
