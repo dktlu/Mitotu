@@ -126,9 +126,6 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
             tvRight.setVisibility(View.GONE);
             tvLeft.setVisibility(View.VISIBLE);
         }
-        SpannableStringBuilder style = new SpannableStringBuilder(tvFriendCount.getText().toString());
-        int count = tvFriendCount.getText().toString().indexOf("个");
-        style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 2, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         contactlist = new ArrayList<>();
         recommendList = new ArrayList<>();
         contactsadapter = new ContactListAdapter(this, contactlist);
@@ -316,6 +313,10 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     contactsadapter.notifyDataSetChanged();
                     setAdapterHeght(contactlist.size(), 61, rvFriends);
                     tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
+                    SpannableStringBuilder style = new SpannableStringBuilder(tvFriendCount.getText().toString());
+                    int count = tvFriendCount.getText().toString().indexOf("个");
+                    style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 2, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvFriendCount.setText(style);
                 }else {
                     if (StringUtil.isBlank(addressListResult.getMsg())){
                         FindMFriendsActivity.this.showMyToast("匹配通讯录失败");
