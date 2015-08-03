@@ -255,8 +255,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     if (StringUtil.isBlank(tv_age.getText().toString().trim())){
                         userinfo.setAge("");
                     }else {
-                        userinfo.setAge(tv_age.getText().toString().trim().substring(0,
-                                tv_age.getText().toString().length() - 1));
+                        userinfo.setAge(tv_age.getText().toString().trim());
                     }
                     userinfo.setMarital_status(tv_emotion.getText().toString().trim());
                     userinfo.setWork(et_job.getText().toString().trim());

@@ -11,6 +11,7 @@ import com.miaotu.form.PublishCustomForm;
 import com.miaotu.form.PublishTogether;
 import com.miaotu.model.ModifyPersonInfo;
 import com.miaotu.model.RegisterInfo;
+import com.miaotu.result.ActivityStateResult;
 import com.miaotu.result.AddressListResult;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.BlackResult;
@@ -62,7 +63,7 @@ import java.util.List;
 @SuppressLint("SimpleDateFormat")
 public class HttpRequestUtil {
     //    正式环境
-//	private static final String SYM_HOST = "http://api.miaotu.com/v1/";
+//	private static final String SYM_HOST = "http://api.miaotu.com/v1.1/";
 //	private static final String IMG_SYM_HOST = "http://img2.miaotu.com/";
     //测试环境
     private static final String SYM_HOST = "http://dev.miaotu.com:80/v1.1/";
@@ -692,7 +693,7 @@ public class HttpRequestUtil {
      * @param img
      * @return
      */
-    public BaseResult publishTopic(String aid, String token, String content, String img, String latitude, String longitude) {
+    public ActivityStateResult publishTopic(String aid, String token, String content, String img, String latitude, String longitude) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("aid", aid));
@@ -702,7 +703,7 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("longitude", longitude));
         LogUtil.e("上传的图片", "img: " + img);
         return HttpDecoder.postForObject(
-                getUrl("user/state"), BaseResult.class,
+                getUrl("user/state"), ActivityStateResult.class,
                 params);
     }
 
@@ -1500,6 +1501,20 @@ public class HttpRequestUtil {
         params.add(new BasicNameValuePair("uid", uid));
         params.add(new BasicNameValuePair("status", status));
         return HttpDecoder.postForObject(getUrl("yueyou/join/pass"),
+                BaseResult.class, params);
+    }
+
+    /**
+     * 发送短信邀请好友
+     * @param token
+     * @param phones
+     * @return
+     */
+    public BaseResult sendInviteMsg(String token, String phones){
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("token", token));
+        params.add(new BasicNameValuePair("phones", phones));
+        return HttpDecoder.postForObject(getUrl("user/invite"),
                 BaseResult.class, params);
     }
 

@@ -18,6 +18,7 @@ import com.miaotu.R;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.CustomTour;
+import com.miaotu.result.ActivityStateResult;
 import com.miaotu.result.BaseResult;
 import com.miaotu.result.MovementListResult;
 import com.miaotu.result.MyCustomTourResult;
@@ -191,28 +192,33 @@ public class BBSPublishTopicActivity extends BaseActivity implements View.OnClic
      * @param imgs
      */
     private void publishTopic(final List<String> imgs) {
-        new BaseHttpAsyncTask<Void, Void, BaseResult>(BBSPublishTopicActivity.this, true) {
+        new BaseHttpAsyncTask<Void, Void, ActivityStateResult>(BBSPublishTopicActivity.this, true) {
             @Override
-            protected void onCompleteTask(BaseResult result) {
+            protected void onCompleteTask(ActivityStateResult result) {
                 if (movementList == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    showToastMsg("发表成功！");
-                    setResult(1);
+                    BBSPublishTopicActivity.this.showMyToast("发表成功！");
+                    Intent detailIntent = new Intent();
+                    detailIntent.setClass(BBSPublishTopicActivity.this,
+                            BBSTopicDetailActivity.class);
+                    detailIntent.putExtra("sid", result.getState().getSid());
+                    startActivityForResult(detailIntent, 1);
+//                    setResult(1);
                     finish();
                 } else {
                     if (StringUtil.isEmpty(result.getMsg())) {
-                        showToastMsg("发表话题失败！");
+                        BBSPublishTopicActivity.this.showMyToast("发表话题失败！");
                     } else {
-                        showToastMsg(result.getMsg());
+                        BBSPublishTopicActivity.this.showMyToast(result.getMsg());
                     }
                 }
 //                tvRight.setClickable(true);
             }
 
             @Override
-            protected BaseResult run(Void... params) {
+            protected ActivityStateResult run(Void... params) {
                 String images = "";
                 if (imgs != null) {
                     for (String img : imgs) {

@@ -1,5 +1,6 @@
 package com.miaotu.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -215,7 +216,10 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
                         share(rbSelected.getId(), result.getTogether().getId(),
                                 result.getTogether().getComment(), hearurl);
                     }
-
+                    Intent togetherIntent = new Intent(PublishTogetherStep2Activity.this,
+                            TogetherDetailActivity.class);
+                    togetherIntent.putExtra("id", result.getTogether().getId());
+                    startActivityForResult(togetherIntent, 1);
                     setResult(1);
                     finish();
                 } else {

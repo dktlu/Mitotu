@@ -21,9 +21,13 @@ import android.widget.TextView;
 
 import com.miaotu.R;
 import com.miaotu.adapter.LetterSortAdapter;
+import com.miaotu.async.BaseHttpAsyncTask;
+import com.miaotu.http.HttpRequestUtil;
 import com.miaotu.model.NativePhoneAddress;
+import com.miaotu.result.BaseResult;
 import com.miaotu.util.CharacterParser;
 import com.miaotu.util.PinyinComparator;
+import com.miaotu.util.StringUtil;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -108,7 +112,7 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
                 if(numbers.size() < 1) {
                     PhoneAddressActivity.this.showMyToast("没有选择联系人");
                 } else {
-                    SmsManager smsManager = SmsManager.getDefault();
+                    /*SmsManager smsManager = SmsManager.getDefault();
                     for (String number:numbers){
                         if(sms_content.length() > 70) {
                             List<String> contents = smsManager.divideMessage(sms_content);
@@ -119,8 +123,12 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
                             smsManager.sendTextMessage(number, null, sms_content, null, null);
                         }
                         break;
+                    }*/
+                    String phones = "";
+                    for (String phone:numbers){
+                        phones += ","+phone;
                     }
-                    PhoneAddressActivity.this.showMyToast("发送完毕");
+                    sendInviteMsg(phones.substring(1));
                 }
                 break;
         }
@@ -177,5 +185,31 @@ public class PhoneAddressActivity extends BaseActivity implements View.OnClickLi
 
             phoneCursor.close();
         }
+    }
+
+    private void sendInviteMsg(final String phones){
+        new BaseHttpAsyncTask<Void, Void, BaseResult>(this, true){
+
+            @Override
+            protected void onCompleteTask(BaseResult baseResult) {
+                if (tvRight == null){
+                    return;
+                }
+                if (baseResult.getCode() == BaseResult.SUCCESS){
+                    PhoneAddressActivity.this.showMyToast("邀请成功！");
+                }else {
+                    if (StringUtil.isBlank(baseResult.getMsg())){
+                        PhoneAddressActivity.this.showMyToast("发送邀请失败");
+                    }else {
+                        PhoneAddressActivity.this.showMyToast(baseResult.getMsg());
+                    }
+                }
+            }
+
+            @Override
+            protected BaseResult run(Void... params) {
+                return HttpRequestUtil.getInstance().sendInviteMsg(readPreference("token"), phones);
+            }
+        }.execute();
     }
 }
