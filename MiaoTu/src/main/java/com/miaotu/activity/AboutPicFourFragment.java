@@ -40,7 +40,7 @@ public class AboutPicFourFragment extends BaseFragment {
 
     @SuppressLint("NewApi")
     private void init() {
-        ivAboutPic.setBackgroundResource(R.drawable.bg_guide_4);
+        ivAboutPic.setBackgroundResource(R.drawable.bg_guide_6);
     }
 
 }

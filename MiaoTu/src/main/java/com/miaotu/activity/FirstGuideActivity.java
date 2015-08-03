@@ -47,7 +47,7 @@ public class FirstGuideActivity extends BaseFragmentActivity implements OnClickL
 
 		writePreference("isFirst", "first");
 		mViewPager = (ControlScrollViewPager) findViewById(R.id.id_viewpager);
-		mViewPager.setOffscreenPageLimit(4);
+		mViewPager.setOffscreenPageLimit(6);
 		findView();
 		bindView();
 		initView();
@@ -76,7 +76,7 @@ public class FirstGuideActivity extends BaseFragmentActivity implements OnClickL
 
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
-					if (arg0 == 3 && arg1 == 0 && arg2 == 0 && isScrolling){
+					if (arg0 == 5 && arg1 == 0 && arg2 == 0 && isScrolling){
 						if (isFromIntroduce){
 							finish();
 						}else {
@@ -121,11 +121,15 @@ public class FirstGuideActivity extends BaseFragmentActivity implements OnClickL
 		AboutPicOneFragment tab01 = new AboutPicOneFragment();
 		AboutPicTwoFragment tab02 = new AboutPicTwoFragment();
 		AboutPicThreeFragment tab03 = new AboutPicThreeFragment();
-		AboutPicFourFragment tab04 = new AboutPicFourFragment();
+		AboutPicNew1Fragment tab04 = new AboutPicNew1Fragment();
+		AboutPicNew2Fragment tab05 = new AboutPicNew2Fragment();
+		AboutPicFourFragment tab06 = new AboutPicFourFragment();
 		mFragments.add(tab01);
 		mFragments.add(tab02);
 		mFragments.add(tab03);
 		mFragments.add(tab04);
+		mFragments.add(tab05);
+		mFragments.add(tab06);
 	}
 	
 
