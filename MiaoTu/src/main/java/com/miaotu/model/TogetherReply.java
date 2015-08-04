@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by ying on 2015/5/23.
  */
 public class TogetherReply implements Serializable {
-    @JsonProperty("Rrid")
+    @JsonProperty("Yrid")
     private String rid;
     @JsonProperty("Uid")
     private String uid;

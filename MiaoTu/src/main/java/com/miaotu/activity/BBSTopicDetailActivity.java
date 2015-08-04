@@ -81,6 +81,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
     private View view;
     private ImageView ivGender;
     private TextView tvAge,tvEmotion,tvWantgo;
+    private String yrid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,9 +144,11 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 etComment.setFocusable(true);
+                showMyToast("position//"+i);
                 if (i>1){
                     etComment.setHint("回复"+commentList.get(i-2).getNickname());
-                    etComment.setTag(commentList.get(i-2).getNickname());
+                    etComment.setTag(commentList.get(i - 2).getNickname());
+                    yrid = commentList.get(i-2).getSrid();
 //                    etComment.setText("@"+commentList.get(i-2).getNickname()+": ");
                 }
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -675,6 +678,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                         etComment.setTag("");
                         etComment.setHint("写评论");
                         etComment.setText("");
+                        yrid = "";
                         getComments(false);
                     } else {
                         if (StringUtil.isEmpty(result.getMsg())) {
@@ -691,7 +695,7 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     if (!StringUtil.isBlank((String) etComment.getTag())){
                         param = "@"+(String) etComment.getTag()+"："+etComment.getText().toString();
                     }
-                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"), param, topic.getSid());
+                    return HttpRequestUtil.getInstance().publishComment(readPreference("token"), param, topic.getSid(), yrid);
                 }
 
 //                @Override

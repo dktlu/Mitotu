@@ -76,6 +76,7 @@ private Together together;
     private TogetherDetailResult togetherDetailResult;
     final ArrayList<PhotoModel> photoList = new ArrayList<PhotoModel>();
     private View ivLine;
+    private String yrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -399,6 +400,7 @@ private Together together;
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        yrid = reply.getRid();
                         etComment.setTag("@" + reply.getNickname() + "：");
                         etComment.setHint("回复"+reply.getNickname());
                         layoutMenu.setVisibility(View.GONE);
@@ -506,6 +508,7 @@ private Together together;
                     TogetherReply reply1 = new TogetherReply();
                     reply1.setNickname(readPreference("name"));
                     reply1.setCreated(result.getTogetherComment().getCreated());
+                    reply1.setRid(result.getTogetherComment().getYrid());
 //                    StringUtil.trimAll(etComment.getText().toString())
                     reply1.setContent(etComment.getText().toString().trim());
                     if (!StringUtil.isBlank((String) etComment.getTag())){
@@ -514,6 +517,7 @@ private Together together;
                     etComment.setText("");
                     etComment.setHint("写评论");
                     etComment.setTag("");
+                    yrid = "";
                     if(togetherDetailResult.getTogether().getReplyList()==null){
                         togetherDetailResult.getTogether().setReplyList(new ArrayList<TogetherReply>());
                     }
@@ -555,6 +559,7 @@ private Together together;
                             view.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    yrid = reply.getRid();
                                     etComment.setTag("@" + reply.getNickname() + "：");
                                     etComment.setHint("回复"+reply.getNickname());
                                     layoutMenu.setVisibility(View.GONE);
@@ -582,7 +587,7 @@ private Together together;
                 if (!StringUtil.isBlank((String) etComment.getTag())){
                     param = etComment.getTag().toString() + etComment.getText().toString().trim();
                 }
-                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), id, param);
+                return HttpRequestUtil.getInstance().publishTogetherComment(readPreference("token"), yrid, id, param);
             }
 
         }.execute();

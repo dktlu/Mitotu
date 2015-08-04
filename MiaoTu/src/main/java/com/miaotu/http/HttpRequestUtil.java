@@ -63,11 +63,11 @@ import java.util.List;
 @SuppressLint("SimpleDateFormat")
 public class HttpRequestUtil {
     //    正式环境
-//	private static final String SYM_HOST = "http://api.miaotu.com/v1.1/";
-//	private static final String IMG_SYM_HOST = "http://img2.miaotu.com/";
+	private static final String SYM_HOST = "http://api.miaotu.com/v1.1/";
+	private static final String IMG_SYM_HOST = "http://img2.miaotu.com/";
     //测试环境
-    private static final String SYM_HOST = "http://dev.miaotu.com:80/v1.1/";
-    private static final String IMG_SYM_HOST = "http://img1.miaotu.com/";
+//    private static final String SYM_HOST = "http://dev.miaotu.com:80/v1.1/";
+//    private static final String IMG_SYM_HOST = "http://img1.miaotu.com/";
 
     public static String getServer() {
         return SYM_HOST;
@@ -296,10 +296,11 @@ public class HttpRequestUtil {
      * @param content
      * @return
      */
-    public TogetherCommentResult publishTogetherComment(String token, String yid, String content) {
+    public TogetherCommentResult publishTogetherComment(String token, String yrid, String yid, String content) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("yid", yid));
+        params.add(new BasicNameValuePair("yrid", yrid));
         params.add(new BasicNameValuePair("content", content));
         return HttpDecoder.postForObject(
                 getUrl("yueyou/reply"), TogetherCommentResult.class,
@@ -673,9 +674,9 @@ public class HttpRequestUtil {
     }
 
     //对帖子发表评论
-    public BaseResult publishComment(String token, String content, String sid) {
+    public BaseResult publishComment(String token, String content, String sid, String rid) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("pid", sid));
+        params.add(new BasicNameValuePair("rid", rid));
         params.add(new BasicNameValuePair("token", token));
         params.add(new BasicNameValuePair("sid", sid));
         params.add(new BasicNameValuePair("content", content));
