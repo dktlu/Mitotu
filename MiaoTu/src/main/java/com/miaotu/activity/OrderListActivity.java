@@ -220,13 +220,13 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             tvWxPay = (TextView) view.findViewById(R.id.tv_wxpay);
             tvAliPay = (TextView) view.findViewById(R.id.tv_alipay);
             popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams.MATCH_PARENT);
         }
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (popupWindow.isShowing()){
-                    changeBackground(1.0f);
+                if (popupWindow.isShowing()) {
+//                    changeBackground(1.0f);
                     popupWindow.dismiss();
                 }
             }
@@ -237,7 +237,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 OrderListActivity.this.showMyToast("支付宝支付");
                 payOrder(orderId, "alipay");
                 if (popupWindow.isShowing()) {
-                    changeBackground(1.0f);
+//                    changeBackground(1.0f);
                     popupWindow.dismiss();
                 }
             }
@@ -248,15 +248,20 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
                 OrderListActivity.this.showMyToast("微信支付");
                 payOrder(orderId, "wx");
                 if (popupWindow.isShowing()) {
-                    changeBackground(1.0f);
+//                    changeBackground(1.0f);
                     popupWindow.dismiss();
                 }
             }
         });
-//        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOutsideTouchable(true);
         changeBackground(0.2f);
-//        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                changeBackground(1.0f);
+            }
+        });
         popupWindow.showAtLocation(webView, Gravity.BOTTOM, 0, 0);
     }
 

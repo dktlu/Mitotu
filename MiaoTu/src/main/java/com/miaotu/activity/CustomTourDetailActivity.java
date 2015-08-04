@@ -517,7 +517,7 @@ private WebView webView;
             public void onClick(View view) {
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
-                    changeBackground(1.0f);
+//                    changeBackground(1.0f);
                 }
             }
         });
@@ -529,7 +529,7 @@ private WebView webView;
                 payOrder("alipay");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
-                    changeBackground(1.0f);
+//                    changeBackground(1.0f);
                 }
             }
         });
@@ -541,14 +541,20 @@ private WebView webView;
                 payOrder("wx");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
-                    changeBackground(1.0f);
+//                    changeBackground(1.0f);
                 }
             }
         });
         changeBackground(0.2f);
-//        popupWindow.setFocusable(true);
+        popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(false);
-//        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.color.background));
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                changeBackground(1.0f);
+            }
+        });
         popupWindow.showAtLocation(webView, Gravity.BOTTOM, 0, 0);
     }
 
