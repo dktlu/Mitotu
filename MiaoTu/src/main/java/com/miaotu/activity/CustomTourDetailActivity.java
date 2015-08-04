@@ -66,7 +66,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
                 if(isPay){
-                    webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                    webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
                     webView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -114,7 +114,7 @@ private WebView webView;
         });
 
 
-                webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+                webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
     }
     /**
      * js调用java的接口
@@ -393,7 +393,7 @@ private WebView webView;
             CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             mHandler.post(new Runnable() {
                 public void run() {
-                    webView.loadUrl("http://m.miaotu.com/App31/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                    webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
                 }
             });
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
@@ -407,7 +407,7 @@ private WebView webView;
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(isPay){
-            webView.loadUrl("http://m.miaotu.com/App31/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
+            webView.loadUrl("http://m.miaotu.com/AppTest/detail/?aid=" + getIntent().getStringExtra("id")+"&token="+readPreference("token")+"&uid="+readPreference("uid"));
             webView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -479,7 +479,7 @@ private WebView webView;
                         //支付成
 //                        showToastMsg("付款完成！");
                     CustomTourDetailActivity.this.showMyToast("付款完成！");
-                        webView.loadUrl("http://m.miaotu.com/App31/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                        webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
                         webView.postDelayed(new Runnable() {
                             @Override
@@ -525,7 +525,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("支付宝支付");
-                CustomTourDetailActivity.this.showMyToast("支付宝支付");
+//                CustomTourDetailActivity.this.showMyToast("支付宝支付");
                 payOrder("alipay");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();
@@ -537,7 +537,7 @@ private WebView webView;
             @Override
             public void onClick(View view) {
 //                showToastMsg("微信支付");
-                CustomTourDetailActivity.this.showMyToast("微信支付");
+//                CustomTourDetailActivity.this.showMyToast("微信支付");
                 payOrder("wx");
                 if (popupWindow.isShowing()){
                     popupWindow.dismiss();

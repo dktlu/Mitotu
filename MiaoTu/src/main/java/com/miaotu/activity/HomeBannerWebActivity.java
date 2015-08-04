@@ -121,4 +121,8 @@ public class HomeBannerWebActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    @android.webkit.JavascriptInterface
+    public String getToken() {
+        return readPreference("token");
+    }
 }

@@ -234,7 +234,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         tvAliPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderListActivity.this.showMyToast("支付宝支付");
+//                OrderListActivity.this.showMyToast("支付宝支付");
                 payOrder(orderId, "alipay");
                 if (popupWindow.isShowing()) {
 //                    changeBackground(1.0f);
@@ -245,7 +245,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
         tvWxPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OrderListActivity.this.showMyToast("微信支付");
+//                OrderListActivity.this.showMyToast("微信支付");
                 payOrder(orderId, "wx");
                 if (popupWindow.isShowing()) {
 //                    changeBackground(1.0f);
