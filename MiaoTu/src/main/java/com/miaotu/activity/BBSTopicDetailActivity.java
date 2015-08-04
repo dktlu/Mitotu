@@ -144,7 +144,6 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 etComment.setFocusable(true);
-                showMyToast("position//"+i);
                 if (i>1){
                     etComment.setHint("回复"+commentList.get(i-2).getNickname());
                     etComment.setTag(commentList.get(i - 2).getNickname());
