@@ -212,7 +212,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
                 Intent findIntent = new Intent();
                 findIntent.setClass(FourthPageFragment.this.getActivity(),
                         Register1Activity.class);
-                findIntent.putExtra("third","third");
+                findIntent.putExtra("third","else");
                 startActivityForResult(findIntent, 1001);
                 break;
             default:

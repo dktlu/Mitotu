@@ -144,10 +144,16 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         alltags = new ArrayList<>();
         userinfo = new ModifyPersonInfo();
         if (!StringUtil.isBlank(getIntent().getStringExtra("third"))){
-            btnRegister.setText("下一步");
-            SpannableStringBuilder style1 = new SpannableStringBuilder("逛一逛");
-            style1.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            tv_right.setText(style1);
+            if ("else".equals(getIntent().getStringExtra("third"))){
+                btnRegister.setVisibility(View.GONE);
+                tv_right.setText("保存");
+                tv_left.setVisibility(View.VISIBLE);
+            }else {
+                btnRegister.setText("下一步");
+                SpannableStringBuilder style1 = new SpannableStringBuilder("逛一逛");
+                style1.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv_right.setText(style1);
+            }
             /*et_nickname.setText(getIntent().getStringExtra("name"));
             tv_gender.setText(getIntent().getStringExtra("gender"));
             tv_age.setText(getIntent().getStringExtra("age"));
@@ -237,10 +243,14 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tv_right:
-                Intent intent = new Intent();
-                intent.setClass(Register1Activity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if ("else".equals(getIntent().getStringExtra("third"))){
+                    onClick(btnRegister);
+                }else {
+                    Intent intent = new Intent();
+                    intent.setClass(Register1Activity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
             case R.id.btn_register:
                 if(!isEmpty()){

@@ -41,12 +41,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class FirstPageTab1Fragment extends BaseFragment implements View.OnClickListener {
-private View root;
+    private View root;
     private PullToRefreshListView lvPull;
     private View head;
     private TogetherlistAdapter adapter;
     private List<Together> mList;
-    private int page=1;
+    private int page = 1;
     private int bannerCount = 0;
     private final int PAGECOUNT = 10;
     private boolean isLoadMore = false;
@@ -57,7 +57,8 @@ private View root;
     protected Handler imageChangeHandler = new MyHandler();
     private static final int CHANGE_IMG = 1;
     private Timer timer;
-    Handler handler ;
+    Handler handler;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ private View root;
     private void findView() {
         lvPull = (PullToRefreshListView) root.findViewById(R.id.lv_pull);
     }
+
     private void bindView() {
         lvPull.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -120,19 +122,19 @@ private View root;
             @Override
             public void onLastItemVisible() {
 //                showToastMsg("滑动到底了");
-                if (!isLoadMore&&mList.size()==(page*PAGECOUNT+bannerCount)) {
+                if (!isLoadMore && mList.size() == (page * PAGECOUNT + bannerCount)) {
                     loadMore(false);
                 }
             }
 
         });
-            }
+    }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void init() {
-        lvPull.getRefreshableView().addHeaderView(head,null,false);
+        lvPull.getRefreshableView().addHeaderView(head, null, false);
         mList = new ArrayList<>();
-        adapter = new TogetherlistAdapter(getActivity(),mList,false, false);
+        adapter = new TogetherlistAdapter(getActivity(), mList, false, false);
         lvPull.setAdapter(adapter);
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         Point size = new Point();
@@ -142,7 +144,7 @@ private View root;
                 width, width * 200 / 320);
         gallery.setLayoutParams(params);
         getTogether(true);
-        handler = new Handler( ) {
+        handler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
@@ -153,17 +155,18 @@ private View root;
             }
         };
     }
-//获取一起去
+
+    //获取一起去
     private void getTogether(final boolean isShow) {
         new BaseHttpAsyncTask<Void, Void, TogetherResult>(getActivity(), isShow) {
             @Override
             protected void onCompleteTask(TogetherResult result) {
-                if(root==null){
+                if (root == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
                     mList.clear();
-                    if(result.getTogetherList()!=null){
+                    if (result.getTogetherList() != null) {
                         mList.addAll(result.getTogetherList());
                     }
                     adapter.notifyDataSetChanged();
@@ -176,10 +179,10 @@ private View root;
                             handler.sendMessage(message);
                         }
                     }, 5000);
-                    if(lvPull.getRefreshableView().getFooterViewsCount()==1&&mList.size()==PAGECOUNT*page){
+                    if (lvPull.getRefreshableView().getFooterViewsCount() == 1 && mList.size() == PAGECOUNT * page) {
                         lvPull.getRefreshableView().addFooterView(layoutMore);
                     }
-                    if(result.getBannerList()!=null){
+                    if (result.getBannerList() != null) {
                         try {
 //                            List<String> imagePathes = new ArrayList<String>();
                             List<Banner> banners = new ArrayList<Banner>();
@@ -198,13 +201,13 @@ private View root;
 //                            gallery.setImageSize(imagePathes.size());
                             gallery.setImageSize(banners.size());
                             gallery.initPoints();
-                            if(!run) {
+                            if (!run) {
                                 startPlayPic();
                             }
                             gallery.setPageMargin(0);
                             FirstPageImageAdapter adapter = new FirstPageImageAdapter(
                                     getActivity(), banners,
-                                    true,R.layout.gallery_item_first_page,
+                                    true, R.layout.gallery_item_first_page,
                                     R.id.iv_gallery);// 最后一个参数true表示设置可以点击
                             gallery.setAdapter(adapter);
 //                            gallery.setCurrentItem(imagePathes.size() * 5000);
@@ -214,9 +217,9 @@ private View root;
                         }
                     }
                 } else {
-                    if(StringUtil.isEmpty(result.getMsg())){
+                    if (StringUtil.isEmpty(result.getMsg())) {
                         showToastMsg("获取约游列表失败！");
-                    }else{
+                    } else {
                         showToastMsg(result.getMsg());
                     }
                 }
@@ -224,11 +227,11 @@ private View root;
 
             @Override
             protected TogetherResult run(Void... params) {
-                page=1;
+                page = 1;
                 LogUtil.d("经度" + readPreference("longitude") + " 维度" + readPreference("latitude"));
                 return HttpRequestUtil.getInstance().getTogetherList(
-                        readPreference("token"),page+"",PAGECOUNT+"",
-                        readPreference("latitude"),readPreference("longitude"));
+                        readPreference("token"), page + "", PAGECOUNT + "",
+                        readPreference("latitude"), readPreference("longitude"));
             }
 
             @Override
@@ -238,6 +241,7 @@ private View root;
             }
         }.execute();
     }
+
     private void startPlayPic() {
         //判断是否开启自动播放
         new Thread() {
@@ -258,6 +262,7 @@ private View root;
             }
         }.start();
     }
+
     class MyHandler extends Handler {
         public void handleMessage(android.os.Message msg) {
             if (msg.what == CHANGE_IMG) {
@@ -268,19 +273,20 @@ private View root;
 
         }
     }
+
     //获取一起去
     private void loadMore(final boolean isShow) {
         new BaseHttpAsyncTask<Void, Void, TogetherResult>(getActivity(), isShow) {
             @Override
             protected void onCompleteTask(TogetherResult result) {
-                if(root==null){
+                if (root == null) {
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    if(result.getTogetherList()==null){
+                    if (result.getTogetherList() == null) {
                         return;
                     }
-                    if (result.getBannerList() != null && result.getBannerList().size() > 0){
+                    if (result.getBannerList() != null && result.getBannerList().size() > 0) {
                         bannerCount += result.getBannerList().size();
                         Together together = new Together();
                         together.setExtend(result.getBannerList().get(0).getExtend());
@@ -292,9 +298,9 @@ private View root;
                     adapter.notifyDataSetChanged();
 
                 } else {
-                    if(StringUtil.isEmpty(result.getMsg())){
+                    if (StringUtil.isEmpty(result.getMsg())) {
                         showToastMsg("获取约游列表失败！");
-                    }else{
+                    } else {
                         showToastMsg(result.getMsg());
                     }
                 }
@@ -303,25 +309,26 @@ private View root;
             @Override
             protected TogetherResult run(Void... params) {
                 isLoadMore = true;
-                page+=1;
+                page += 1;
                 LogUtil.d("经度" + readPreference("longitude") + " 维度" + readPreference("latitude"));
                 return HttpRequestUtil.getInstance().getTogetherList(readPreference("token"),
-                        page+"",PAGECOUNT+"",readPreference("latitude"),readPreference("longitude"));
+                        page + "", PAGECOUNT + "", readPreference("latitude"), readPreference("longitude"));
             }
 
             @Override
             protected void finallyRun() {
-                isLoadMore=false;
-                if(mList.size()!=(PAGECOUNT*page+bannerCount)){
+                isLoadMore = false;
+                if (mList.size() != (PAGECOUNT * page + bannerCount)) {
                     lvPull.getRefreshableView().removeFooterView(layoutMore);
                 }
                 super.finallyRun();
             }
         }.execute();
     }
+
     @Override
     public void onClick(View view) {
-        if(!Util.isNetworkConnected(getActivity())) {
+        if (!Util.isNetworkConnected(getActivity())) {
             showToastMsg("当前未联网，请检查网络设置");
             return;
         }
@@ -332,9 +339,10 @@ private View root;
 
     /**
      * 设置喜欢控件显示
+     *
      * @param position
      */
-    public void modifyLikeView(int position, boolean flag){
+    public void modifyLikeView(int position, boolean flag) {
         mList.get(position).setIsLike(flag);
         adapter.notifyDataSetChanged();
     }
