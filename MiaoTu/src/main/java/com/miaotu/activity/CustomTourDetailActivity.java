@@ -404,7 +404,7 @@ private WebView webView;
             }
             if (isSuccess)
 //            showToastMsg("付款完成！");
-            CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
+            CustomTourDetailActivity.this.showMyToast("付款完成！");
             mHandler.post(new Runnable() {
                 public void run() {
                     webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + "&to=" + descity + "&startdate=" +startdate);

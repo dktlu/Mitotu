@@ -117,10 +117,16 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         if (ordercount == "0" || "0".equals(ordercount)){
             rl_order.setVisibility(View.GONE);
             lineRed.setVisibility(View.GONE);
+        }else {
+            rl_order.setVisibility(View.VISIBLE);
+            lineRed.setVisibility(View.VISIBLE);
         }
         if (customcount == "0"||"0".equals(customcount)){
             rl_customer.setVisibility(View.GONE);
             lineOrder.setVisibility(View.GONE);
+        }else {
+            rl_customer.setVisibility(View.VISIBLE);
+            lineOrder.setVisibility(View.VISIBLE);
         }
         UrlImageViewHelper.setUrlDrawable(iv_userhead, headimg, R.drawable.default_avatar);
         if ("男".equals(gender)) {
