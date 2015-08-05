@@ -220,7 +220,7 @@ public class OrderListActivity extends BaseActivity implements View.OnClickListe
             tvWxPay = (TextView) view.findViewById(R.id.tv_wxpay);
             tvAliPay = (TextView) view.findViewById(R.id.tv_alipay);
             popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
-                    RelativeLayout.LayoutParams.MATCH_PARENT);
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override

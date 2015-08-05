@@ -103,11 +103,14 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
                 if (mTab01 == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     mTab01 = new MyLikeFragment();
+                    Bundle likeBundle = new Bundle();
+                    likeBundle.putString("uid", getIntent().getStringExtra("uid"));
+                    mTab01.setArguments(likeBundle);
                     transaction.add(R.id.id_content, mTab01);
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(mTab01);
-                    mTab01.getLikeList();
+                    mTab01.getLikeList(getIntent().getStringExtra("uid"));
                 }
                 break;
             case 1: //粉丝
@@ -115,11 +118,14 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
                 if (mTab02 == null) {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     mTab02 = new MyFansFragment();
+                    Bundle likedBundle = new Bundle();
+                    likedBundle.putString("uid", getIntent().getStringExtra("uid"));
+                    mTab02.setArguments(likedBundle);
                     transaction.add(R.id.id_content, mTab02);
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(mTab02);
-                    mTab02.getFansList();
+                    mTab02.getFansList(getIntent().getStringExtra("uid"));
                 }
                 break;
         }
@@ -149,7 +155,7 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
             (MyLikeAndFansActivity.this).writePreference("movement_city", data.getStringExtra("city"));
         }
         if (resultCode == 1001){
-            mTab01.getLikeList();
+            mTab01.getLikeList(getIntent().getStringExtra("uid"));
         }
     }
 }

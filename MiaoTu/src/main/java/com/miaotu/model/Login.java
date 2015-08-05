@@ -60,6 +60,10 @@ public class Login {
     private String budget;
     @JsonProperty("FreeTime")
     private String freetime;
+    @JsonProperty("OrderCount")
+    private String orderCount;
+    @JsonProperty("CustomCount")
+    private String customCount;
 
     public String getUid() {
         return uid;
@@ -275,5 +279,21 @@ public class Login {
 
     public void setFreetime(String freetime) {
         this.freetime = freetime;
+    }
+
+    public String getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(String orderCount) {
+        this.orderCount = orderCount;
+    }
+
+    public String getCustomCount() {
+        return customCount;
+    }
+
+    public void setCustomCount(String customCount) {
+        this.customCount = customCount;
     }
 }

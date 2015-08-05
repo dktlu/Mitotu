@@ -97,7 +97,8 @@ public class JoinTogetherStep2 extends BaseActivity implements View.OnClickListe
                     intent.putExtra("headurl", together.getHeadPhoto());
                     intent.putExtra("gid", together.getGroupId());
                     intent.putExtra("groupname", together.getGroupname());
-                    intent.putExtra("remark", together.getComment());
+                    intent.putExtra("descity", together.getDesCity());
+                    intent.putExtra("startdate", together.getStartDate());
                     intent.putExtra("yid", together.getId());
                     if (together.getPicList() != null && together.getPicList().size() > 0) {
                         intent.putExtra("picurl", together.getPicList().get(0).getUrl());

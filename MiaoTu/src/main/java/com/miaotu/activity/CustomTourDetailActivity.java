@@ -45,7 +45,7 @@ public class CustomTourDetailActivity extends BaseActivity {
 private WebView webView;
     private TextView tvLeft,tvTitle,tvRight;
     Handler mHandler = new Handler();
-    private String orderId,uid,nickname,headUrl,groupId,groupName,remark;
+    private String orderId,uid,nickname,headUrl,groupId,groupName,descity,startdate;
     private boolean isPay=false;
     private PopupWindow popupWindow,claimWindow;
     private View view, topBar;
@@ -124,7 +124,7 @@ private WebView webView;
     public final class JSInterface {
         //JavaScript脚本代码可以调用的函数onClick()处理
         @android.webkit.JavascriptInterface
-        public void share(String remark, String picurl) {
+        public void share(String descity, String startdate, String picurl) {
             ShareSDK.initSDK(CustomTourDetailActivity.this);
             OnekeyShare oks = new OnekeyShare();
             oks.setTheme(OnekeyShareTheme.CLASSIC);
@@ -134,11 +134,12 @@ private WebView webView;
 //        oks.setNotification(R.drawable.ic_launcher,
 //                getString(R.string.app_name));
             // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-            oks.setTitle(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setTitle("想去" + descity + "的筒子们，一起啊！");
             // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
             oks.setTitleUrl("http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // text是分享文本，所有平台都需要这个字段
-            oks.setText(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setText(startdate+"去"+
+                    descity+"，不跟团、自由行，有人一起吗？");
             // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 
             if (!StringUtil.isBlank(getIntent().getStringExtra("picurl"))){
@@ -146,11 +147,13 @@ private WebView webView;
                         + "200x200");
             }else if (!StringUtil.isBlank(picurl)){
                 oks.setImageUrl(picurl + "200x200");
+            }else {
+                oks.setImageUrl("http://m.miaotu.com/Public/images/200.png");
             }
             // url仅在微信（包括好友和朋友圈）中使用
             oks.setUrl("http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-            oks.setComment(remark + "\n http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
+            oks.setComment("http://m.miaotu.com/ShareLine31/custom/?aid=" + getIntent().getStringExtra("id"));
             // site是分享此内容的网站名称，仅在QQ空间使用
             oks.setSite(getString(R.string.app_name));
             // siteUrl是分享此内容的网站地址，仅在QQ空间使用
@@ -245,6 +248,12 @@ private WebView webView;
             startActivity(chatIntent);
         }
         @android.webkit.JavascriptInterface
+        public void showRedPackage(){
+            Intent intent = new Intent();
+            intent.setClass(CustomTourDetailActivity.this, RedPackageIntroduceActivity.class);
+            startActivity(intent);
+        }
+        @android.webkit.JavascriptInterface
         public void chat() {
             //私聊
             mHandler.post(new Runnable() {
@@ -296,7 +305,7 @@ private WebView webView;
                 public void run() {
 
                     // Code in here
-                    if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
+                    if (!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                        showToastMsg("当前未联网，请检查网络设置");
                         CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                         return;
@@ -340,12 +349,12 @@ private WebView webView;
             CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             return;
         }
-        Intent userIntent = new Intent(CustomTourDetailActivity.this,PersonCenterActivity.class);
+        Intent userIntent = new Intent(CustomTourDetailActivity.this, PersonCenterActivity.class);
         userIntent.putExtra("uid", uid);
         startActivity(userIntent);
     }
     @android.webkit.JavascriptInterface
-    public void pay(String orderId,String uid,String nickname,String headUrl,String groupId,String groupName,String remark) {
+    public void pay(String orderId,String uid,String nickname,String headUrl,String groupId,String groupName,String startdate,String descity) {
         // 支付
         if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //            showToastMsg("当前未联网，请检查网络设置");
@@ -358,18 +367,23 @@ private WebView webView;
         CustomTourDetailActivity.this.headUrl = headUrl;
         CustomTourDetailActivity.this.groupId = groupId;
         CustomTourDetailActivity.this.groupName = groupName;
-        CustomTourDetailActivity.this.remark = remark;
+        CustomTourDetailActivity.this.descity = descity;
+        CustomTourDetailActivity.this.startdate = startdate;
 //        payOrder();
         showPayWindow();
         }
 
         @android.webkit.JavascriptInterface
-        public void payRedPackage(String amount, final String uid, final String nickname, final String headUrl, final String groupId, final String groupName, final String remark){
+        public void payRedPackage(String amount, final String uid, final String nickname, final String headUrl, final String groupId, final String groupName, final String descity, final String startdate){
             if(!Util.isNetworkConnected(CustomTourDetailActivity.this)) {
 //                showToastMsg("当前未联网，请检查网络设置");
                 CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
                 return;
             }
+            String ordercount = readPreference("ordercount");
+            int count = Integer.parseInt(ordercount) +1;
+            writePreference("ordercount", count+"");
+
             boolean isSuccess = false;
             if (!StringUtil.isBlank(readPreference("luckmoney"))) {
                 if (StringUtil.isBlank(amount)){
@@ -393,7 +407,7 @@ private WebView webView;
             CustomTourDetailActivity.this.showMyToast("当前未联网，请检查网络设置");
             mHandler.post(new Runnable() {
                 public void run() {
-                    webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                    webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + "&to=" + descity + "&startdate=" +startdate);
                 }
             });
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
@@ -430,6 +444,9 @@ private WebView webView;
                 if(tvTitle==null){
                     return;
                 }
+                String ordercount = readPreference("ordercount");
+                int count = Integer.parseInt(ordercount) +1;
+                writePreference("ordercount", count+"");
                 JSONTokener jsonTokener = new JSONTokener(result);
                 JSONObject jb;
                 String err="";
@@ -479,7 +496,7 @@ private WebView webView;
                         //支付成
 //                        showToastMsg("付款完成！");
                     CustomTourDetailActivity.this.showMyToast("付款完成！");
-                        webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&remark=" + remark);
+                        webView.loadUrl("http://m.miaotu.com/AppTest/joinRes/?uid=" + uid + "&nickname=" + nickname + "&headurl=" + headUrl + "&gid=" + groupId + "&groupname=" + groupName + "&to=" + descity + "&startdate=" +startdate);
 //                    webView.loadUrl("http://m.miaotu.com/App/joinRes");
                         webView.postDelayed(new Runnable() {
                             @Override

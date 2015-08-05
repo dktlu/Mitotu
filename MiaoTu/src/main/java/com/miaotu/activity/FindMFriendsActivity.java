@@ -192,7 +192,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 } else {
                     wcsp.setShareType(Platform.SHARE_WEBPAGE);
                     wcsp.setImageUrl(headurl);
-                    wcsp.setUrl("http://m.miaotu.com/");
+                    wcsp.setUrl("http://www.miaotu.com/apk/MiaoTu.apk");
                 }
                 wcsp.setTitle("找对的人去旅行！含泪推荐！！");
                 wcsp.setText("老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！");
@@ -204,7 +204,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 ShareSDK.initSDK(this);
                 QQ.ShareParams qqsp = new QQ.ShareParams();
                 qqsp.setTitle("找对的人去旅行！含泪推荐！！");
-                qqsp.setTitleUrl("http://m.miaotu.com/");
+                qqsp.setTitleUrl("http://www.miaotu.com/apk/MiaoTu.apk");
                 qqsp.setText("老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！");
                 qqsp.setImageUrl("http://m.miaotu.com/Public/images/200.png");
                 Platform qq = ShareSDK.getPlatform(QQ.NAME);

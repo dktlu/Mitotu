@@ -35,6 +35,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     private List<BlackInfo> blackInfoList;
     private MyLikeAdapter adapter;
     private View root;
+    private String uid;
 
 
     @Override
@@ -52,6 +53,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
+        uid = readPreference("uid");
         View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
         view.setVisibility(View.GONE);
         ((LinearLayout)lvBlackList.getParent()).addView(view);
@@ -89,13 +91,17 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                 return false;
             }
         });
-        getLikeList();
+        Bundle bundle = getArguments();
+        if (!StringUtil.isBlank(bundle.getString("uid"))){
+            uid = bundle.getString("uid");
+        }
+        getLikeList(uid);
     }
 
     /**
      * 获取关注列表
      */
-    public void getLikeList(){
+    public void getLikeList(final String uid){
         new BaseHttpAsyncTask<Void, Void, BlackResult>(this.getActivity(), true){
 
             @Override
@@ -121,7 +127,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
             @Override
             protected BlackResult run(Void... params) {
                 return HttpRequestUtil.getInstance().getLikeList(readPreference("token"),
-                        readPreference("uid"));
+                        uid);
             }
         }.execute();
     }

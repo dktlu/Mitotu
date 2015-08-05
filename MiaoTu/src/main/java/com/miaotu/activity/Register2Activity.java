@@ -162,7 +162,8 @@ private boolean validate(){
                 break;
             case R.id.tv_right:
                 if(validate()){
-                    showDialog();
+//                    showDialog();
+                    getSms(etTel.getText().toString());
                 }
                 break;
         }

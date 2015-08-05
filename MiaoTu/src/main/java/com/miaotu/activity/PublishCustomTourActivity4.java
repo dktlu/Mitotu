@@ -70,6 +70,9 @@ public class PublishCustomTourActivity4 extends BaseActivity implements OnClickL
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
+                    String customcount = readPreference("customcount");
+                    int count = Integer.parseInt(customcount) +1;
+                    writePreference("customcount", count+"");
                     setResult(1);
                     Intent intent = new Intent(PublishCustomTourActivity4.this,PublishCustomTourActivity5.class);
                     startActivity(intent);

@@ -39,7 +39,7 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private ImageView ivGender;
     private LinearLayout llSexandAge;
     private RelativeLayout rlTip;
-    private View line;
+    private View line,lineRed,lineOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +76,8 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
     private void findView() {
         rlTip = (RelativeLayout) root.findViewById(R.id.rl_info_tip);
         line = root.findViewById(R.id.view1);
+        lineRed = root.findViewById(R.id.line_red);
+        lineOrder = root.findViewById(R.id.line_order);
         tv_wantgo = (TextView) root.findViewById(R.id.tv_wantgo);
         tvAge = (TextView) root.findViewById(R.id.tv_age);
         ivGender = (ImageView) root.findViewById(R.id.iv_gender);
@@ -110,6 +112,16 @@ public class FourthPageFragment extends BaseFragment implements View.OnClickList
         String gender = readPreference("gender");
         String followcount = readPreference("followcount");
         String fanscount = readPreference("fanscount");
+        String ordercount = readPreference("ordercount");
+        String customcount = readPreference("customcount");
+        if (ordercount == "0" || "0".equals(ordercount)){
+            rl_order.setVisibility(View.GONE);
+            lineRed.setVisibility(View.GONE);
+        }
+        if (customcount == "0"||"0".equals(customcount)){
+            rl_customer.setVisibility(View.GONE);
+            lineOrder.setVisibility(View.GONE);
+        }
         UrlImageViewHelper.setUrlDrawable(iv_userhead, headimg, R.drawable.default_avatar);
         if ("男".equals(gender)) {
             ivGender.setBackgroundResource(R.drawable.icon_boy);

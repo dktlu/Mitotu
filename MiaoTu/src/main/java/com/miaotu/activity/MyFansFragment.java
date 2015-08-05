@@ -34,6 +34,7 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
     private List<BlackInfo> blackInfoList;
     private MyFansAdapter adapter;
     private View root;
+    private String uid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +51,7 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
+        uid = readPreference("uid");
         View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
         ((ImageView)view.findViewById(R.id.iv_empty)).setBackgroundResource(R.drawable.icon_empty_fans);
         ((LinearLayout)lvBlackList.getParent()).setGravity(Gravity.CENTER);
@@ -59,13 +61,17 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
         blackInfoList = new ArrayList<>();
         adapter = new MyFansAdapter(this.getActivity(), blackInfoList, readPreference("token"));
         lvBlackList.setAdapter(adapter);
-        getFansList();
+        Bundle bundle = getArguments();
+        if (!StringUtil.isBlank(bundle.getString("uid"))){
+            uid = bundle.getString("uid");
+        }
+        getFansList(uid);
     }
 
     /**
      * 获取关注列表
      */
-    public void getFansList(){
+    public void getFansList(final String uid){
         new BaseHttpAsyncTask<Void, Void, BlackResult>(this.getActivity(), true){
 
             @Override
@@ -92,7 +98,7 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
             @Override
             protected BlackResult run(Void... params) {
                 return HttpRequestUtil.getInstance().getFansList(readPreference("token"),
-                        readPreference("uid"));
+                        uid);
             }
         }.execute();
     }

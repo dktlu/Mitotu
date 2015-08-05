@@ -135,6 +135,14 @@ private void bindView(){
                     writePreference("budget",result.getLogin().getBudget());
                     writePreference("home",result.getLogin().getHome());
                     writePreference("lifearea",result.getLogin().getLifearea());
+                    writePreference("ordercount", "0");
+                    writePreference("customcount", "0");
+                    if (!StringUtil.isBlank(result.getLogin().getOrderCount())){
+                        writePreference("ordercount", result.getLogin().getOrderCount());
+                    }
+                    if (!StringUtil.isBlank(result.getLogin().getCustomCount())) {
+                        writePreference("customcount", result.getLogin().getCustomCount());
+                    }
 
                     EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
                             new EMCallBack() {//回调
@@ -338,7 +346,8 @@ private void bindView(){
             return false;
         }
         if(!StringUtil.isPhoneNumber(tvAuto.getText().toString())){
-            LoginActivity.this.showMyToast("请输入正确的手机号码！");
+            LoginActivity.this.showMyToast("账号填写有误，请检查后重新填写");
+            return false;
         }
         if(StringUtil.isBlank(etPassword.getText().toString())){
             LoginActivity.this.showMyToast("请输入您的登录密码！");

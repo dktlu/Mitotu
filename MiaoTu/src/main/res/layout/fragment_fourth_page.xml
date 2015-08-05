@@ -175,7 +175,7 @@
                         android:id="@+id/tv_follow_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="199"
+                        android:text="0"
                         android:textColor="#505050"
                         android:textSize="14sp" />
 
@@ -200,7 +200,7 @@
                         android:id="@+id/tv_fans_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="11099"
+                        android:text="0"
                         android:textColor="#505050"
                         android:textSize="14sp" />
 
@@ -324,6 +324,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/line_order"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/bg_line" />
@@ -333,6 +334,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@android:color/white">
+
 
                 <ImageView
                     android:id="@+id/iv_like"
@@ -364,6 +366,7 @@
             </RelativeLayout>
 
             <View
+                android:id="@+id/line_red"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/bg_line" />

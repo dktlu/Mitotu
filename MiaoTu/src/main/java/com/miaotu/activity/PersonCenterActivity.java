@@ -78,7 +78,7 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     private ViewStub viewStub;
     private TextView tv_title_tour;
     private View belowimagewall;
-    private LinearLayout ll_sexandage;
+    private LinearLayout ll_sexandage,llFollow,llFans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        llFans = (LinearLayout) this.findViewById(R.id.ll_fans);
+        llFollow = (LinearLayout) this.findViewById(R.id.ll_follow);
         tv_title_tour = (TextView) this.findViewById(R.id.tv_title_tour);
         belowimagewall = this.findViewById(R.id.belowimagewall);
         tv_more = (TextView) this.findViewById(R.id.tv_more);
@@ -163,6 +165,8 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         iv_background.setOnClickListener(this);
         iv_head_photo.setOnClickListener(this);
         tv_more.setOnClickListener(this);
+        llFollow.setOnClickListener(this);
+        llFans.setOnClickListener(this);
     }
 
     /**
@@ -173,8 +177,10 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
         if("true".equals(personInfoResult.getPersonInfo().getIslike())){    //是否关注此人
             changeBtnFollow(true);
         }
-        tvFollowCount.setText(readPreference("followcount"));
-        tvFansCount.setText(readPreference("fanscount"));
+//        tvFollowCount.setText(readPreference("followcount"));
+//        tvFansCount.setText(readPreference("fanscount"));
+        tvFollowCount.setText(personInfoResult.getPersonInfo().getLikecount());
+        tvFansCount.setText(personInfoResult.getPersonInfo().getLikedcount());
         UrlImageViewHelper.setUrlDrawable(iv_head_photo,
                 personInfoResult.getPersonInfo().getHeadurl(),
                 R.drawable.icon_default_head_photo);
@@ -400,6 +406,22 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                 Intent imagewallIntent = new Intent(PersonCenterActivity.this, GridImageWallActivity.class);
                 imagewallIntent.putExtra("uid", uid);
                 startActivity(imagewallIntent);
+                break;
+            case R.id.ll_follow:
+                Intent followIntent = new Intent();
+                followIntent.setClass(PersonCenterActivity.this,
+                        MyLikeAndFansActivity.class);
+                followIntent.putExtra("flag", 0);
+                followIntent.putExtra("uid", uid);
+                startActivityForResult(followIntent, 1001);
+                break;
+            case R.id.ll_fans:
+                Intent fansIntent = new Intent();
+                fansIntent.setClass(PersonCenterActivity.this,
+                        MyLikeAndFansActivity.class);
+                fansIntent.putExtra("flag", 1);
+                fansIntent.putExtra("uid", uid);
+                startActivityForResult(fansIntent, 1001);
                 break;
             default:
                 break;

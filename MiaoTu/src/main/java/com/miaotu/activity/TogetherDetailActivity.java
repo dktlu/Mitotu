@@ -485,7 +485,7 @@ private Together together;
 
             @Override
             protected BaseResult run(Void... params) {
-                return HttpRequestUtil.getInstance().likeTogether(readPreference("token"),id);
+                return HttpRequestUtil.getInstance().likeTogether(readPreference("token"), id);
             }
 
         }.execute();
@@ -605,17 +605,20 @@ private Together together;
 //        oks.setNotification(R.drawable.ic_launcher,
 //                getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(togetherDetailResult.getTogether().getComment() + "\n http://m.miaotu.com/ShareLine31/?yid=" + togetherDetailResult.getTogether().getId());
+        oks.setTitle("想去" + togetherDetailResult.getTogether().getDesCity() + "的筒子们，一起啊！");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl("http://m.miaotu.com/ShareLine31/?yid=" + togetherDetailResult.getTogether().getId());
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(togetherDetailResult.getTogether().getComment() + "\n http://m.miaotu.com/ShareLine31/?yid=" + togetherDetailResult.getTogether().getId());
+        oks.setText(togetherDetailResult.getTogether().getStartDate()+"去"+
+                togetherDetailResult.getTogether().getDesCity()+"，不跟团、自由行，有人一起吗？");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         if (togetherDetailResult.getTogether().getPicList() != null &&
                 togetherDetailResult.getTogether().getPicList().size() > 0){
 
             oks.setImageUrl(togetherDetailResult.getTogether().getPicList().get(0).getUrl()
                     + "200x200");
+        }else {
+            oks.setImageUrl("http://m.miaotu.com/Public/images/200.png");
         }
         // url仅在微信（包括好友和朋友圈）中使用
         oks.setUrl("http://m.miaotu.com/ShareLine31/?yid=" + togetherDetailResult.getTogether().getId());
