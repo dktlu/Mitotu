@@ -110,7 +110,7 @@ private void bindView(){
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
-                    LoginActivity.this.showMyToast("登录成功！");
+//                    LoginActivity.this.showMyToast("登录成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
@@ -241,7 +241,7 @@ private void bindView(){
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
 //                    login(registerInfo,false);
-                    LoginActivity.this.showMyToast("登录成功！");
+//                    LoginActivity.this.showMyToast("登录成功！");
                     writePreference("uid", result.getLogin().getUid());
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
