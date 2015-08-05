@@ -270,6 +270,14 @@ private void bindView(){
                     writePreference("budget",result.getLogin().getBudget());
                     writePreference("home",result.getLogin().getHome());
                     writePreference("lifearea",result.getLogin().getLifearea());
+                    writePreference("ordercount", "0");
+                    writePreference("customcount", "0");
+                    if (!StringUtil.isBlank(result.getLogin().getOrderCount())){
+                        writePreference("ordercount", result.getLogin().getOrderCount());
+                    }
+                    if (!StringUtil.isBlank(result.getLogin().getCustomCount())) {
+                        writePreference("customcount", result.getLogin().getCustomCount());
+                    }
 
                     EMChatManager.getInstance().login(MD5.md5(readPreference("uid")), readPreference("token"),
                             new EMCallBack() {//回调
@@ -462,6 +470,8 @@ private void bindView(){
             platDB.getUserGender();
             platDB.getUserIcon();
             platDB.getUserId();
+
+
             platDB.getUserName();
             writePreference("weibo_token,", platDB.getToken());
             writePreference("weibo_id", platDB.getUserId());
