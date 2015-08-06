@@ -636,6 +636,9 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
                         belowimagewall.setVisibility(View.GONE);
                         tv_more.setVisibility(View.GONE);
                         viewStub.inflate();
+                        if (!isMine){
+                            ((TextView)findViewById(R.id.tv_tip)).setText("TA发布的照片动态将会显示在这里~");
+                        }
                         return;
                     }
                     imageWallAdapter.notifyItemChanged(imageWallList.size()-1);
