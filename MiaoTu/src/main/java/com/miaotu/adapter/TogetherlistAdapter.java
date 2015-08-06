@@ -244,6 +244,13 @@ public class TogetherlistAdapter extends BaseAdapter {
                 }
             });
             holder.tvAge.setText(mList.get(position).getAge() + "岁");
+            if ("15".equals(mList.get(position).getAge())
+                ||Integer.parseInt(mList.get(position).getAge())<16){
+                holder.tvAge.setText("<16岁");
+            }else if ("61".equals(mList.get(position).getAge())
+                    ||Integer.parseInt(mList.get(position).getAge())>60){
+                holder.tvAge.setText(">60岁");
+            }
         /*if (StringUtil.isBlank(mList.get(position).getJob())){
             holder.tvJob.setVisibility(View.GONE);
         }

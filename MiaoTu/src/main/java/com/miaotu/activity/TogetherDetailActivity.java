@@ -206,6 +206,11 @@ private Together together;
             ivGender.setBackgroundResource(R.drawable.icon_woman);
         }
         tvAge.setText(result.getTogether().getAge()+"岁");
+        if ("15".equals(result.getTogether().getAge())){
+            tvAge.setText("<16岁");
+        }else if ("61".equals(result.getTogether().getAge())){
+            tvAge.setText(">60岁");
+        }
         tvJob.setText(result.getTogether().getJob());
         tvComment.setText(result.getTogether().getComment());
         if(!StringUtil.isEmpty(result.getTogether().getUserTag())){

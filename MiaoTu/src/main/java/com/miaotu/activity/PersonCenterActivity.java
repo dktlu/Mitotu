@@ -222,6 +222,13 @@ public class PersonCenterActivity extends BaseActivity implements View.OnClickLi
             ll_sexandage.setBackgroundResource(R.drawable.bg_woman);
         }
         tv_age.setText(personInfoResult.getPersonInfo().getAge());
+        if ("15".equals(personInfoResult.getPersonInfo().getAge())
+                || Integer.parseInt(personInfoResult.getPersonInfo().getAge())<16){
+            tv_age.setText("<16");
+        }else if ("61".equals(personInfoResult.getPersonInfo().getAge())
+                || Integer.parseInt(personInfoResult.getPersonInfo().getAge())>60){
+            tv_age.setText(">60");
+        }
         if (!StringUtil.isBlank(personInfoResult.getPersonInfo().getPicurl())){
             UrlImageViewHelper.setUrlDrawable(iv_background,
                     personInfoResult.getPersonInfo().getPicurl(),

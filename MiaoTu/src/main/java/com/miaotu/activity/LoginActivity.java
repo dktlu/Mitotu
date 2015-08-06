@@ -115,6 +115,15 @@ private void bindView(){
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
                     writePreference("name",result.getLogin().getName());
+                    if (StringUtil.isBlank(result.getLogin().getAge())){
+                        result.getLogin().setAge("0");
+                    }else {
+                        if (Integer.parseInt(result.getLogin().getAge())<16){
+                            result.getLogin().setAge("<16");
+                        }else if (Integer.parseInt(result.getLogin().getAge())>60){
+                            result.getLogin().setAge(">60");
+                        }
+                    }
                     writePreference("age",result.getLogin().getAge());
                     writePreference("gender",result.getLogin().getGender());
                     writePreference("address",result.getLogin().getAddress());
@@ -246,6 +255,15 @@ private void bindView(){
                     writePreference("id", result.getLogin().getId());
                     writePreference("token",result.getLogin().getToken());
                     writePreference("name",result.getLogin().getName());
+                    if (StringUtil.isBlank(result.getLogin().getAge())){
+                        result.getLogin().setAge("0");
+                    }else {
+                        if (Integer.parseInt(result.getLogin().getAge())<16){
+                            result.getLogin().setAge("<16");
+                        }else if (Integer.parseInt(result.getLogin().getAge())>60){
+                            result.getLogin().setAge(">60");
+                        }
+                    }
                     writePreference("age",result.getLogin().getAge());
                     writePreference("gender",result.getLogin().getGender());
                     writePreference("address",result.getLogin().getAddress());

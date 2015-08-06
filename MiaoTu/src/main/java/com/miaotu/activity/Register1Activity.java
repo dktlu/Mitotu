@@ -234,11 +234,11 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                 String curMaritalStatus = maritalStatusAdapter
                         .getMaritalStatuses()[wvMaritalStatus.getCurrentItem()]; // 获取当前选中的情感状态
                 tv_age.setText(curMaritalStatus);
-                if (wvMaritalStatus.getCurrentItem() == 0){
-                    tv_age.setText("<16");
-                }else if (wvMaritalStatus.getCurrentItem() == 44){
-                    tv_age.setText(">60");
-                }
+//                if (wvMaritalStatus.getCurrentItem() == 0){
+//                    tv_age.setText("<16");
+//                }else if (wvMaritalStatus.getCurrentItem() == 44){
+//                    tv_age.setText(">60");
+//                }
                 dialog.dismiss();
             }
         });
@@ -273,6 +273,11 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                         userinfo.setAge("");
                     }else {
                         userinfo.setAge(tv_age.getText().toString().trim());
+                        if ("16岁以下".equals(tv_age.getText().toString().trim())){
+                            userinfo.setAge("15");
+                        }else if ("60岁以上".equals(tv_age.getText().toString().trim())){
+                            userinfo.setAge("61");
+                        }
                     }
                     userinfo.setMarital_status(tv_emotion.getText().toString().trim());
                     userinfo.setWork(et_job.getText().toString().trim());
@@ -387,6 +392,11 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                     }
                     if (!StringUtil.isBlank(info.getAge())) {
                         writePreference("age", info.getAge());
+                        if ("15".equals(info.getAge())) {
+                            writePreference("age", "<16");
+                        } else if ("61".equals(info.getAge())){
+                            writePreference("age", ">60");
+                        }
                     }
                     if (!StringUtil.isBlank(info.getNickname())) {
                         writePreference("name", info.getNickname());

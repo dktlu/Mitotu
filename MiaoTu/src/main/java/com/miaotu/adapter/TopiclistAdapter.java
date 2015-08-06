@@ -226,6 +226,13 @@ public class TopiclistAdapter extends BaseAdapter {
         holder.tvLike.setText("喜欢 " + mList.get(position).getStatelikecount() + "人");
         holder.tvComment.setText("评论 " + mList.get(position).getStatereplycount());
         holder.tvAge.setText(mList.get(position).getAge() + "岁");
+        if ("15".equals(mList.get(position).getAge())
+                ||Integer.parseInt(mList.get(position).getAge())<16){
+            holder.tvAge.setText("<16岁");
+        }else if ("61".equals(mList.get(position).getAge())
+                ||Integer.parseInt(mList.get(position).getAge())>60){
+            holder.tvAge.setText(">60岁");
+        }
         if (StringUtil.isBlank(mList.get(position).getAge())){
             holder.tvAge.setText("0岁");
         }

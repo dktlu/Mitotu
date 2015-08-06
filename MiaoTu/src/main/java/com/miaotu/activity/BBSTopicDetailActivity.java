@@ -201,6 +201,11 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
             tvEmotion = (TextView) view.findViewById(R.id.tv_emotion);
             tvTipComment = (TextView) view.findViewById(R.id.tv_tip_comment);
             tvAge.setText(topic.getAge() + "岁");
+            if ("15".equals(topic.getAge())){
+                tvAge.setText("<16岁");
+            }else if ("61".equals(topic.getAge())){
+                tvAge.setText(">60岁");
+            }
             if (StringUtil.isBlank(topic.getEmotion())){
                 tvEmotion.setVisibility(View.GONE);
             }
@@ -470,6 +475,11 @@ public class BBSTopicDetailActivity extends BaseActivity implements View.OnClick
                     tvWantgo = (TextView) view.findViewById(R.id.tv_wantgo);
                     tvTipComment = (TextView) view.findViewById(R.id.tv_tip_comment);
                     tvAge.setText(topic.getAge() + "岁");
+                    if ("15".equals(topic.getAge()) || Integer.parseInt(topic.getAge())<16){
+                        tvAge.setText("<16岁");
+                    }else if ("61".equals(topic.getAge()) || Integer.parseInt(topic.getAge())>60){
+                        tvAge.setText(">60岁");
+                    }
                     if (StringUtil.isBlank(topic.getEmotion())){
                         tvEmotion.setVisibility(View.GONE);
                     }
