@@ -22,6 +22,7 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
     private int curPage;
     private RadioGroup radioGroup;
     private TextView tvLfet,tvTitle;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
 
     private void init() {
         tvTitle.setText("关注与粉丝");
+        uid = readPreference("uid");
+        if (!StringUtil.isBlank(getIntent().getStringExtra("uid"))) {
+            uid = getIntent().getStringExtra("uid");
+        }
         fragmentManager = getSupportFragmentManager();
         if (getIntent().getIntExtra("flag", 0) == 0){
             setTabSelection(0);
@@ -104,13 +109,13 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     mTab01 = new MyLikeFragment();
                     Bundle likeBundle = new Bundle();
-                    likeBundle.putString("uid", getIntent().getStringExtra("uid"));
+                    likeBundle.putString("uid", uid);
                     mTab01.setArguments(likeBundle);
                     transaction.add(R.id.id_content, mTab01);
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(mTab01);
-                    mTab01.getLikeList(getIntent().getStringExtra("uid"));
+                    mTab01.getLikeList(uid);
                 }
                 break;
             case 1: //粉丝
@@ -119,13 +124,13 @@ public class MyLikeAndFansActivity extends BaseFragmentActivity implements View.
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     mTab02 = new MyFansFragment();
                     Bundle likedBundle = new Bundle();
-                    likedBundle.putString("uid", getIntent().getStringExtra("uid"));
+                    likedBundle.putString("uid", uid);
                     mTab02.setArguments(likedBundle);
                     transaction.add(R.id.id_content, mTab02);
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(mTab02);
-                    mTab02.getFansList(getIntent().getStringExtra("uid"));
+                    mTab02.getFansList(uid);
                 }
                 break;
         }

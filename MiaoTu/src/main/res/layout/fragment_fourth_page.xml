@@ -309,7 +309,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/iv_yibaomingde"
-                    android:text="约游秒旅团"
+                    android:text="约游妙旅团"
                     android:textColor="#646464"
                     android:textSize="14sp" />
 

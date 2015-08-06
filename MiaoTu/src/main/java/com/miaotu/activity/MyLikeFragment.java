@@ -36,6 +36,7 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     private MyLikeAdapter adapter;
     private View root;
     private String uid;
+    private boolean isMine;
 
 
     @Override
@@ -53,7 +54,14 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
-        uid = readPreference("uid");
+//        uid = readPreference("uid");
+        Bundle bundle = getArguments();
+        if (!StringUtil.isBlank(bundle.getString("uid"))){
+            if (readPreference("uid").equals(bundle.getString("uid"))) {
+                isMine = true;
+            }
+            uid = bundle.getString("uid");
+        }
         View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
         view.setVisibility(View.GONE);
         ((LinearLayout)lvBlackList.getParent()).addView(view);
@@ -91,10 +99,6 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                 return false;
             }
         });
-        Bundle bundle = getArguments();
-        if (!StringUtil.isBlank(bundle.getString("uid"))){
-            uid = bundle.getString("uid");
-        }
         getLikeList(uid);
     }
 
@@ -114,7 +118,9 @@ public class MyLikeFragment extends BaseFragment implements View.OnClickListener
                     }
                     blackInfoList.addAll(blackResult.getBlackInfos());
                     adapter.notifyDataSetChanged();
-                    writePreference("followcount", blackInfoList.size()+"");
+                    if (isMine) {
+                        writePreference("followcount", blackInfoList.size() + "");
+                    }
                 }else {
                     if(StringUtil.isBlank(blackResult.getMsg())){
                         MyLikeFragment.this.showMyToast("获取黑名单失败");

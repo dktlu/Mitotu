@@ -35,6 +35,7 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
     private MyFansAdapter adapter;
     private View root;
     private String uid;
+    private boolean isMine;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,9 +52,16 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData(){
-        uid = readPreference("uid");
+//        uid = readPreference("uid");
+        Bundle bundle = getArguments();
+        if (!StringUtil.isBlank(bundle.getString("uid"))){
+            if (readPreference("uid").equals(bundle.getString("uid"))){
+                isMine = true;
+            }
+            uid = bundle.getString("uid");
+        }
         View view = LayoutInflater.from(this.getActivity()).inflate(R.layout.empty_follow_fans, null);
-        ((ImageView)view.findViewById(R.id.iv_empty)).setBackgroundResource(R.drawable.icon_empty_fans);
+        ((ImageView)view.findViewById(R.id.iv_empty)).setBackgroundResource(R.drawable.icon_empty_follow);
         ((LinearLayout)lvBlackList.getParent()).setGravity(Gravity.CENTER);
         view.setVisibility(View.GONE);
         ((LinearLayout)lvBlackList.getParent()).addView(view);
@@ -61,10 +69,6 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
         blackInfoList = new ArrayList<>();
         adapter = new MyFansAdapter(this.getActivity(), blackInfoList, readPreference("token"));
         lvBlackList.setAdapter(adapter);
-        Bundle bundle = getArguments();
-        if (!StringUtil.isBlank(bundle.getString("uid"))){
-            uid = bundle.getString("uid");
-        }
         getFansList(uid);
     }
 
@@ -85,7 +89,9 @@ public class MyFansFragment extends BaseFragment implements View.OnClickListener
                     }
                     blackInfoList.addAll(blackResult.getBlackInfos());
                     adapter.notifyDataSetChanged();
-                    writePreference("fanscount", blackInfoList.size() + "");
+                    if (isMine) {
+                        writePreference("fanscount", blackInfoList.size() + "");
+                    }
                 }else {
                     if(StringUtil.isBlank(blackResult.getMsg())){
                         MyFansFragment.this.showMyToast("获取黑名单失败");

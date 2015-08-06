@@ -114,12 +114,12 @@ public class ContactListAdapter extends
                             count = 0;
                         }
 //                        ((BaseActivity)mContext).showToastMsg("取消喜欢成功");
-                        showMyToast((BaseActivity)mContext, "取消喜欢成功");
+                        showMyToast((BaseActivity)mContext, "已取消关注");
                     }else {
                         view.setBackgroundResource(R.drawable.icon_minus);
                         count+=1;
 //                        ((BaseActivity)mContext).showToastMsg("喜欢成功");
-                        showMyToast((BaseActivity) mContext, "喜欢成功");
+                        showMyToast((BaseActivity) mContext, "已关注");
                     }
                     ((BaseActivity)mContext).writePreference("followcount", count + "");
                 }else {

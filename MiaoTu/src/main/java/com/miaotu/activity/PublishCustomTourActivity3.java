@@ -174,6 +174,7 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
                         LogUtil.d(file1.getAbsolutePath());
                         ImageLoader.getInstance().displayImage(Uri.fromFile(file1).toString(), ivId1, imageOptions);
                         tvDel1.setVisibility(View.VISIBLE);
+                        showMyToast("正面照片//"+Uri.fromFile(file1).toString());
                     }
                     break;
                 case 2:
