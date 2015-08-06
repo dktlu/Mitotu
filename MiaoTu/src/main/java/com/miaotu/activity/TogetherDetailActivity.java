@@ -402,7 +402,9 @@ private Together together;
                     public void onClick(View view) {
                         yrid = reply.getRid();
                         etComment.setTag("@" + reply.getNickname() + "：");
-                        etComment.setHint("回复"+reply.getNickname());
+                        etComment.setHint("回复" + reply.getNickname());
+                        etComment.requestFocus();
+//                        etComment.setSelection(0);
                         layoutMenu.setVisibility(View.GONE);
                         layoutPublishComment.setVisibility(View.VISIBLE);
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -562,6 +564,7 @@ private Together together;
                                     yrid = reply.getRid();
                                     etComment.setTag("@" + reply.getNickname() + "：");
                                     etComment.setHint("回复"+reply.getNickname());
+                                    etComment.requestFocus();
                                     layoutMenu.setVisibility(View.GONE);
                                     layoutPublishComment.setVisibility(View.VISIBLE);
                                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -783,7 +786,7 @@ private Together together;
                     TogetherDetailActivity.this.showMyToast("您已经报过名了");
                     return;
                 }
-                Intent joinIntent = new Intent(TogetherDetailActivity.this,JoinTogetherStep1.class);
+                Intent joinIntent = new Intent(TogetherDetailActivity.this,JoinTogetherStep2.class);
                 joinIntent.putExtra("together",together);
                 startActivityForResult(joinIntent, 1);
                 break;

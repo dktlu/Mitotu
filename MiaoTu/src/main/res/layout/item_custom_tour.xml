@@ -48,6 +48,14 @@
                 android:text="05-24截止报名"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
+            <TextView
+                android:id="@+id/tv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@drawable/icon_top"
+                />
         </RelativeLayout>
 
         <com.miaotu.view.CircleImageView

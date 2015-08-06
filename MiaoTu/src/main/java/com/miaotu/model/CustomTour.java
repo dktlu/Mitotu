@@ -62,6 +62,8 @@ public class CustomTour {
     private String userTags;
     @JsonProperty("IsLike")
     private boolean isLike;
+    @JsonProperty("IsTop")
+    private String isTop;
 
     public String getId() {
         return id;
@@ -285,5 +287,13 @@ public class CustomTour {
 
     public void setIsLike(boolean isLike) {
         this.isLike = isLike;
+    }
+
+    public String getIsTop() {
+        return isTop;
+    }
+
+    public void setIsTop(String isTop) {
+        this.isTop = isTop;
     }
 }

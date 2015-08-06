@@ -150,7 +150,7 @@
                     android:lineSpacingExtra="5dp"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp"
-                    android:text="您有2个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界"
+                    android:text="您有2个手机好友已经注册了妙途\n关注后和TA们一起，看更大的世界"
                     android:textColor="#787878"
                     android:textSize="12sp" />
 

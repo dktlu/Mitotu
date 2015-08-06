@@ -1,10 +1,15 @@
 package com.miaotu.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -184,9 +189,25 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
                 int count = getChineseLength(editable.toString() + "");
                 isMinus = false;
                 if (count > 140) {
-                    tvFontCount.setText(140 - count + "");
+//                    tvFontCount.setText(140 - count + "");
+                    SpannableStringBuilder style = new SpannableStringBuilder(140 - count + "");
+                    style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 0, style.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvFontCount.setText(style);
                     isMinus = true;
                 }
+            }
+        });
+        etComment.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_ENTER){
+                    String content = etComment.getText().toString();
+                    content += "  ";
+                    etComment.setText(content);
+                    etComment.setSelection(content.length());
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -194,7 +215,10 @@ public class PublishTogetherStep2Activity extends BaseActivity implements OnClic
     private void init() {
         publishTogether = (PublishTogether) getIntent().getSerializableExtra("publishTogether");
         tvTitle.setText("发起旅行");
-        tvRight.setText("发布");
+//        tvRight.setText("发布");
+        SpannableStringBuilder style = new SpannableStringBuilder("发布");
+        style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvRight.setText(style);
     }
 
     private void publish() {

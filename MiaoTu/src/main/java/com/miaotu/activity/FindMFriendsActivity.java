@@ -312,7 +312,7 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                     contactlist.addAll(addressListResult.getAddressList());
                     contactsadapter.notifyDataSetChanged();
                     setAdapterHeght(contactlist.size(), 61, rvFriends);
-                    tvFriendCount.setText("您有"+contactlist.size()+"个QQ的好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
+                    tvFriendCount.setText("您有"+contactlist.size()+"个手机好友已经注册了妙途\n关注后和TA们一起，看更大的世界");
                     SpannableStringBuilder style = new SpannableStringBuilder(tvFriendCount.getText().toString());
                     int count = tvFriendCount.getText().toString().indexOf("个");
                     style.setSpan(new ForegroundColorSpan(Color.parseColor("#ff8000")), 2, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

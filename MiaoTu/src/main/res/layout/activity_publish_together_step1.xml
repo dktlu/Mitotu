@@ -139,7 +139,7 @@
                 android:textColorHint="#b4b4b4"
                 android:gravity="center|left"
                 android:singleLine="true"
-                android:maxLength="20"
+                android:maxLength="8"
                 />
         </LinearLayout>
         <LinearLayout

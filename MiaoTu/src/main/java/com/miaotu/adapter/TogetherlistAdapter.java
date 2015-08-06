@@ -136,6 +136,8 @@ public class TogetherlistAdapter extends BaseAdapter {
                         .findViewById(R.id.tv_join_list);
                 holder.tvWantGo = (TextView) togetherView
                         .findViewById(R.id.tv_wantgo);
+                holder.ivTop = (ImageView) togetherView.
+                        findViewById(R.id.iv_top);
                 togetherView.setTag(holder);
             } else {
                 holder = (ViewHolder) togetherView.getTag();
@@ -217,7 +219,18 @@ public class TogetherlistAdapter extends BaseAdapter {
             }
             holder.tvFee.setText(mList.get(position).getFee());
             holder.tvComment.setText(mList.get(position).getComment());
-            holder.tvJoinCount.setText("已报名" + mList.get(position).getJoinCount() + "人");
+            if ("true".equals(mList.get(position).getIsjoin())||
+                    mList.get(position).getIsjoin() == "true"){
+                holder.tvJoinCount.setText("已报名");
+            }else {
+                holder.tvJoinCount.setText("报名");
+            }
+            if ("true".equals(mList.get(position).getIstop())||
+                    mList.get(position).getIstop() == "true"){
+                holder.ivTop.setVisibility(View.VISIBLE);
+            }else {
+                holder.ivTop.setVisibility(View.GONE);
+            }
             holder.tvCommentCount.setText("评论" + mList.get(position).getReplyCount() + "人");
             if (mList.get(position).isLike()) {
                 holder.ivLike.setBackgroundResource(R.drawable.icon_like);
@@ -380,6 +393,7 @@ public class TogetherlistAdapter extends BaseAdapter {
         private LinearLayout layoutImg = null;
         private TextView tvJoinList = null;
         private TextView tvWantGo = null;
+        private ImageView ivTop;
     }
 
     class BannerViewHolder {

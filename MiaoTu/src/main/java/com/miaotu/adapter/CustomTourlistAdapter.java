@@ -96,6 +96,14 @@ public class CustomTourlistAdapter extends BaseAdapter {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     width, width * 202 / 339);
             holder.ivSummary.setLayoutParams(params);
+
+            holder.tvTop = (TextView) convertView.
+                    findViewById(R.id.tv_top);
+            /*RelativeLayout.LayoutParams topparams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            topparams.setMargins(10,10,0,0);
+            holder.tvTop.setLayoutParams(topparams);*/
             holder.tvEndTime = (TextView) convertView
 					.findViewById(R.id.tv_age);
             holder.tvPrice = (TextView) convertView
@@ -128,6 +136,12 @@ public class CustomTourlistAdapter extends BaseAdapter {
 		UrlImageViewHelper.setUrlDrawable(holder.ivHeadPhoto,
                 mList.get(position).getHeadUrl() + "100x100",
                 R.drawable.icon_default_head_photo);
+        if (mList.get(position).getIsTop() == "true"||
+                "true".equals(mList.get(position).getIsTop())){
+            holder.tvTop.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvTop.setVisibility(View.GONE);
+        }
         holder.ivHeadPhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -253,6 +267,7 @@ public class CustomTourlistAdapter extends BaseAdapter {
         private ImageView ivSummary = null;
         private ImageView ivLike = null;
         private FlowLayout layoutTag = null;
+        private TextView tvTop = null;
 	}
 
     /**

@@ -31,7 +31,7 @@ public class SignNoticeActivity extends BaseActivity implements View.OnClickList
 
     private void initData(){
 
-        tvTitle.setText("预订须知");
+        tvTitle.setText("报名须知");
         if ("1".equals(getIntent().getStringExtra("together"))){
             tvNotice.setText(getResources().getString(R.string.togethernotice));
         }else {
