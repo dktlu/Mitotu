@@ -29,7 +29,7 @@ public class AccountSafetyActivity extends BaseActivity implements
 		findView();
 		bindView();
 
-		//注册
+		//注册d
 		init();
 	}
 
