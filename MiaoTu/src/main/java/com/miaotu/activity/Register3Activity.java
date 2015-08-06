@@ -140,6 +140,7 @@ public class Register3Activity extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 if (result.getCode() == BaseResult.SUCCESS) {
+                    Register3Activity.this.showMyToast("注册成功");
                     login(registerInfo);
 
                 } else {

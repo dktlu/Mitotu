@@ -164,6 +164,8 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
             tv_age.setText(readPreference("age"));
             tv_emotion.setText(readPreference("emotion"));
             et_wantgo.setText(readPreference("wantgo"));
+            UrlImageViewHelper.setUrlDrawable(iv_head_photo, readPreference("headphoto"),
+                    R.drawable.icon_register_header);
         }
         setResult(1);
     }
@@ -516,7 +518,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                 if (result.getCode() == BaseResult.SUCCESS) {
                     photourl = result.getPhotoList().get(0);
                     UrlImageViewHelper.setUrlDrawable(iv_head_photo, photourl,
-                            R.drawable.default_avatar);
+                            R.drawable.icon_register_header);
                     ModifyPersonInfo info = new ModifyPersonInfo();
                     info.setToken(readPreference("token"));
                     info.setHear_url(photourl);
