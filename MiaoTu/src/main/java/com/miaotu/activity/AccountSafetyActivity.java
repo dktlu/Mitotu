@@ -28,6 +28,8 @@ public class AccountSafetyActivity extends BaseActivity implements
 		setContentView(R.layout.activity_account_safety);
 		findView();
 		bindView();
+
+		//注册
 		init();
 	}
 
