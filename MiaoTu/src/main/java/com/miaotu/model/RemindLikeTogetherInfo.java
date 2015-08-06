@@ -20,6 +20,8 @@ public class RemindLikeTogetherInfo implements Serializable{
     private String picUrl;
     @JsonProperty("Content")
     private String content;
+    @JsonProperty("ReplyContent")
+    private String repleycontent;
 
     public String getUid() {
         return uid;
@@ -67,5 +69,13 @@ public class RemindLikeTogetherInfo implements Serializable{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getRepleycontent() {
+        return repleycontent;
+    }
+
+    public void setRepleycontent(String repleycontent) {
+        this.repleycontent = repleycontent;
     }
 }

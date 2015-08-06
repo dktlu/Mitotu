@@ -23,6 +23,7 @@ import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 import com.miaotu.R;
 import com.miaotu.adapter.DateArrayAdapter;
 import com.miaotu.adapter.DateNumericAdapter;
+import com.miaotu.adapter.MaritalStatusAdapter;
 import com.miaotu.adapter.ProvinceAdapter;
 import com.miaotu.async.BaseHttpAsyncTask;
 import com.miaotu.http.HttpRequestUtil;
@@ -53,8 +54,8 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     private EditText et_tag;
     private FlowLayout fl_tags;
     private ModifyPersonInfo userinfo;
-    private EditText et_nickname, et_emotion, et_job, et_wantgo,et_school,et_worksite,et_free;
-    private TextView tv_age, tv_gender,tv_budget,tv_content_life,tv_content_home;
+    private EditText et_nickname, et_job, et_wantgo,et_school,et_worksite,et_free;
+    private TextView tv_age, tv_gender,tv_budget,tv_content_life,tv_content_home,tv_content_emotion;
     private RelativeLayout rl_changephoto;
     private List<String> alltags;
     private CircleImageView iv_head_photo;
@@ -85,7 +86,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         iv_head_photo = (CircleImageView) this.findViewById(R.id.iv_head_photo);
         et_wantgo = (EditText) this.findViewById(R.id.et_wantgo);
         et_job = (EditText) this.findViewById(R.id.et_job);
-        et_emotion = (EditText) this.findViewById(R.id.et_emotion);
+        tv_content_emotion = (TextView) this.findViewById(R.id.tv_content_emotion);
         tv_age = (TextView) this.findViewById(R.id.tv_age);
         tv_gender = (TextView) this.findViewById(R.id.tv_gender);
         et_nickname = (EditText) this.findViewById(R.id.et_nickname);
@@ -106,12 +107,13 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         tv_budget.setOnClickListener(this);
         tv_content_home.setOnClickListener(this);
         tv_content_life.setOnClickListener(this);
+        tv_content_emotion.setOnClickListener(this);
     }
 
     private void clearEditText() {
         et_wantgo.setText("");
         et_job.setText("");
-        et_emotion.setText("");
+        tv_content_emotion.setText("");
         tv_age.setText("");
         tv_gender.setText("");
         et_nickname.setText("");
@@ -134,7 +136,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         boolean empty = false;
         if (StringUtil.isBlank(et_wantgo.getText().toString()) &&
                 StringUtil.isBlank(et_job.getText().toString()) &&
-                StringUtil.isBlank(et_emotion.getText().toString()) &&
+                StringUtil.isBlank(tv_content_emotion.getText().toString()) &&
                 StringUtil.isBlank(tv_age.getText().toString()) &&
                 StringUtil.isBlank(tv_gender.getText().toString()) &&
                 StringUtil.isBlank(et_nickname.getText().toString()) &&
@@ -161,8 +163,8 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         UrlImageViewHelper.setUrlDrawable(iv_head_photo, headimg, R.drawable.default_avatar);
         et_nickname.setText(readPreference("name"));
         tv_gender.setText(readPreference("gender"));
-        tv_age.setText(readPreference("age") + "岁");
-        et_emotion.setText(readPreference("emotion"));
+        tv_age.setText(readPreference("age"));
+        tv_content_emotion.setText(readPreference("emotion"));
         et_job.setText(readPreference("job"));
         et_wantgo.setText(readPreference("wantgo"));
         et_worksite.setText(readPreference("workarea"));
@@ -240,10 +242,9 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             if (StringUtil.isBlank(tv_age.getText().toString().trim())){
                 userinfo.setAge("");
             }else {
-                userinfo.setAge(tv_age.getText().toString().trim().substring(0,
-                        tv_age.getText().toString().length() - 1));
+                userinfo.setAge(tv_age.getText().toString().trim());
             }
-            userinfo.setMarital_status(et_emotion.getText().toString().trim());
+            userinfo.setMarital_status(tv_content_emotion.getText().toString().trim());
             userinfo.setWork(et_job.getText().toString().trim());
             userinfo.setWant_go(et_wantgo.getText().toString().trim());
             userinfo.setHear_url("");
@@ -281,6 +282,9 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_budget:
                 getBudgetDialog();
+                break;
+            case R.id.tv_content_emotion:
+                getEmotionDialog();
                 break;
             default:
                 break;
@@ -638,19 +642,55 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    // 获取生日dialog
+    // 获取年龄状态dialog
     private void getAgeDialog() {
+        // 为dialog的listview赋值
+        LayoutInflater lay = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = lay.inflate(R.layout.dialog_marital_status_layout, null);
+        final WheelView wvMaritalStatus = (WheelView) v
+                .findViewById(R.id.wv_marital_status);
+        wvMaritalStatus.setVisibleItems(5);
+        final MaritalStatusAdapter maritalStatusAdapter = new MaritalStatusAdapter(
+                this);
+        wvMaritalStatus.setViewAdapter(maritalStatusAdapter);
+
+        wvMaritalStatus.addChangingListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView wheel, int oldValue, int newValue) {
+            }
+        });
+
+        wvMaritalStatus.setCurrentItem(1);
+        // 创建dialog
+        dialog = new WheelTwoColumnDialog(this, R.style.Dialog_Fullscreen, v);
+        dialog.setOnConfirmListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String curMaritalStatus = maritalStatusAdapter
+                        .getMaritalStatuses()[wvMaritalStatus.getCurrentItem()]; // 获取当前选中的情感状态
+                tv_age.setText(curMaritalStatus);
+                if (wvMaritalStatus.getCurrentItem() == 0){
+                    tv_age.setText("<16");
+                }else if (wvMaritalStatus.getCurrentItem() == 44){
+                    tv_age.setText(">60");
+                }
+                dialog.dismiss();
+            }
+        });
+    }
+
+    // 获取情感dialog
+    private void getEmotionDialog() {
         // 为dialog的listview赋值
         LayoutInflater lay = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = lay.inflate(R.layout.dialog_age_layout, null);
         final WheelView wvDay = (WheelView) v.findViewById(R.id.wv_day);
 
-        final String months[] = new String[100];
-        for (int i = 1; i <= 100; i++) {
-            months[i - 1] = i + "";
-        }
-        wvDay.setViewAdapter(new DateArrayAdapter(this, months, 17));
+        final String months[] = new String[]{"单身求勾搭", "热恋中","已婚","保密","独身主义"};
+        wvDay.setViewAdapter(new DateArrayAdapter(this, months, 0));
         // 创建dialog
         dialog = new WheelTwoColumnDialog(this, R.style.Dialog_Fullscreen, v);
         dialog.setOnConfirmListener(new View.OnClickListener() {
@@ -659,12 +699,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             public void onClick(View v) {
 //                int monthIndex = wvMonth.getCurrentItem();
                 int dayIndex = wvDay.getCurrentItem();
-                String currentDay = (dayIndex + 1) + ""; // 获取年龄
-//                if (currentDay.length() == 1) {
-//                    currentDay = "0" + currentDay;
-//                }
-                tv_age.setText(currentDay + "岁");
-
+                tv_content_emotion.setText(months[dayIndex]);
                 dialog.dismiss();
             }
         });

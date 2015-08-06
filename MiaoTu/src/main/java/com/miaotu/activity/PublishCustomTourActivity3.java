@@ -90,6 +90,21 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
         File myDir = new File(Environment
                 .getExternalStorageDirectory().getAbsolutePath() + "/miaotu");
         myDir.mkdirs();
+
+        etId.setText(readPreference("activityid"));
+        etTel.setText(readPreference("activityphone"));
+        if (!StringUtil.isBlank(readPreference("idphoto1"))){
+//            ImageLoader.getInstance().displayImage(readPreference("idphoto1"), ivId1, imageOptions);
+            UrlImageViewHelper.setUrlDrawable(ivId1, readPreference("idphoto1"),R.drawable.bg_id_1);
+            file1 = new File(readPreference("file1"));
+            tvDel1.setVisibility(View.VISIBLE);
+        }
+        if (!StringUtil.isBlank(readPreference("idphoto2"))) {
+//            ImageLoader.getInstance().displayImage(readPreference("idphoto2"), ivId2, imageOptions);
+            UrlImageViewHelper.setUrlDrawable(ivId2, readPreference("idphoto2"), R.drawable.bg_id_2);
+            file2 = new File(readPreference("file2"));
+            tvDel2.setVisibility(View.VISIBLE);
+        }
     };
     private boolean validate(){
         if(StringUtil.isEmpty(etTel.getText().toString())){
@@ -174,7 +189,6 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
                         LogUtil.d(file1.getAbsolutePath());
                         ImageLoader.getInstance().displayImage(Uri.fromFile(file1).toString(), ivId1, imageOptions);
                         tvDel1.setVisibility(View.VISIBLE);
-                        showMyToast("正面照片//"+Uri.fromFile(file1).toString());
                     }
                     break;
                 case 2:
@@ -206,6 +220,12 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
             @Override
             protected void onCompleteTask(final PhotoUploadResult result) {
                 if (result.getCode() == BaseResult.SUCCESS) {
+                    writePreference("idphoto1", result.getPhotoList().get(0));
+                    writePreference("idphoto2", result.getPhotoList().get(1));
+                    writePreference("activityphone", etTel.getText().toString().trim());
+                    writePreference("activityid", etId.getText().toString().trim());
+                    writePreference("file1", imageUri1.getPath());
+                    writePreference("file2", imageUri2.getPath());
                     customForm = (PublishCustomForm) getIntent().getSerializableExtra("form");
                     customForm.setPhone(etTel.getText().toString());
                     customForm.setIdCard(etId.getText().toString());
@@ -238,7 +258,6 @@ public class PublishCustomTourActivity3 extends BaseActivity implements OnClickL
                     imgs.add(file1);
                     imgs.add(file2);
                     addPhoto(imgs);
-
                 }
                 break;
             case R.id.tv_left:

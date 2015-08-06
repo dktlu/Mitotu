@@ -73,7 +73,7 @@ public class RemindLikeCustomListAdapter extends BaseAdapter{
         if (flag == 1){
             holder.tvStatus.setText("喜欢了你发起的旅行");
         }else if (flag == 2){
-            holder.tvStatus.setText("评论了你发起的旅行");
+            holder.tvStatus.setText(remindLikes.get(i).getRemindLikeCustomInfo().getReplycontent());
         }
         UrlImageViewHelper.setUrlDrawable(holder.ivPhoto, remindLikes.get(i).getRemindLikeCustomInfo().getHeadUrl(), R.drawable.icon_default_head_photo);
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {

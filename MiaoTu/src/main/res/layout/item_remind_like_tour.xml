@@ -38,6 +38,7 @@
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="喜欢了你发起的旅行"
                 android:textColor="#b4b4b4"
                 android:textSize="12sp" />

@@ -48,6 +48,7 @@ import java.util.List;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -180,8 +181,16 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
                 startActivity(addressIntent);
                 break;
             case R.id.ll_weibo:
-                getFollowList(readPreference("weibo_token"),
-                        readPreference("weibo_id"),readPreference("weibo_name"));
+//                getFollowList(readPreference("weibo_token"),
+//                        readPreference("weibo_id"),readPreference("weibo_name"));
+                ShareSDK.initSDK(this);
+                SinaWeibo.ShareParams wbsp = new SinaWeibo.ShareParams();
+                wbsp.setText("老表，强烈给你推荐妙途旅行！随手发约游、发动态，自由行、不跟团。麻溜的去试试吧！\n" +
+                        "http://www.miaotu.com/apk/MiaoTu.apk");
+                wbsp.setImageUrl("http://m.miaotu.com/Public/images/200.png");
+                Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+                weibo.setPlatformActionListener(new PlatFormListener());
+                weibo.share(wbsp);
                 break;
             case R.id.ll_wx:
                 ShareSDK.initSDK(this);
@@ -402,11 +411,12 @@ public class FindMFriendsActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onError(Platform platform, int i, Throwable throwable) {
+            FindMFriendsActivity.this.showMyToast("发送错误");
         }
 
         @Override
         public void onCancel(Platform platform, int i) {
-            FindMFriendsActivity.this.showMyToast("取消发送");
+//            FindMFriendsActivity.this.showMyToast("取消发送");
         }
     }
 }

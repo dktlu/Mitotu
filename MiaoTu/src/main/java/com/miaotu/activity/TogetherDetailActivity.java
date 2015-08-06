@@ -50,6 +50,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -785,6 +786,16 @@ private Together together;
                 if (togetherDetailResult.getTogether().isAddGroup() == true){
                     TogetherDetailActivity.this.showMyToast("您已经报过名了");
                     return;
+                }
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    if (simpleDateFormat.parse(togetherDetailResult.getTogether().getStartDate()).
+                            before(new Date())){
+                        TogetherDetailActivity.this.showMyToast("报名时间已结束");
+                        return;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
                 Intent joinIntent = new Intent(TogetherDetailActivity.this,JoinTogetherStep2.class);
                 joinIntent.putExtra("together",together);

@@ -167,6 +167,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
                 writePreference("home","");
                 writePreference("lifearea","");
                 writePreference("logintype", "");
+                writePreference("idphoto1", "");
+                writePreference("idphoto2", "");
+                writePreference("activityphone", "");
+                writePreference("activityid", "");
+                writePreference("file1", "");
+                writePreference("file2", "");
                 JPushInterface.stopPush(SettingActivity.this);
                 // XmppConnection.getInstance().closeConnection();
                 setResult(1);

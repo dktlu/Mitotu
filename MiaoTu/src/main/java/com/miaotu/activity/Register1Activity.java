@@ -224,7 +224,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        wvMaritalStatus.setCurrentItem(1);
+        wvMaritalStatus.setCurrentItem(0);
         // 创建dialog
         dialog = new WheelTwoColumnDialog(this, R.style.Dialog_Fullscreen, v);
         dialog.setOnConfirmListener(new View.OnClickListener() {
@@ -234,6 +234,11 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
                 String curMaritalStatus = maritalStatusAdapter
                         .getMaritalStatuses()[wvMaritalStatus.getCurrentItem()]; // 获取当前选中的情感状态
                 tv_age.setText(curMaritalStatus);
+                if (wvMaritalStatus.getCurrentItem() == 0){
+                    tv_age.setText("<16");
+                }else if (wvMaritalStatus.getCurrentItem() == 44){
+                    tv_age.setText(">60");
+                }
                 dialog.dismiss();
             }
         });
@@ -737,7 +742,7 @@ public class Register1Activity extends BaseActivity implements View.OnClickListe
         });
     }
 
-    // 获取预算dialog
+    // 获取情感dialog
     private void getEmotionDialog() {
         // 为dialog的listview赋值
         LayoutInflater lay = (LayoutInflater) this
